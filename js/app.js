@@ -1,41 +1,50 @@
-var customSearch;
-(function($) {
-	
-	"use strict";
+const getRealPath = (pathname, desc = false) => {
+  if (!pathname) {
+    pathname = window.location.pathname;
+  }
+  let names = pathname.split("/");
+  if (desc === false) {
+    for (let i = names.length - 1; i >= 0; --i) {
+      let name = names[i].trim();
+      if (name.length > 0 && name !== "/" && name !== "index.html") {
+        return name;
+      }
+    }
+  } else {
+    for (let i = 0; i < names.length; ++i) {
+      let name = names[i].trim();
+      if (name.length > 0 && name !== "/" && name !== "index.html") {
+        return name;
+      }
+    }
+  }
+  return "/";
+};
+let links = document.querySelectorAll(".nexmoe-list-item");
+let rootRealPath = getRealPath(window.location.pathname, true);
+for (let link of links) {
+  let linkPath = link.getAttribute("href");
+  if (linkPath && getRealPath(linkPath, true) === rootRealPath) {
+    link.className = "active nexmoe-list-item mdui-list-item mdui-ripple";
+  }
+}
+$("table")
+  .has("img")
+  .addClass("nexmoe-album");
 
-  var scrolltoElement = function(e) {
-    e.preventDefault();
-    var self = $(this),
-        correction = e.data ? e.data.correction ? e.data.correction : 0 : 0;
-    $('html, body').animate({'scrollTop': $(self.attr('href')).offset().top - correction }, 400);
-  };
-	
-  var closeMenu = function(e) {
-	  e.stopPropagation();
-    $('body').removeClass('menu-open');
-		$('#site-nav-switch').removeClass('active');
-  };
-  
-  var toggleMenu = function(e) {
-	  e.stopPropagation();
-	  $('body').toggleClass('menu-open');
-    $('#site-nav-switch').toggleClass('active');
-  };
-	
-	$(function() {
-		$('#footer, #main').addClass('loaded');
-		$('#site-nav-switch').on('click', toggleMenu);
-		$(document).on('click', closeMenu);
-		$('#site-menu').on('click', function (e) {
-			e.stopPropagation();
-		});
-		$('.window-nav, .go-comment').on('click', scrolltoElement);
-    $(".content .video-container").fitVids();
+$("#nexmoe-content img").each(function() {
+  $(this).attr("data-src", $(this).attr("src"));
+  $(this).attr("src", "");
+  $(this).addClass("lazyload");
+  $(this).attr("referrerPolicy", "no-referrer");
+});
 
-		setTimeout(function() {
-	    $('#loading-bar-wrapper').fadeOut(500);
-	  }, 300);
+$("article:not(.nexmoe-py) img").each(function() {
+  var element = document.createElement("a");
+  $(element).attr("data-fancybox", "gallery");
+  $(element).attr("href", $(this).attr("data-src"));
+  $(this).wrap(element);
+});
 
-	});
-		
-})(jQuery);
+$("#nexmoe-sidebar a").addClass("mdui-ripple");
+mdui.mutation();
