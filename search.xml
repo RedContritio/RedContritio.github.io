@@ -3,10 +3,75 @@
   
     
     <entry>
-      <title><![CDATA[basic_cpp_knowledge]]></title>
+      <title><![CDATA[Cpp 入门]]></title>
       <url>/2019/10/20/basic-cpp-knowledge/</url>
-      <content type="html"></content>
+      <content type="html"><![CDATA[<blockquote><p>C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it. </p>
+<footer><strong>[Linus Torvalds]</strong></footer></blockquote>
+
+<a id="more"></a>
+
+<p>为了便于讲解，本文采用由浅及深的方式组织行文主线。</p>
+<p>本文主要采用对比 c 和 cpp 差异的方式来进行。</p>
+<hr>
+<h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
+<p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
+<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.txt</span></span><br><span class="line">a *= <span class="number">3</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"module.txt"</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译执行 main.c 后，输出应该是</p>
+<blockquote>
+<p>3</p>
+<p>3 2</p>
+</blockquote>
+<p>可见，<code>#include</code> 作用是将一段文本直接引入到代码中。</p>
+<p>对头文件使用 <code>#include</code> 时也是如此。</p>
+<h3 id="头文件名称对比"><a href="#头文件名称对比" class="headerlink" title="头文件名称对比"></a>头文件名称对比</h3><table>
+<thead>
+<tr>
+<th>语言</th>
+<th>———–</th>
+<th>————</th>
+<th>———–</th>
+<th>———–</th>
+<th>———–</th>
+<th>———–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c</td>
+<td>stdio.h</td>
+<td>stdlib.h</td>
+<td>math.h</td>
+<td>\</td>
+<td>windows.h</td>
+<td>string.h</td>
+</tr>
+<tr>
+<td>cpp</td>
+<td>cstdio</td>
+<td>cstdlib</td>
+<td>cmath</td>
+<td>vector</td>
+<td>windows.h</td>
+<td>cstring</td>
+</tr>
+</tbody></table>
+<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
+<p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cstdio</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h2><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
+<h3 id="和-malloc-对比"><a href="#和-malloc-对比" class="headerlink" title="和 malloc 对比"></a>和 <code>malloc</code> 对比</h3><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
+]]></content>
       
+        
+        <tags>
+            
+            <tag> 社团课程 </tag>
+            
+        </tags>
         
     </entry>
     
