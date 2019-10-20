@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
     
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
     <script type="text/javascript">
         // Data Center
         var DC = {
             reward:	false,
-            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            lv: JSON.parse('{"enable":true,"app_id":null,"app_key":null,"icon":true}'),
             v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
-            g: JSON.parse('{"enable":false,"lazy":true,"owner":"RedContritio","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"RedContritio","repo":"gitment","oauth":{"client_id":"0a6a884a25f2cfcd11b3","client_secret":"ef65c52b75e4a88915c74e3e9b9e935e56209ce0"},"perPage":10}'),
             d: JSON.parse('{"app_id":null}')
         };
     </script>
@@ -213,9 +215,26 @@
 
 
             
+	<span id="/2019/10/20/%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/" class="leancloud_visitors" data-flag-title="看板娘配置" title="看板娘配置">
+		
+			<i class="icon icon-eye"></i>
+		
+		<span class="leancloud-visitors-count"></span>
+	</span>
+ 
 
             
 
+
+<span class="post-comments-counter" id="/2019/10/20/%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2019/10/20/%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
 
             
         </div>
@@ -307,6 +326,14 @@
         </div>
         
             
+
+
+      
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
 
 
         
@@ -466,8 +493,14 @@
 
     
     
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
 
 
+
+<script type="text/javascript" src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+<script type="text/javascript" src="/js/plugins/leancloud_visitors.js?v=1.4.4"></script>
 
 
 
