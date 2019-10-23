@@ -26,7 +26,7 @@
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1571808914777">
+  <link rel="stylesheet" href="/css/style.css?v=1571809058185">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -134,7 +134,7 @@
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年10月20日</a>
     <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
     
     
       <a class="nexmoefont icon-tag-fill -link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程</a>
@@ -151,10 +151,19 @@
 <hr>
 <h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
 <p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
-<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.txt</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a);</span><br><span class="line">a *= <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><pre><code class="c">// module.txt
+printf(&quot;%d\n&quot;, a);
+a *= 3;</code></pre>
+<pre><code class="c">// main.c
+#include &lt;stdio.h&gt;
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"module.txt"</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+int main()
+{
+    int a = 1, b = 2;
+#include &quot;module.txt&quot;
+    printf(&quot;%d %d\n&quot;, a, b);
+    return 0;
+}</code></pre>
 <p>编译执行 main.c 后，输出应该是</p>
 <blockquote>
 <p>1</p>
@@ -195,11 +204,16 @@
 </tbody></table>
 <p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
 <p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cstdio</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">// cstdio
+...
+#include &lt;stdio.h&gt;
+...</code></pre>
 <hr>
-<h2 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">...</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b;</span><br></pre></td></tr></table></figure>
-
+<h2 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h2><pre><code class="cpp">#include &lt;iostream&gt;
+using namespace std;
+...
+cin &gt;&gt; a;
+cout &lt;&lt; b;</code></pre>
 <p>上面这一段应该是大多数人最早接触的 cpp 代码。</p>
 <p>大概讲解一下这一段内容中每行代码发生了什么。</p>
 <p><code>#include &lt;iostream&gt;</code> 引入 iostream 头文件</p>
@@ -221,13 +235,39 @@
 <p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
 <p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
 <h3 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h3><p><code>new</code> 用法示例如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *a = <span class="keyword">new</span> <span class="keyword">int</span>; <span class="comment">// 表示让 a 指向分配的 int 类型值，值未初始化</span></span><br><span class="line"><span class="string">"上面这一行等价于"</span>;</span><br><span class="line"><span class="keyword">int</span> *a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *b = <span class="keyword">new</span> <span class="keyword">int</span>(); <span class="comment">// 表示让 b 指向分配的 int 类型值，并在分配后采用默认方式初始化这个值</span></span><br><span class="line"><span class="comment">// 对于 int 类型，默认方式初始化意味着置为 0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *c = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">3</span>); <span class="comment">// 表示让 c 指向分配的 int 类型值，并在分配后初始化这个值为 3</span></span><br><span class="line"><span class="comment">// *c == 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *d = <span class="keyword">new</span> <span class="keyword">int</span>[n]; <span class="comment">// 表示让 d 指向分配的长度为 n 的 int 数组，内存未初始化</span></span><br><span class="line"><span class="string">"上面这一行等价于"</span>;</span><br><span class="line"><span class="keyword">int</span> *d = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(n*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *e = <span class="keyword">new</span> <span class="keyword">int</span>[n](); <span class="comment">// 表示让 e 指向分配的长度为 n 的 int 数组，并采用默认方式初始化每个值</span></span><br><span class="line"><span class="comment">// e[0] == e[1] == e[2] == ... == e[n-1] == 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 特别的，有些类型分配的时候略微麻烦一点（类型系统的进阶使用）</span></span><br><span class="line"><span class="keyword">int</span> **a= <span class="keyword">new</span> (<span class="keyword">int</span> *[n]); <span class="comment">// 长度为 n 的 int* 数组</span></span><br><span class="line"><span class="keyword">int</span> (**pf)()= <span class="keyword">new</span> (<span class="keyword">int</span> (*)()); <span class="comment">// pf 为指向函数指针的指针，指向的函数 f 声明形式如 int f(void);</span></span><br><span class="line"><span class="keyword">int</span> (**pfs)()= <span class="keyword">new</span> (<span class="keyword">int</span> (*[n])()); <span class="comment">// pfs 为函数指针数组</span></span><br></pre></td></tr></table></figure>
+<pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
+&quot;上面这一行等价于&quot;;
+int *a = (int*)malloc(sizeof(int));
 
+int *b = new int(); // 表示让 b 指向分配的 int 类型值，并在分配后采用默认方式初始化这个值
+// 对于 int 类型，默认方式初始化意味着置为 0
+
+int *c = new int(3); // 表示让 c 指向分配的 int 类型值，并在分配后初始化这个值为 3
+// *c == 3
+
+int *d = new int[n]; // 表示让 d 指向分配的长度为 n 的 int 数组，内存未初始化
+&quot;上面这一行等价于&quot;;
+int *d = (int*)malloc(n*sizeof(int));
+
+int *e = new int[n](); // 表示让 e 指向分配的长度为 n 的 int 数组，并采用默认方式初始化每个值
+// e[0] == e[1] == e[2] == ... == e[n-1] == 0
+
+// 特别的，有些类型分配的时候略微麻烦一点（类型系统的进阶使用）
+int **a= new (int *[n]); // 长度为 n 的 int* 数组
+int (**pf)()= new (int (*)()); // pf 为指向函数指针的指针，指向的函数 f 声明形式如 int f(void);
+int (**pfs)()= new (int (*[n])()); // pfs 为函数指针数组</code></pre>
 <p><strong>无法用 new 在创建一个数组的同时初始化每个元素</strong></p>
 <hr>
 <p><code>delete</code> 用法类似。（采用<code>new</code> 举例中所用的变量）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> c;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> []d; <span class="comment">// 删除数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> []e;</span><br></pre></td></tr></table></figure>
+<pre><code class="cpp">delete a;
 
+delete b;
+
+delete c;
+
+delete []d; // 删除数组
+
+delete []e;</code></pre>
 <hr>
 <h3 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h3><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
 
@@ -275,7 +315,7 @@
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1571808914778"></script>
+<script src="/js/app.js?v=1571809058187"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 

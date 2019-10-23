@@ -11,8 +11,12 @@
 <ol>
 <li>设置好 index.ejs 布局后 hexo generate 出错</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ERROR D:\GitHub\RedContritio.github.io\themes\landscape\layout\index.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;% page.posts.each(<span class="keyword">function</span>(post)&#123; %&gt;</span><br><span class="line">    2|</span><br><span class="line">    3| &lt;% &#125;) %&gt;</span><br><span class="line"></span><br><span class="line">Cannot <span class="built_in">read</span> property <span class="string">'each'</span> of undefined</span><br></pre></td></tr></table></figure>
+<pre><code class="bash">ERROR D:\GitHub\RedContritio.github.io\themes\landscape\layout\index.ejs:1
+ &gt;&gt; 1| &lt;% page.posts.each(function(post){ %&gt;
+    2|
+    3| &lt;% }) %&gt;
 
+Cannot read property &#39;each&#39; of undefined</code></pre>
 <p>这个现象会出现是因为没有找到其他的布局框架，导致 post 也用 index.ejs 布局，但是 post 页面内无法进行 posts 的迭代从而出错。</p>
 ]]></content>
       
@@ -38,10 +42,19 @@
 <hr>
 <h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
 <p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
-<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.txt</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a);</span><br><span class="line">a *= <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><pre><code class="c">// module.txt
+printf(&quot;%d\n&quot;, a);
+a *= 3;</code></pre>
+<pre><code class="c">// main.c
+#include &lt;stdio.h&gt;
 
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"module.txt"</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a, b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+int main()
+{
+    int a = 1, b = 2;
+#include &quot;module.txt&quot;
+    printf(&quot;%d %d\n&quot;, a, b);
+    return 0;
+}</code></pre>
 <p>编译执行 main.c 后，输出应该是</p>
 <blockquote>
 <p>1</p>
@@ -82,11 +95,16 @@
 </tbody></table>
 <p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
 <p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cstdio</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<pre><code class="c">// cstdio
+...
+#include &lt;stdio.h&gt;
+...</code></pre>
 <hr>
-<h2 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">...</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b;</span><br></pre></td></tr></table></figure>
-
+<h2 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h2><pre><code class="cpp">#include &lt;iostream&gt;
+using namespace std;
+...
+cin &gt;&gt; a;
+cout &lt;&lt; b;</code></pre>
 <p>上面这一段应该是大多数人最早接触的 cpp 代码。</p>
 <p>大概讲解一下这一段内容中每行代码发生了什么。</p>
 <p><code>#include &lt;iostream&gt;</code> 引入 iostream 头文件</p>
@@ -108,13 +126,39 @@
 <p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
 <p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
 <h3 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h3><p><code>new</code> 用法示例如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *a = <span class="keyword">new</span> <span class="keyword">int</span>; <span class="comment">// 表示让 a 指向分配的 int 类型值，值未初始化</span></span><br><span class="line"><span class="string">"上面这一行等价于"</span>;</span><br><span class="line"><span class="keyword">int</span> *a = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *b = <span class="keyword">new</span> <span class="keyword">int</span>(); <span class="comment">// 表示让 b 指向分配的 int 类型值，并在分配后采用默认方式初始化这个值</span></span><br><span class="line"><span class="comment">// 对于 int 类型，默认方式初始化意味着置为 0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *c = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">3</span>); <span class="comment">// 表示让 c 指向分配的 int 类型值，并在分配后初始化这个值为 3</span></span><br><span class="line"><span class="comment">// *c == 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *d = <span class="keyword">new</span> <span class="keyword">int</span>[n]; <span class="comment">// 表示让 d 指向分配的长度为 n 的 int 数组，内存未初始化</span></span><br><span class="line"><span class="string">"上面这一行等价于"</span>;</span><br><span class="line"><span class="keyword">int</span> *d = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(n*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *e = <span class="keyword">new</span> <span class="keyword">int</span>[n](); <span class="comment">// 表示让 e 指向分配的长度为 n 的 int 数组，并采用默认方式初始化每个值</span></span><br><span class="line"><span class="comment">// e[0] == e[1] == e[2] == ... == e[n-1] == 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 特别的，有些类型分配的时候略微麻烦一点（类型系统的进阶使用）</span></span><br><span class="line"><span class="keyword">int</span> **a= <span class="keyword">new</span> (<span class="keyword">int</span> *[n]); <span class="comment">// 长度为 n 的 int* 数组</span></span><br><span class="line"><span class="keyword">int</span> (**pf)()= <span class="keyword">new</span> (<span class="keyword">int</span> (*)()); <span class="comment">// pf 为指向函数指针的指针，指向的函数 f 声明形式如 int f(void);</span></span><br><span class="line"><span class="keyword">int</span> (**pfs)()= <span class="keyword">new</span> (<span class="keyword">int</span> (*[n])()); <span class="comment">// pfs 为函数指针数组</span></span><br></pre></td></tr></table></figure>
+<pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
+&quot;上面这一行等价于&quot;;
+int *a = (int*)malloc(sizeof(int));
 
+int *b = new int(); // 表示让 b 指向分配的 int 类型值，并在分配后采用默认方式初始化这个值
+// 对于 int 类型，默认方式初始化意味着置为 0
+
+int *c = new int(3); // 表示让 c 指向分配的 int 类型值，并在分配后初始化这个值为 3
+// *c == 3
+
+int *d = new int[n]; // 表示让 d 指向分配的长度为 n 的 int 数组，内存未初始化
+&quot;上面这一行等价于&quot;;
+int *d = (int*)malloc(n*sizeof(int));
+
+int *e = new int[n](); // 表示让 e 指向分配的长度为 n 的 int 数组，并采用默认方式初始化每个值
+// e[0] == e[1] == e[2] == ... == e[n-1] == 0
+
+// 特别的，有些类型分配的时候略微麻烦一点（类型系统的进阶使用）
+int **a= new (int *[n]); // 长度为 n 的 int* 数组
+int (**pf)()= new (int (*)()); // pf 为指向函数指针的指针，指向的函数 f 声明形式如 int f(void);
+int (**pfs)()= new (int (*[n])()); // pfs 为函数指针数组</code></pre>
 <p><strong>无法用 new 在创建一个数组的同时初始化每个元素</strong></p>
 <hr>
 <p><code>delete</code> 用法类似。（采用<code>new</code> 举例中所用的变量）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> c;</span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> []d; <span class="comment">// 删除数组</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> []e;</span><br></pre></td></tr></table></figure>
+<pre><code class="cpp">delete a;
 
+delete b;
+
+delete c;
+
+delete []d; // 删除数组
+
+delete []e;</code></pre>
 <hr>
 <h3 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h3><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
 ]]></content>
@@ -135,21 +179,41 @@
 <a id="more"></a>
 
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装框架"><a href="#安装框架" class="headerlink" title="安装框架"></a>安装框架</h3><p>根目录下，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-helper-live2d</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">npm install --save hexo-helper-live2d</code></pre>
 <p>此后在根目录下 __config.yml 中新增：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Live2D</span></span><br><span class="line"><span class="comment">## https://github.com/EYHN/hexo-helper-live2d</span></span><br><span class="line">live2d:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  <span class="comment"># enable: false</span></span><br><span class="line">  scriptFrom: <span class="built_in">local</span> <span class="comment"># 默认</span></span><br><span class="line">  pluginRootPath: live2dw/ <span class="comment"># 插件在站点上的根目录(相对路径)</span></span><br><span class="line">  pluginJsPath: lib/ <span class="comment"># 脚本文件相对与插件根目录路径</span></span><br><span class="line">  pluginModelPath: assets/ <span class="comment"># 模型文件相对与插件根目录路径</span></span><br><span class="line">  <span class="comment"># scriptFrom: jsdelivr # jsdelivr CDN</span></span><br><span class="line">  <span class="comment"># scriptFrom: unpkg # unpkg CDN</span></span><br><span class="line">  <span class="comment"># scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url</span></span><br><span class="line">  tagMode: <span class="literal">false</span> <span class="comment"># 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中</span></span><br><span class="line">  debug: <span class="literal">false</span> <span class="comment"># 调试, 是否在控制台输出日志</span></span><br><span class="line">  model:</span><br><span class="line">    use: live2d-widget-model-wanko <span class="comment"># npm-module package name</span></span><br><span class="line">    <span class="comment"># use: wanko # 博客根目录/live2d_models/ 下的目录名</span></span><br><span class="line">    <span class="comment">#use: ./source/live2d/wanko # 相对于博客根目录的路径</span></span><br><span class="line">    <span class="comment"># use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # 你的自定义 url</span></span><br><span class="line">  display:</span><br><span class="line">    position: right</span><br><span class="line">    width: 150</span><br><span class="line">    height: 300</span><br><span class="line">  mobile:</span><br><span class="line">    show: <span class="literal">false</span> <span class="comment"># 手机中是否展示</span></span><br><span class="line">    scale: 0.5</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code class="bash"># Live2D
+## https://github.com/EYHN/hexo-helper-live2d
+live2d:
+  enable: true
+  # enable: false
+  scriptFrom: local # 默认
+  pluginRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
+  pluginJsPath: lib/ # 脚本文件相对与插件根目录路径
+  pluginModelPath: assets/ # 模型文件相对与插件根目录路径
+  # scriptFrom: jsdelivr # jsdelivr CDN
+  # scriptFrom: unpkg # unpkg CDN
+  # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url
+  tagMode: false # 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
+  debug: false # 调试, 是否在控制台输出日志
+  model:
+    use: live2d-widget-model-wanko # npm-module package name
+    # use: wanko # 博客根目录/live2d_models/ 下的目录名
+    #use: ./source/live2d/wanko # 相对于博客根目录的路径
+    # use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # 你的自定义 url
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: false # 手机中是否展示
+    scale: 0.5
+</code></pre>
 <h3 id="安装模型"><a href="#安装模型" class="headerlink" title="安装模型"></a>安装模型</h3><p>安装模型有两种方式，第一种是通过 npm 下载，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install live2d-widget-model-wanko</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">npm install live2d-widget-model-wanko</code></pre>
 <p>另一种方式是自行下载包，安装到任意位置，此后在 __config.yml 中 live2d-&gt;model 写明适当位置即可。</p>
 <hr>
 <h1 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h1><p>根目录下执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-helper-live2d</span><br></pre></td></tr></table></figure>
-
+<pre><code class="bash">npm uninstall hexo-helper-live2d</code></pre>
 <hr>
 <p><em>感谢 <a href="https://sevencho.github.io/" target="_blank" rel="noopener">曹雪松de博客|CoderBoy’s Blog</a></em></p>
 ]]></content>
