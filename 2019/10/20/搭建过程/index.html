@@ -1,240 +1,147 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    
-    
-    <title>站点搭建过程 | Chireiden | 地霊殿</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="keywords" content="维护">
-    <link rel="shortcut icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
-    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
-    
-    <script type="text/javascript">
-        // Data Center
-        var DC = {
-            reward:	false,
-            lv: JSON.parse('{"enable":true,"app_id":null,"app_key":null,"icon":true}'),
-            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
-            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
-            d: JSON.parse('{"app_id":null}')
-        };
-    </script>
-    <script type="text/javascript">
-        window.lazyScripts=[];
-    </script>
-    
+  
+  <title>站点搭建过程 - Chireiden</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="站点搭建过程基于 hexo 搭建了自己的站点，在此发布一下搭建教程。">
+<meta name="keywords" content="维护">
+<meta property="og:type" content="article">
+<meta property="og:title" content="站点搭建过程">
+<meta property="og:url" content="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;10&#x2F;20&#x2F;%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B&#x2F;index.html">
+<meta property="og:site_name" content="Chireiden">
+<meta property="og:description" content="站点搭建过程基于 hexo 搭建了自己的站点，在此发布一下搭建教程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-20T05:25:38.765Z">
+<meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
+  
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
+  <link rel="stylesheet" href="/css/style.css?v=1571808579691">
 </head>
 
-
-<body>
-    <div id="loading" class="active"></div>
-
-    <aside id="menu" class="">
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap">
-      
-      <img src="/img/brand.jpg" class="brand-bg">
-      
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://q1.qlogo.cn/g?b=qq&nk=591369735&s=640">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">RedContritio</h5>
-          <a href="mailto:RedContritio@qq.com" target="_blank" rel="noopener" title="RedContritio@qq.com" class="mail">
-            
-              <span>R</span>
-            
-              <span>e</span>
-            
-              <span>d</span>
-            
-              <span>C</span>
-            
-              <span>o</span>
-            
-              <span>n</span>
-            
-              <span>t</span>
-            
-              <span>r</span>
-            
-              <span>i</span>
-            
-              <span>t</span>
-            
-              <span>i</span>
-            
-              <span>o</span>
-            
-              <span>@</span>
-            
-              <span>q</span>
-            
-              <span>q</span>
-            
-              <span>.</span>
-            
-              <span>c</span>
-            
-              <span>o</span>
-            
-              <span>m</span>
-            
-          </a>
-        </hgroup>
-        
-        <ul class="menu-link">
-          
-              <li>
-                <a href="https://github.com/RedContritio" target="_blank">
-                  <i class="icon icon-lg icon-github"></i>
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://user.qzone.qq.com/591369735/main" target="_blank">
-                  <i class="icon icon-lg icon-qq"></i>
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://space.bilibili.com/8280700" target="_blank">
-                  <i class="icon icon-lg icon-mars-double"></i>
-                </a>
-              </li>
-            
-        </ul>
-        
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                HOME
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                CATEGORIES
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                TAGS
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                ARCHIVES
-              </a>
-            </li>
-        
-            <li class="">
-              <a href="/custom"  >
-                <i class="icon icon-lg icon-plus-square"></i>
-                CUSTOM
-              </a>
-            </li>
-        
-      </ul>
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://tva1.sinaimg.cn/large/9bd9b167ly1fwsfzfmb51j21hc0u04qp.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" target="_blank" rel="noopener" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="RedContritio" class="mdui-btn mdui-btn-icon"><img src="http://q1.qlogo.cn/g?b=qq&amp;nk=591369735&amp;s=640"></a>
+       </div>
     </div>
   </div>
-</aside>
-
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row clearfix">
-        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="RedContritio">
+            <img src="http://q1.qlogo.cn/g?b=qq&amp;nk=591369735&amp;s=640" alt="RedContritio">
         </a>
-        <div class="flex-col header-title ellipsis">
-            <span>站点搭建过程</span>
-            
-        </div>
-        
-        <a href="javascript:;" target="_blank" rel="noopener" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
-            <i class="icon icon-lg icon-search"></i>
-        </a>
-        
     </div>
-</header>
-<header class="content-header post-header">
-    <img src="/img/banner.jpg" class="header-bg">
-    <div class="container fade-scale">
-        <h1 class="title">站点搭建过程</h1>
-        <h5 class="subtitle">
-            
-                <time datetime="2019-10-20T02:45:23.000Z" itemprop="datePublished" class="page-time">
-  2019-10-20
-</time>
-
-
-            
-        </h5>
+    <div class="nexmoe-count">
+        <div><span>文章</span>4</div>
+        <div><span>标签</span>2</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <ul class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </ul>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">社交</h3>
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/8280700" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">标签云</h3>
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud">
+      <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" style="font-size: 10px;">社团课程</a> <a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 20px;">维护</a>
     </div>
     
+  </div>
 
-</header>
-
-<div id="site_search">
-    <div class="search-title clearfix">
-        <span class="pull-left">
-          <i class="icon icon-lg icon-search"></i>
-        </span>
-        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
-        <a href="javascript:;" target="_blank" rel="noopener" class="close pull-right waves-effect waves-circle waves-light">
-          <i class="icon icon-lg icon-close"></i>
-        </a>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul>
     </div>
-    <div id="local-search-result"></div>
-</div>
+  </div>
 
 
-<div class="container body-wrap">
-    <article id="post-搭建过程"
-  class="post-article article-type-post" itemprop="blogPost">
-    <div class="post-card">
-        <h1 class="post-card-title">站点搭建过程</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2019-10-20 10:45:23" datetime="2019-10-20T02:45:23.000Z"  itemprop="datePublished">2019-10-20</time>
-
-            
-
-
-            
-	<span id="/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/" class="leancloud_visitors" data-flag-title="站点搭建过程" title="站点搭建过程">
-		
-			<i class="icon icon-eye"></i>
-		
-		<span class="leancloud-visitors-count"></span>
-	</span>
- 
-
-            
-
-
-            
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            
-            <h1 id="站点搭建过程"><a href="#站点搭建过程" class="headerlink" title="站点搭建过程"></a>站点搭建过程</h1><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p>
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2019 RedContritio
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://nexmoe.com/hexo-theme-nexmoe.html" target="_blank">Nexmoe</a>
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+    <div class="nexmoe-post-cover"> 
+        
+        <img src="https://tva4.sinaimg.cn/large/9bd9b167gy1g4c8qerpiwj21hc0u0nb6.jpg">
+        
+        <h1>站点搭建过程</h1>
+    </div>
+  <div class="nexmoe-post-meta">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2019年10月20日</a>
+    <a><i class="nexmoefont icon-areachart"></i>93 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+    
+    
+      <a class="nexmoefont icon-tag-fill -link" href="/tags/%E7%BB%B4%E6%8A%A4/" rel="tag">维护</a>
+    
+  </div>
+  <article>
+    <h1 id="站点搭建过程"><a href="#站点搭建过程" class="headerlink" title="站点搭建过程"></a>站点搭建过程</h1><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p>
 <a id="more"></a>
 
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><ul>
@@ -262,256 +169,64 @@
 </li>
 </ol>
 
-        </div>
-        
-<blockquote class="post-copyright">
-    <div class="content">
-        
-
-        
-        转载注明出处，原文地址：<a href="/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/" target="_blank" rel="external">https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</a>
-        
-    </div>
-    <footer>
-        <a href="https://redcontritio.github.io">
-            <img src="http://q1.qlogo.cn/g?b=qq&nk=591369735&s=640" alt="RedContritio">
-            RedContritio
-        </a>
-    </footer>
-</blockquote>
-
-        
-        <div class="post-footer">
-            
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%B4%E6%8A%A4/" rel="tag">维护</a></li></ul>
-
-            <div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/&title=《站点搭建过程》 — Chireiden&pic=http://q1.qlogo.cn/g?b=qq&nk=591369735&s=640" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/&title=《站点搭建过程》 — Chireiden&source=站点搭建过程基于 hexo 搭建了自己的站点，在此发布一下搭建教程。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-        </div>
-        
-            
-
-
-        
-    </div>
-    
-<nav class="post-nav flex-row flex-justify-between">
+  </article>
   
-    <div class="prev">
-      <a href="/2019/10/20/%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">看板娘配置</h4>
-      </a>
-    </div>
-  
-
-  
-</nav>
-
-
     
-    
-        <aside class="post-widget">
-            <nav class="post-toc-wrap" id="post-toc">
-                <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#站点搭建过程"><span class="post-toc-number">1.</span> <span class="post-toc-text">站点搭建过程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#依赖"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">依赖</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定制"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">定制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命令行操作"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">命令行操作</span></a></li></ol></li></ol>
-            </nav>
-            <div class="toc-bar"><div>
-        </aside>
-    
-</article>
+<div class="nexmoe-post-copyright">
+<i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+<strong>本文作者：</strong>RedContritio<br>
+<strong>本文链接：</strong><a href="https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/" title="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;10&#x2F;20&#x2F;%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;10&#x2F;20&#x2F;%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B&#x2F;</a><br>
 
+  <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
 
 </div>
 
-    </main>
-    <footer class="footer ">
-    
-    <div class="bottom">
-        <p>
-            <span>
-                RedContritio &copy; 2017 - 2019
-            </span>
-        		
-           	
-            
-            
-            <span>
-	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">hexo-theme-mellow</a>
-            </span>
-            
-            
-            
 
-            
-                
-<span class="site-uv" title="总访客量">
-    <i class="icon icon-user"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
-</span>
-
-
-<span class="site-pv" title="总访问量">
-    <i class="icon icon-eye"></i>
-    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
-</span>
-
-            
-        </p>
-    </div>
-</footer>
-
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" target="_blank" rel="noopener" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/&title=《站点搭建过程》 — Chireiden&pic=http://q1.qlogo.cn/g?b=qq&nk=591369735&s=640" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://redcontritio.github.io/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/&title=《站点搭建过程》 — Chireiden&source=站点搭建过程基于 hexo 搭建了自己的站点，在此发布一下搭建教程。" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACwklEQVR42u3aS27kMAwFQN//0hlgVlnE9iMp5gOUVw0j6FZpAJLzpOuKn4//z+fPn5/e+97vXhsPHh4eXmvpd0/+N3eLuHuT/26yxbfbh4eHh7fGqzaDU/jnSv785nnNeHh4eL+Bly+ouinJSvDw8PD+Lu8UJlpccbvx8PDwvpNXDQWeefn25b+1nrXg4eHhxbzJQdRPfV4/38PDw8NrnaonBTf/ybx8V9vA7Wrx8PDwFnj5aNsbkfMNSqKN6rEZHh4e3gaveh2qWrhPRbHNb8bDw8Nb4yUtobeUU6Ft/j0v/2PAw8PDO8SbZJ7VIp63meplgi/e4+Hh4S3w8iP/3sH8pG302kMhhMHDw8Nr8fJooEfNB+hkPUnLeel7eHh4eN/Cqw7K1aLfax5RQ8LDw8Nb4CXzZ1SCi+N1tVVUWwIeHh7eHm9SmntXrKrbV93Ea9Jh8PDw8AbFOgkLJhs0KfqFdoWHh4e3xssj2jyEnQe1vUD5ZaTGw8PDO8SrjrNJZDAZ4p8veOUXC/Dw8PA2ePn4+8yoXiyYR7eF1oKHh4d3lNcLZCeHXtWhvNdUyqkzHh4eXpFXjV+rF6Hmx13NkR0PDw9vgZcD8uLeax7JgH7sThkeHh7egJcPuJPxNzkAa/6bzCd6PDw8vCLvbJCakKqlv3cd4SWlxsPDwxvwenFt0h6qFw56VxMKd8rw8PDwlnnVK1D5EJyMxUkjiSJgPDw8vAVeXvTzZfUig6QN9L4NDw8P7yzvo/g8B7W9IHgSW7zEGXh4eHgLvEnhzkPYyUFX/rnaxvDw8PAmvF70kL9PjtCqjDw+xsPDw9vjTYKJHJAEr6MOdtcY8PDw8H6It3EBaxIHR+0HDw8P75fxegNx+Vwu3oIv3uPh4eGt8XphRL7E6ib2oo3DMS4eHh5epwJf1RJ/9kZYNQJuPnh4eHgp7x+O1SvwSeFsOgAAAABJRU5ErkJggg==" alt="微信分享二维码">
-</div>
-
-
-
-
-  <script src='https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js'></script>
-  <script>
-    if (window.mermaid) {
-      mermaid.initialize({theme: 'forest'});
-    }
-  </script>
-
-    
-    <!-- main-js -->
-<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-
-<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
-<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
-
-<!-- third-party -->
-
-
-
-
-
-
-<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+  
+  <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
 <script type="text/javascript">
-	var search_path = "search.xml";
-	if (search_path.length === 0) {
-		search_path = "search.xml";
-	}
-	var path = "/" + search_path;
-	searchFunc(path, "local-search-input", "local-search-result");
+    var gitalk = new Gitalk({
+        clientID: '0a6a884a25f2cfcd11b3',
+        clientSecret: 'ef65c52b75e4a88915c74e3e9b9e935e56209ce0',
+        id: window.location.pathname,
+        repo: 'RedContritio.github.io',
+        owner: 'RedContritio',
+        admin: 'RedContritio'
+    })
+    gitalk.render('gitalk')
 </script>
+</section>
+</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/js/mdui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-for-websites@1.4.9/SmoothScroll.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script src="/js/app.js?v=1571808579693"></script>
+<script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
 
 
 
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-    
-    
-
-
-
-<script type="text/javascript" src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-<script type="text/javascript" src="/js/plugins/leancloud_visitors.js?v=1.4.4"></script>
-
-
-
-    <!-- mathjax config similar to math.stackexchange -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-            processEscapes: true,
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
 
 
 
 
 
+</body>
 
-
-    
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/histoire.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true,"scale":0.25},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"log":false});</script></body>
 </html>

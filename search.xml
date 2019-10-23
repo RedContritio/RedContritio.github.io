@@ -3,6 +3,29 @@
   
     
     <entry>
+      <title><![CDATA[制作主题时踩的坑]]></title>
+      <url>/2019/10/22/%E5%88%B6%E4%BD%9C%E4%B8%BB%E9%A2%98%E6%97%B6%E8%B8%A9%E7%9A%84%E5%9D%91/</url>
+      <content type="html"><![CDATA[<p>自定义主题的时候遇到的一些问题记录如下：</p>
+<a id="more"></a>
+
+<ol>
+<li>设置好 index.ejs 布局后 hexo generate 出错</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ERROR D:\GitHub\RedContritio.github.io\themes\landscape\layout\index.ejs:1</span><br><span class="line"> &gt;&gt; 1| &lt;% page.posts.each(<span class="keyword">function</span>(post)&#123; %&gt;</span><br><span class="line">    2|</span><br><span class="line">    3| &lt;% &#125;) %&gt;</span><br><span class="line"></span><br><span class="line">Cannot <span class="built_in">read</span> property <span class="string">'each'</span> of undefined</span><br></pre></td></tr></table></figure>
+
+<p>这个现象会出现是因为没有找到其他的布局框架，导致 post 也用 index.ejs 布局，但是 post 页面内无法进行 posts 的迭代从而出错。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 维护 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Cpp 入门]]></title>
       <url>/2019/10/20/basic-cpp-knowledge/</url>
       <content type="html"><![CDATA[<blockquote><p>C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it. </p>
