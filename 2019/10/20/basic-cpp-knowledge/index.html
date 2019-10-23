@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="Chireiden">
 <meta property="og:description" content="C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it.  [Linus">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-23T05:11:01.602Z">
+<meta property="og:updated_time" content="2019-10-23T09:40:57.363Z">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1571809727695">
+  <link rel="stylesheet" href="/css/style.css?v=1571823712456">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -133,8 +133,8 @@
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年10月20日</a>
-    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>2.4k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 11 分钟</a>
     
     
       <a class="nexmoefont icon-tag-fill -link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程</a>
@@ -209,7 +209,7 @@ int main()
 #include &lt;stdio.h&gt;
 ...</code></pre>
 <hr>
-<h2 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h2><pre><code class="cpp">#include &lt;iostream&gt;
+<h1 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h1><pre><code class="cpp">#include &lt;iostream&gt;
 using namespace std;
 ...
 cin &gt;&gt; a;
@@ -229,12 +229,15 @@ cout &lt;&lt; b;</code></pre>
     style variable fill:#FFC,stroke:#333,stroke-width:0.5px</pre>
 
 <p>cin 和 cout 仅仅是一个管道，用来让数据从中流过（data stream），这就是所谓的 iostream（input &amp; output stream）。</p>
+<p><code>cin</code> 可以用来输入多个值，如 <code>cin &gt;&gt; a &gt;&gt; b;</code></p>
+<p><code>cin</code> 可以隐式转换为 <code>bool</code> 。</p>
+<p><code>cout</code> 用法同理。</p>
 <hr>
-<h2 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h2><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
-<h3 id="简单介绍malloc-系列"><a href="#简单介绍malloc-系列" class="headerlink" title="简单介绍malloc 系列"></a>简单介绍<code>malloc</code> 系列</h3><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
+<h1 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
+<h2 id="简单介绍malloc-系列"><a href="#简单介绍malloc-系列" class="headerlink" title="简单介绍malloc 系列"></a>简单介绍<code>malloc</code> 系列</h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
 <p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
 <p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
-<h3 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h3><p><code>new</code> 用法示例如下：</p>
+<h2 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h2><p><code>new</code> 用法示例如下：</p>
 <pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
 &quot;上面这一行等价于&quot;;
 int *a = (int*)malloc(sizeof(int));
@@ -269,7 +272,145 @@ delete []d; // 删除数组
 
 delete []e;</code></pre>
 <hr>
-<h3 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h3><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
+<h2 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
+<h1 id="函数多态（重载）与默认参数"><a href="#函数多态（重载）与默认参数" class="headerlink" title="函数多态（重载）与默认参数"></a>函数多态（重载）与默认参数</h1><h2 id="函数多态"><a href="#函数多态" class="headerlink" title="函数多态"></a>函数多态</h2><p>例如，我们有</p>
+<pre><code class="cpp">int max(int a, int b) { return a&gt;b?a:b;}</code></pre>
+<p>如果我们想要三个数比较该怎么做？</p>
+<p>在 c 中，</p>
+<pre><code class="c">int max3i(int a, int b, int c) { int t = max(a, b); return t&gt;c?t:c;}</code></pre>
+<p>而在 cpp 中，我们可以直接使用</p>
+<pre><code class="cpp">int max(int a, int b, int c) { int t = max(a, b); return t&gt;c?t:c;}</code></pre>
+<p>cpp 可以根据参数的数量和类型来自动判断调用哪一个函数。</p>
+<p>以至于我们可以</p>
+<pre><code class="cpp">int max(int a) { int t = a; return t&gt;a?t:a;}
+int max(int a, int b) { int t = max(b); return t&gt;a?t:a;}
+int max(int a, int b, int c) { int t = max(b, c); return t&gt;a?t:a;}
+int max(int a, int b, int c, int d) { int t = max(b, c, d); return t&gt;a?t:a;}
+int max(int a, int b, int c, int d, int e) { int t = max(b, c, d, e); return t&gt;a?t:a;}
+int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); return t&gt;a?t:a;}</code></pre>
+<p>这时候我们可以传入 1-6 个参数来最大值，并且除了单个参数的情况，其他具有一致性。</p>
+<p>再例如，常见的错误代码 <code>int a = pow(5, 2)</code> ，我们可以定义 pow 的多态：</p>
+<pre><code class="cpp">int pow(int a, int n)
+{
+    if(n&lt;0) return 0;
+    int res = 1;
+    for(int i=0; i&lt;n; ++i) res *= a;
+    return a;
+}</code></pre>
+<p>可以避免浮点误差。</p>
+<hr>
+<h2 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
+<p>例如我们需要一个求和函数，我们预定有四个数字要被传入。</p>
+<pre><code class="cpp">int sum(int a, int b, int c, int d) { return a+b+c+d;}</code></pre>
+<p>但是随着时间流逝，我们有时候需要传入三个参数。</p>
+<pre><code class="cpp">int sum(int a, int b, int c) { return sum(a, b, c, 0);}</code></pre>
+<p>以及两个······</p>
+<pre><code class="cpp">int sum(int a, int b) { return sum(a, b, 0);}</code></pre>
+<p>甚至一个············</p>
+<pre><code class="cpp">int sum(int a) { return sum(a, 0);}</code></pre>
+<p>甚至没有参数<del>（👈这样的函数有意义吗？？？）</del></p>
+<pre><code class="cpp">int sum(void) { return sum(0);}</code></pre>
+<p>这里的求和函数和上面的 max 形式很像，并且一路规约下来也很自然，只是略微冗杂了点。</p>
+<p>能不能更简单呢？</p>
+<p><font size=7>能！</font></p>
+<p>cpp 允许函数含有默认参数。</p>
+<p>上面的 <code>sum</code> 系列函数使用默认参数后只需要一个函数即可。</p>
+<pre><code class="cpp">int sum(int a=0, int b=0, int c=0, int d=0) { return a+b+c+d;}</code></pre>
+<p>这个函数的定义表示，如果没有传入对应参数，则对应参数默认置为 0。</p>
+<p>如 <code>sum(1,2,3)</code> ，其中各参数即为<code>a=1, b=2, c=3, d=0</code> 。</p>
+<p>在 cpp 中，各参数只能从左向右排布，因此默认参数需要从右向左赋值。</p>
+<p>函数的默认参数只能在声明或定义中出现一次。</p>
+<hr>
+<h1 id="新的类型"><a href="#新的类型" class="headerlink" title="新的类型"></a>新的类型</h1><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用类型是值和指针的折中。</p>
+<p>引用的主要用途是函数传参和创建别名。</p>
+<p>函数传递较大的数据类型由于需要整个拷贝，因此在 c 中通常传递指针作为参数，例如：</p>
+<pre><code class="c">typedef struct data
+{
+    int a[1000000];
+    int b[1000000];
+}data, *pdate;
+
+int f(pdata p)
+{
+    pdata-&gt;a ...
+    pdata-&gt;b ...
+}</code></pre>
+<p>但是频繁的指针操作并不优雅，因此我们使用引用。</p>
+<pre><code class="cpp">int f(data&amp; d)
+{
+    d.a ...
+    d.b ...
+}</code></pre>
+<p>在这里我们可以像使用一个 data 类型一样使用 data&amp; 类型。</p>
+<p>引用和其实体共享一个对象，例如</p>
+<pre><code class="cpp">int a = 2;
+int &amp;b = a;
+b = 3;</code></pre>
+<p>此时 a 也被改变。</p>
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>类是类似结构体的数据类型。</p>
+<pre><code class="cpp">struct A
+{
+    int a;
+} a;
+
+class B
+{
+    int b;
+} b;
+
+int main()
+{
+    printf(&quot;%d\n&quot;, a.a);
+    printf(&quot;%d\n&quot;, b.b);
+}</code></pre>
+<p>类的内容默认对外不开放。</p>
+<p>类内可以定义函数（方法）。</p>
+<pre><code class="cpp">class B
+{
+public:
+    int print();
+private:
+    int b;
+} b;</code></pre>
+<p>public 表示类外可以访问，private 表示类外无法访问。</p>
+<p>这时候我们可以使用 b.print() 来输出，但是不能修改 b.b 的内容。 </p>
+<p>特别的，cpp 中的 struct 也不同于 c 中的，它更像是被修改了默认访问权限的 class。</p>
+<hr>
+<h1 id="内联与宏"><a href="#内联与宏" class="headerlink" title="内联与宏"></a>内联与宏</h1><h2 id="内联的好处"><a href="#内联的好处" class="headerlink" title="内联的好处"></a>内联的好处</h2><p>宏是一种功能强大的预处理工具。</p>
+<p>但是含有隐患。</p>
+<pre><code class="c">#define mult(a, b) a*b</code></pre>
+<p>如果使用 </p>
+<pre><code class="c">int x = mult(3+2,2+3);</code></pre>
+<p>如常理所想应该是 x 被赋值为 (3+2)*(2+3) == 25，但是实际上，这句在展开后会成为</p>
+<pre><code class="c">int x = 3+2*2+3; // x == 10</code></pre>
+<p>诚然，我们可以采用加括号的方式来封闭宏，但是总有力所不逮之处（为什么不行？思考题）。</p>
+<p>因此，cpp 创建了内联的语法。</p>
+<pre><code>inline int mult(int a, int b) { return a*b;}
+int x = mult(3+2,2+3);</code></pre><p>这时候，第二行<code>int x = mult(3+2,2+3);</code> 就相当于展开成这样的三行：</p>
+<pre><code class="cpp">int a = 3+2;
+int b = 2+3;
+int x = a*b;</code></pre>
+<p>可以确保其正确性。</p>
+<h2 id="为什么还要宏？"><a href="#为什么还要宏？" class="headerlink" title="为什么还要宏？"></a>为什么还要宏？</h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
+<p>这里是宏的一些（内联做不到的）用法：</p>
+<pre><code class="cpp">#include &lt;cstdio&gt;
+
+int test_function(void);
+
+int main()
+{
+    test_function();
+    printf(&quot;%s\n&quot;, __FUNCTION__);
+}
+
+int test_function(void)
+{
+    printf(&quot;%s\n&quot;, __FUNCTION__);
+}</code></pre>
+<hr>
+<p>例如上面的 <code>mult</code> ，也可以使用宏的方式来正确处理。</p>
+<pre><code class="cpp">#define mult(a, b) ((a)*(b))</code></pre>
+<p>但是，它在维持原有参数结构的情况下，不能做到和内联一样安全。</p>
 
   </article>
   
@@ -324,7 +465,7 @@ delete []e;</code></pre>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1571809727699"></script>
+<script src="/js/app.js?v=1571823712457"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 
