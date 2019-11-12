@@ -23,8 +23,7 @@ public:
     int arr[100];
 };</code></pre>
 <p>我们定义：</p>
-<p>BigInt 的值为 $\sum_{i=0}^100-1 arr[i]*10^i$</p>
-<p>$$\frac{\partial u}{\partial t}<br>= h^2 \left( \frac{\partial^2 u}{\partial x^2} +<br>\frac{\partial^2 u}{\partial y^2} +<br>\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<p>BigInt 的值为 BigInt::arr[0]*10^0 + BigInt::arr[1]*10^1 + BigInt::arr[2]*10^2 + … + BigInt::arr[99]*10^99</p>
 ]]></content>
       
         
