@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[面向对象入门]]></title>
-      <url>/2019/11/11/OO-Basic-baseoncpp/</url>
+      <url>/2019/11/11/OO-Basic-basedoncpp/</url>
       <content type="html"><![CDATA[<blockquote><p>If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one?</p>
 <footer><strong>[Tom Cargill]</strong></footer></blockquote>
 
@@ -12,18 +12,109 @@
 
 <p>本文通篇将会构造一个类，并以此类的构造过程为讲解顺序。</p>
 <p>本文需求的先修知识：cpp <em>iostream</em> (<code>std::cin,std::cout</code> &amp; <code>std::endl</code>)，cpp <em>class defination</em>, c <em>struct</em>, c <em>pointer</em> and cpp <em>keywords</em> (<code>const, new, delete, class, public, private</code> [<code>protected, pure, virtual</code>])</p>
+<p>[TOC]</p>
 <hr>
-<h2 id="编程目标"><a href="#编程目标" class="headerlink" title="编程目标"></a>编程目标</h2><p>编程中经常需要大数运算，例如 <code>pow(2, 100)</code>，或  <code>123456789*(10^0+10^9+10^18+10^27+...)</code>，并进行如四则运算等操作。</p>
-<p>但是由于 c/cpp 的整数类型有表示上限，因此需要我们自己实现这样的功能。</p>
+<h2 id="编程目标"><a href="#编程目标" class="headerlink" title="编程目标"></a>编程目标</h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如</p>
+<p>（每行前面有一个空格）</p>
+<pre><code> Hello,
+ World!</code></pre><p>像这样的，基于字符构造的，有特定格式、内容的整体，我们姑且称之为 “字符图像”。</p>
+<p>我们可以给字符图像加上边框：</p>
+<pre><code>.-------.
+| Hello,|
+| World!|
+&#39;-------&#39;</code></pre><p>更多地，可能会希望支持两个这样的字符图拼接，形成新的图像。</p>
+<pre><code>.-------.
+| Hello,| 你好，
+| World!| 世界！
+&#39;-------&#39;</code></pre><p>以及希望能够修改边框的样式等等······</p>
 <hr>
-<h2 id="类型定义"><a href="#类型定义" class="headerlink" title="类型定义"></a>类型定义</h2><p>首先需要定义这个类型，要存储一个多位的数字，最简单的方式就是设置一个数组：</p>
-<pre><code class="cpp">class BigInt
+<h2 id="面向过程可以吗？"><a href="#面向过程可以吗？" class="headerlink" title="面向过程可以吗？"></a>面向过程可以吗？</h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p>
+<pre><code class="cpp">int main()
 {
-public:
-    int arr[100];
-};</code></pre>
-<p>我们定义：</p>
-<p>BigInt 的值为 BigInt::arr[0]*10^0 + BigInt::arr[1]*10^1 + BigInt::arr[2]*10^2 + … + BigInt::arr[99]*10^99</p>
+    const char *content[] = {&quot;Hello,&quot;, &quot;World!&quot;};
+    int left_padding = 1, right_padding = 1;
+    for(int i=0; i&lt;2; ++i)
+    {
+        for(int j=0; j&lt; left_padding; ++j) printf(&quot; &quot;);
+        printf(&quot;%s&quot;, content[i]);
+        printf(&quot;\n&quot;);
+    }
+}</code></pre>
+<p>运行可以得到输出：</p>
+<pre><code> Hello, 
+ World!</code></pre><p>但是很显然，这样无法（很难）对多个字符图进行操作。</p>
+<h2 id="C-语言也能面向对象吗？"><a href="#C-语言也能面向对象吗？" class="headerlink" title="C 语言也能面向对象吗？"></a>C 语言也能面向对象吗？</h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
+<h3 id="C-语言面向对象"><a href="#C-语言面向对象" class="headerlink" title="C 语言面向对象"></a>C 语言面向对象</h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p>
+<p>我们用 C 语言来试试看：</p>
+<pre><code class="c">struct tagPicture
+{
+    char **m_content;
+    int m_padding_left, m_padding_top;
+    int m_height, m_width;
+};
+
+typedef struct tagPicture Picture;</code></pre>
+<p>在这个结构体 <code>struct tagPicture</code> （或记作<code>Picture</code>）中，我们使用 <code>m_content</code> 来保存图像内容，<code>m_height, m_width</code> 表示图像的宽与高，<code>m_padding_left</code> 和<code>m_padding_top</code> 表示图像左侧和上侧内边界大小。</p>
+<p>怎么创建一个 <code>Picture</code> 呢？</p>
+<p>在 C 语言中，我们需要定义一个函数来创建该类型：</p>
+<pre><code class="c">// 此处需要库文件 stdlib.h 和 string.h
+Picture getPicture(const char **_ArrayOfCharArray, int _Lines)
+{
+    Picture t;
+    t.m_content = (char **) malloc(_Lines *sizeof(char *));
+    t.m_padding_left = t.m_padding_top = 0;
+    t.m_height = _Lines;
+    t.m_width = 0;
+    for(int i=0; i&lt;_Lines; ++i)
+    {
+        int n = _ArrayOfCharArray[i] ? strlen(_ArrayOfCharArray[i]) : 0;
+        if( t.m_width &lt; n ) t.m_width = n; 
+    }
+    for(int i=0; i&lt;_Lines; ++i)
+    {
+        t.m_content[i] = (char *) malloc((t.m_width+1) * sizeof(char));
+        strcpy(t.m_content[i], _ArrayOfCharArray[i]);
+    }
+    return t;
+}</code></pre>
+<p>还需要设定一个输出用的函数：</p>
+<pre><code class="c">// 此处需要库文件 stdio.h
+void printPicture(Picture _Picture)
+{
+    for(int i=0; i&lt;_Picture.m_height; ++i)
+    {
+        if(!(i &lt; _Picture.m_padding_top))
+        {
+            for(int j=0; j&lt;_Picture.m_width; ++j)
+            {
+                if(j &lt; _Picture.m_padding_left) printf(&quot; &quot;);
+                else if(_Picture.m_content[j-_Picture.m_padding_left])
+                    printf(&quot;%c&quot;, _Picture.m_content[i-_Picture.m_padding_top][j-_Picture.m_padding_left]);
+                else break;
+            }
+        }
+        if(i+1 != _Picture.m_height) printf(&quot;\n&quot;);
+    }
+}</code></pre>
+<p>接下来在主函数调用试试：</p>
+<pre><code class="c">int main()
+{
+    const char *content[] = {&quot;Hello,&quot;, &quot;World!&quot;};
+    Picture a = getPicture(content, 2);
+//  a.m_padding_left = 1;
+    printPicture(a);
+}</code></pre>
+<p>编译运行后可以得到这样的输出：</p>
+<pre><code>Hello,
+World!</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设置为 1，则会看到：</p>
+<pre><code> Hello
+ World</code></pre><h3 id="有何缺陷？"><a href="#有何缺陷？" class="headerlink" title="有何缺陷？"></a>有何缺陷？</h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
+<ul>
+<li>课后习题 1 : 经过上面的示例，我们可以发现纵向拼接很容易，在此处不做详解，将 C 语言面向对象实现图像的纵向拼接这一任务留作习题。</li>
+<li>课后习题 2 : 纵向拼接实现很轻松，横向拼接相对来说难度略大，但聪明的读者一定能解决这个问题，请用 C 语言面向对象实现图像的横向拼接。</li>
+<li>课后习题 3 : 请用 C 语言面向对象实现给图像加边框，边框样式需要作为函数参数，如可以指定用 ‘*‘ 来画边框。</li>
+<li>课后习题 4 : 请用 C 语言面向对象实现图像修改边框样式，例如将 ‘*’ 样式的边框改为 ‘+’ 样式。</li>
+</ul>
 ]]></content>
       
         
