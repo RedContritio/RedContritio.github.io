@@ -11,8 +11,9 @@ body {
   margin: auto !important;
 }
 #nexmoe-background .nexmoe-bg {
-  opacity: 0.6;
+  opacity: 0.8;
   background-size: cover;
+  filter: blur(1px);
   height: 100vh;
   width: 100%;
   position: fixed;
@@ -233,14 +234,15 @@ body {
     left: 0;
   }
 }
-#nexmoe-content:hover {
-  opacity: 1;
-}
 #nexmoe-content {
   position: relative;
-  opacity: 0.8;
 }
 #nexmoe-content .nexmoe-primary {
+  transition: opacity 30s;
+  -moz-transition: opacity 30s; /* Firefox 4 */
+  -webkit-transition: opacity 30s; /* Safari 和 Chrome */
+  -o-transition: opacity 30s; /* Opera */
+  opacity: 0;
   box-shadow: 0 0 1rem rgba(161,177,204,0.4);
   background-color: #fff;
   float: left;
@@ -276,6 +278,13 @@ body {
   background: #ff4e6a;
   opacity: 0.9;
   box-shadow: 0 2px 12px #ff4e6a;
+}
+#nexmoe-content .nexmoe-primary:hover {
+  opacity: 1;
+  transition: opacity 2s;
+  -moz-transition: opacity 2s; /* Firefox 4 */
+  -webkit-transition: opacity 2s; /* Safari 和 Chrome */
+  -o-transition: opacity 2s; /* Opera */
 }
 #nexmoe-content .nexmoe-posts {
   position: relative;
