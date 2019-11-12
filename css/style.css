@@ -46,7 +46,7 @@ body {
   -moz-transition: opacity 10s; /* Firefox 4 */
   -webkit-transition: opacity 10s; /* Safari 和 Chrome */
   -o-transition: opacity 10s; /* Opera */
-  opacity: 0;
+  opacity: 0.1;
 }
 #nexmoe-header .mdui-drawer:hover {
   opacity: 1;
