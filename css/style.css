@@ -42,6 +42,18 @@ body {
 #nexmoe-header .mdui-drawer {
   left: unset;
   scrollbar-width: none;
+  transition: opacity 10s;
+  -moz-transition: opacity 10s; /* Firefox 4 */
+  -webkit-transition: opacity 10s; /* Safari 和 Chrome */
+  -o-transition: opacity 10s; /* Opera */
+  opacity: 0;
+}
+#nexmoe-header .mdui-drawer:hover {
+  opacity: 1;
+  transition: opacity 1s;
+  -moz-transition: opacity 1s; /* Firefox 4 */
+  -webkit-transition: opacity 1s; /* Safari 和 Chrome */
+  -o-transition: opacity 1s; /* Opera */
 }
 #nexmoe-header .mdui-drawer::-webkit-scrollbar {
   display: none;
