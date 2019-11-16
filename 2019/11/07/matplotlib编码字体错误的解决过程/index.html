@@ -3,7 +3,7 @@
 
 <head>
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><title>matplotlib编码字体错误的解决过程 - Chireiden</title>
+  <title>matplotlib编码字体错误的解决过程 - Chireiden</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -26,12 +26,12 @@
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1573877524174"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <link rel="stylesheet" href="/css/style.css?v=1573887085833">
 </head>
 
 <body class="mdui-drawer-body-left">
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="nexmoe-background">
+  <div id="nexmoe-background">
     <div class="nexmoe-bg" style="background-image: url(https://api.btstu.cn/sjbz/api.php?method=zsy&amp;lx=dongman&amp;format=images)"></div>
     <div class="mdui-appbar mdui-shadow-0">
       <div class="mdui-toolbar">
@@ -141,7 +141,7 @@
     
   </div>
   <article>
-    <h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
+    <h2><a href="#fa-xian-wen-ti" class="header-anchor"># </a><span id="fa-xian-wen-ti">发现问题</span></h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
 <p>plt.rcParams[‘font.sans-serif’]=[‘SimHei’]  # 用来正常显示中文标签<br>plt.rcParams[‘axes.unicode_minus’]=False  # 用来正常显示负号</p>
 <a id="more"></a>
 
@@ -204,7 +204,7 @@ fig.text(.15, .3, &quot;ASCII hyphen:&quot;, fontsize=20)
 fig.text(.85, .3, &quot;-1&quot;, ha=&#39;right&#39;, fontsize=20)
 plt.show()</code></pre>
 <p>可知，<code>unicode_minus</code> 设置为 <code>False</code> 时，理应不使用 U+2212 输出，而是使用 U+002D，然而上面的错误信息却试图输出 U+2212，我们可以认为是这个选项没有起到作用。</p>
-<h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
+<h2><a href="#ding-wei-wen-ti" class="header-anchor"># </a><span id="ding-wei-wen-ti">定位问题</span></h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
 <p>不妨在库源码中追溯来源。</p>
 <pre><code class="python">import matplotlib.pyplot as plt</code></pre>
 <p>由此可知，错误是在 <code>matplotlib.pyplot.xscale</code> 调用时出现的。</p>
@@ -562,11 +562,11 @@ matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, 
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1573877524175"></script>
+<script src="/js/app.js?v=1573887085835"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
 
 
 

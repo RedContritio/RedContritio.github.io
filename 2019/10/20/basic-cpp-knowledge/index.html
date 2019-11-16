@@ -3,7 +3,7 @@
 
 <head>
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><title>Cpp 入门 - Chireiden</title>
+  <title>Cpp 入门 - Chireiden</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -26,12 +26,12 @@
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1573877524147"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <link rel="stylesheet" href="/css/style.css?v=1573887085836">
 </head>
 
 <body class="mdui-drawer-body-left">
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="nexmoe-background">
+  <div id="nexmoe-background">
     <div class="nexmoe-bg" style="background-image: url(https://api.btstu.cn/sjbz/api.php?method=zsy&amp;lx=dongman&amp;format=images)"></div>
     <div class="mdui-appbar mdui-shadow-0">
       <div class="mdui-toolbar">
@@ -149,9 +149,9 @@
 <p>为了便于讲解，本文采用由浅及深的方式组织行文主线。</p>
 <p>本文主要采用对比 c 和 cpp 差异的方式来进行。</p>
 <hr>
-<h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
+<h1><a href="#tou-wen-jian" class="header-anchor"># </a><span id="tou-wen-jian">头文件</span></h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
 <p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
-<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><pre><code class="c">// module.txt
+<h3><a href="#include-shi-shi-me" class="header-anchor"># </a><span id="include-shi-shi-me">#include 是什么？</span></h3><pre><code class="c">// module.txt
 printf(&quot;%d\n&quot;, a);
 a *= 3;</code></pre>
 <pre><code class="c">// main.c
@@ -171,7 +171,7 @@ int main()
 </blockquote>
 <p>可见，<code>#include</code> 作用是将一段文本直接引入到代码中。</p>
 <p>对头文件使用 <code>#include</code> 时也是如此。</p>
-<h3 id="头文件名称对比"><a href="#头文件名称对比" class="headerlink" title="头文件名称对比"></a>头文件名称对比</h3><table>
+<h3><a href="#tou-wen-jian-ming-cheng-dui-bi" class="header-anchor"># </a><span id="tou-wen-jian-ming-cheng-dui-bi">头文件名称对比</span></h3><table>
 <thead>
 <tr>
 <th>语言</th>
@@ -202,14 +202,14 @@ int main()
 <td>cstring</td>
 </tr>
 </tbody></table>
-<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
+<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size="5"><font color="#green">c</font>stdio<font color="red">.h</font> </font> 。</p>
 <p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
 <pre><code class="c">// cstdio
 ...
 #include &lt;stdio.h&gt;
 ...</code></pre>
 <hr>
-<h1 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h1><pre><code class="cpp">#include &lt;iostream&gt;
+<h1><a href="#iostream" class="header-anchor"># </a><span id="iostream">IOSTREAM</span></h1><pre><code class="cpp">#include &lt;iostream&gt;
 using namespace std;
 ...
 cin &gt;&gt; a;
@@ -217,7 +217,7 @@ cout &lt;&lt; b;</code></pre>
 <p>上面这一段应该是大多数人最早接触的 cpp 代码。</p>
 <p>大概讲解一下这一段内容中每行代码发生了什么。</p>
 <p><code>#include &lt;iostream&gt;</code> 引入 iostream 头文件</p>
-<p><code>using namespace std;</code> 使用 std 命名空间，命名空间如果有时间放在后面讲。<font color=#E0E0E0>反正也没人用得到不如不讲了。</font></p>
+<p><code>using namespace std;</code> 使用 std 命名空间，命名空间如果有时间放在后面讲。<font color="#E0E0E0">反正也没人用得到不如不讲了。</font></p>
 <p>关于 cin 和 cout，我们可以构造这样一个模型：</p>
 <pre class="mermaid">graph LR;
     input-->cin;
@@ -233,11 +233,11 @@ cout &lt;&lt; b;</code></pre>
 <p><code>cin</code> 可以隐式转换为 <code>bool</code> 。</p>
 <p><code>cout</code> 用法同理。</p>
 <hr>
-<h1 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
-<h2 id="简单介绍malloc-系列"><a href="#简单介绍malloc-系列" class="headerlink" title="简单介绍malloc 系列"></a>简单介绍<code>malloc</code> 系列</h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
+<h1><a href="#xin-de-guan-jian-zi" class="header-anchor"># </a><span id="xin-de-guan-jian-zi">新的关键字</span></h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
+<h2><a href="#jian-dan-jie-shao-malloc-xi-lie" class="header-anchor"># </a><span id="jian-dan-jie-shao-malloc-xi-lie">简单介绍<code>malloc</code> 系列</span></h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
 <p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
 <p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
-<h2 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h2><p><code>new</code> 用法示例如下：</p>
+<h2><a href="#new-he-delete-yong-fa" class="header-anchor"># </a><span id="new-he-delete-yong-fa"><code>new</code> 和<code>delete</code> 用法</span></h2><p><code>new</code> 用法示例如下：</p>
 <pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
 &quot;上面这一行等价于&quot;;
 int *a = (int*)malloc(sizeof(int));
@@ -272,8 +272,8 @@ delete []d; // 删除数组
 
 delete []e;</code></pre>
 <hr>
-<h2 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
-<h1 id="函数多态（重载）与默认参数"><a href="#函数多态（重载）与默认参数" class="headerlink" title="函数多态（重载）与默认参数"></a>函数多态（重载）与默认参数</h1><h2 id="函数多态"><a href="#函数多态" class="headerlink" title="函数多态"></a>函数多态</h2><p>例如，我们有</p>
+<h2><a href="#new-de-si-kao" class="header-anchor"># </a><span id="new-de-si-kao"><code>new</code> 的思考</span></h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color="white"> placement new </font></p>
+<h1><a href="#han-shu-duo-tai-chong-zai-yu-mo-ren-can-shu" class="header-anchor"># </a><span id="han-shu-duo-tai-chong-zai-yu-mo-ren-can-shu">函数多态（重载）与默认参数</span></h1><h2><a href="#han-shu-duo-tai" class="header-anchor"># </a><span id="han-shu-duo-tai">函数多态</span></h2><p>例如，我们有</p>
 <pre><code class="cpp">int max(int a, int b) { return a&gt;b?a:b;}</code></pre>
 <p>如果我们想要三个数比较该怎么做？</p>
 <p>在 c 中，</p>
@@ -299,7 +299,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 }</code></pre>
 <p>可以避免浮点误差。</p>
 <hr>
-<h2 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
+<h2><a href="#mo-ren-can-shu" class="header-anchor"># </a><span id="mo-ren-can-shu">默认参数</span></h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
 <p>例如我们需要一个求和函数，我们预定有四个数字要被传入。</p>
 <pre><code class="cpp">int sum(int a, int b, int c, int d) { return a+b+c+d;}</code></pre>
 <p>但是随着时间流逝，我们有时候需要传入三个参数。</p>
@@ -312,7 +312,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 <pre><code class="cpp">int sum(void) { return sum(0);}</code></pre>
 <p>这里的求和函数和上面的 max 形式很像，并且一路规约下来也很自然，只是略微冗杂了点。</p>
 <p>能不能更简单呢？</p>
-<p><font size=7>能！</font></p>
+<p><font size="7">能！</font></p>
 <p>cpp 允许函数含有默认参数。</p>
 <p>上面的 <code>sum</code> 系列函数使用默认参数后只需要一个函数即可。</p>
 <pre><code class="cpp">int sum(int a=0, int b=0, int c=0, int d=0) { return a+b+c+d;}</code></pre>
@@ -321,7 +321,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 <p>在 cpp 中，各参数只能从左向右排布，因此默认参数需要从右向左赋值。</p>
 <p>函数的默认参数只能在声明或定义中出现一次。</p>
 <hr>
-<h1 id="新的类型"><a href="#新的类型" class="headerlink" title="新的类型"></a>新的类型</h1><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用类型是值和指针的折中。</p>
+<h1><a href="#xin-de-lei-xing" class="header-anchor"># </a><span id="xin-de-lei-xing">新的类型</span></h1><h2><a href="#yin-yong" class="header-anchor"># </a><span id="yin-yong">引用</span></h2><p>引用类型是值和指针的折中。</p>
 <p>引用的主要用途是函数传参和创建别名。</p>
 <p>函数传递较大的数据类型由于需要整个拷贝，因此在 c 中通常传递指针作为参数，例如：</p>
 <pre><code class="c">typedef struct data
@@ -347,7 +347,7 @@ int f(pdata p)
 int &amp;b = a;
 b = 3;</code></pre>
 <p>此时 a 也被改变。</p>
-<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>类是类似结构体的数据类型。</p>
+<h2><a href="#class" class="header-anchor"># </a><span id="class">class</span></h2><p>类是类似结构体的数据类型。</p>
 <pre><code class="cpp">struct A
 {
     int a;
@@ -376,7 +376,7 @@ private:
 <p>这时候我们可以使用 b.print() 来输出，但是不能修改 b.b 的内容。 </p>
 <p>特别的，cpp 中的 struct 也不同于 c 中的，它更像是被修改了默认访问权限的 class。</p>
 <hr>
-<h1 id="内联与宏"><a href="#内联与宏" class="headerlink" title="内联与宏"></a>内联与宏</h1><h2 id="内联的好处"><a href="#内联的好处" class="headerlink" title="内联的好处"></a>内联的好处</h2><p>宏是一种功能强大的预处理工具。</p>
+<h1><a href="#nei-lian-yu-hong" class="header-anchor"># </a><span id="nei-lian-yu-hong">内联与宏</span></h1><h2><a href="#nei-lian-de-hao-chu" class="header-anchor"># </a><span id="nei-lian-de-hao-chu">内联的好处</span></h2><p>宏是一种功能强大的预处理工具。</p>
 <p>但是含有隐患。</p>
 <pre><code class="c">#define mult(a, b) a*b</code></pre>
 <p>如果使用 </p>
@@ -391,7 +391,7 @@ int x = mult(3+2,2+3);</code></pre><p>这时候，第二行<code>int x = mult(3+
 int b = 2+3;
 int x = a*b;</code></pre>
 <p>可以确保其正确性。</p>
-<h2 id="为什么还要宏？"><a href="#为什么还要宏？" class="headerlink" title="为什么还要宏？"></a>为什么还要宏？</h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
+<h2><a href="#wei-shi-me-huan-yao-hong" class="header-anchor"># </a><span id="wei-shi-me-huan-yao-hong">为什么还要宏？</span></h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
 <p>这里是宏的一些（内联做不到的）用法：</p>
 <pre><code class="cpp">#include &lt;cstdio&gt;
 
@@ -465,11 +465,11 @@ int test_function(void)
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1573877524149"></script>
+<script src="/js/app.js?v=1573887085839"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
 
 
 

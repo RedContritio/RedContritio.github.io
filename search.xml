@@ -12,9 +12,50 @@
 
 <p>本文通篇将会构造一个类，并以此类的构造过程为讲解顺序。</p>
 <p>本文需求的先修知识：cpp <em>iostream</em> (<code>std::cin,std::cout</code> &amp; <code>std::endl</code>)，cpp <em>class defination</em>, c <em>struct</em>, c <em>pointer</em> and cpp <em>keywords</em> (<code>const, new, delete, class, public, private</code> [<code>protected, pure, virtual</code>])</p>
-<p>[TOC]</p>
+<div class="toc">
+
+<!-- toc -->
+
+<ul>
+<li><a href="#bian-cheng-mu-biao">编程目标</a></li>
+<li><a href="#mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</a></li>
+<li><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</a><ul>
+<li><a href="#c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</a></li>
+<li><a href="#you-he-que-xian">有何缺陷？</a></li>
+<li><a href="#c-yu-yan-ke-hou-xi-ti">C语言课后习题</a></li>
+</ul>
+</li>
+<li><a href="#cpp-mian-xiang-dui-xiang">Cpp 面向对象</a><ul>
+<li><a href="#gou-zao-he-shu-chu-gong-neng">构造和输出功能</a></li>
+<li><a href="#guan-li-nei-cun">管理内存</a></li>
+<li><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</a><ul>
+<li><a href="#wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</a></li>
+<li><a href="#wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</a></li>
+<li><a href="#wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</a></li>
+</ul>
+</li>
+<li><a href="#lei-xing-de-she-ji">类型的设计</a><ul>
+<li><a href="#picture-lei">Picture 类</a></li>
+<li><a href="#pictureentity-ji-lei">PictureEntity 基类</a></li>
+<li><a href="#basicpicture">BasicPicture</a></li>
+<li><a href="#framedpicture">FramedPicture</a></li>
+<li><a href="#vcatpicture">VcatPicture</a></li>
+<li><a href="#hcatpicture">HcatPicture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</a><ul>
+<li><a href="#cpp-ke-hou-xi-ti">Cpp 课后习题</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+
 <hr>
-<h2 id="编程目标"><a href="#编程目标" class="headerlink" title="编程目标"></a>编程目标</h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
+<h2><a href="#bian-cheng-mu-biao" class="header-anchor"># </a><span id="bian-cheng-mu-biao">编程目标</span></h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
 <pre><code> Hello,
  World!</code></pre><p>像这样的，基于字符构造的，有特定格式、内容的整体，我们姑且称之为 “字符图像”。<br>我们可以给字符图像加上边框：</p>
 <pre><code>.-------.
@@ -26,7 +67,7 @@
 | World!| 世界！
 &#39;-------&#39;</code></pre><p>以及希望能够修改边框的样式等等······</p>
 <hr>
-<h2 id="面向过程可以吗？"><a href="#面向过程可以吗？" class="headerlink" title="面向过程可以吗？"></a>面向过程可以吗？</h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p>
+<h2><a href="#mian-xiang-guo-cheng-ke-yi-ma" class="header-anchor"># </a><span id="mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</span></h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p>
 <pre><code class="cpp">int main()
 {
     const char *content[] = {&quot;Hello,&quot;, &quot;World!&quot;};
@@ -41,8 +82,8 @@
 <p>运行可以得到输出：</p>
 <pre><code> Hello, 
  World!</code></pre><p>但是很显然，这样无法（很难）对多个字符图进行操作。</p>
-<h2 id="C-语言也能面向对象吗？"><a href="#C-语言也能面向对象吗？" class="headerlink" title="C 语言也能面向对象吗？"></a>C 语言也能面向对象吗？</h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
-<h3 id="C-语言面向对象"><a href="#C-语言面向对象" class="headerlink" title="C 语言面向对象"></a>C 语言面向对象</h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p>
+<h2><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma" class="header-anchor"># </a><span id="c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</span></h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
+<h3><a href="#c-yu-yan-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</span></h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p>
 <p>我们用 C 语言来试试看：</p>
 <pre><code class="c">struct tagPicture
 {
@@ -105,14 +146,14 @@ void printPicture(Picture _pic)
 <pre><code>Hello,
 World!</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设置为 1，则会看到：</p>
 <pre><code> Hello
- World</code></pre><h3 id="有何缺陷？"><a href="#有何缺陷？" class="headerlink" title="有何缺陷？"></a>有何缺陷？</h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
-<ul>
+ World</code></pre><h3><a href="#you-he-que-xian" class="header-anchor"># </a><span id="you-he-que-xian">有何缺陷？</span></h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
+<h3><a href="#c-yu-yan-ke-hou-xi-ti" class="header-anchor"># </a><span id="c-yu-yan-ke-hou-xi-ti">C语言课后习题</span></h3><ul>
 <li>课后习题 1 : 经过上面的示例，我们可以发现纵向拼接很容易，在此处不做详解，将 C 语言面向对象实现图像的纵向拼接这一任务留作习题。</li>
 <li>课后习题 2 : 纵向拼接实现很轻松，横向拼接相对来说难度略大，但聪明的读者一定能解决这个问题，请用 C 语言面向对象实现图像的横向拼接。</li>
 <li>课后习题 3 : 请用 C 语言面向对象实现给图像加边框，边框样式需要作为函数参数，如可以指定用 ‘*‘ 来画边框。</li>
 <li>课后习题 4 : 请用 C 语言面向对象实现图像修改边框样式，例如将 ‘*’ 样式的边框改为 ‘+’ 样式。</li>
 </ul>
-<h2 id="Cpp-面向对象"><a href="#Cpp-面向对象" class="headerlink" title="Cpp 面向对象"></a>Cpp 面向对象</h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
+<h2><a href="#cpp-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="cpp-mian-xiang-dui-xiang">Cpp 面向对象</span></h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
 <table>
 <thead>
 <tr>
@@ -142,7 +183,7 @@ World!</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设
 </tr>
 </tbody></table>
 <p>简单用法在此不做赘述。<br>不妨先实现上面程序的内容，让我们看看能否更加优雅。</p>
-<h3 id="构造和输出功能"><a href="#构造和输出功能" class="headerlink" title="构造和输出功能"></a>构造和输出功能</h3><p>我们姑且以此结构构造程序：</p>
+<h3><a href="#gou-zao-he-shu-chu-gong-neng" class="header-anchor"># </a><span id="gou-zao-he-shu-chu-gong-neng">构造和输出功能</span></h3><p>我们姑且以此结构构造程序：</p>
 <pre><code>src
  |-- main.cpp
  |-- Picture.h
@@ -217,7 +258,7 @@ void Picture::print(void)
         if(i+1 != m_height) printf(&quot;\n&quot;);
     }
 }</code></pre>
-<h3 id="管理内存"><a href="#管理内存" class="headerlink" title="管理内存"></a>管理内存</h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
+<h3><a href="#guan-li-nei-cun" class="header-anchor"># </a><span id="guan-li-nei-cun">管理内存</span></h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
 <pre><code class="cpp">// picture.h
 @@ -5,6 +5,7 @@
  {
@@ -241,8 +282,8 @@ void Picture::print(void)
  void Picture::print(void)
  {
         for(int i=0; i&lt;m_height; ++i)</code></pre>
-<h3 id="怎么纵向连接？俯瞰继承关系"><a href="#怎么纵向连接？俯瞰继承关系" class="headerlink" title="怎么纵向连接？俯瞰继承关系"></a>怎么纵向连接？俯瞰继承关系</h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
-<h4 id="我们应该怎样设计呢？"><a href="#我们应该怎样设计呢？" class="headerlink" title="我们应该怎样设计呢？"></a>我们应该怎样设计呢？</h4><p>这里引入一个概念：继承</p>
+<h3><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi" class="header-anchor"># </a><span id="zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</span></h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
+<h4><a href="#wo-men-ying-gai-zen-yang-she-ji-ni" class="header-anchor"># </a><span id="wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</span></h4><p>这里引入一个概念：继承</p>
 <p>如下，是图形之间的继承关系。<br>我们可以认为，如果 A 指向 B ，那么 B 属于 A。</p>
 <p><em>这里涉及到面向对象设计的基本理念，目前主流思路有两种：is-a，has-a <del>和 like-a</del>。</em></p>
 <pre class="mermaid">graph TB;
@@ -279,10 +320,10 @@ void Picture::print(void)
 <p>显然，这两种构造都无法用 is-a 来解释，用 has-a 解释也很勉强。因此，这是一种不合理的构造方式。</p>
 <p><strong>因此，我们采用指针来进行运算，采用共同基类来实现</strong>。</p>
 <hr>
-<h4 id="我们需要哪些类型呢？"><a href="#我们需要哪些类型呢？" class="headerlink" title="我们需要哪些类型呢？"></a>我们需要哪些类型呢？</h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
+<h4><a href="#wo-men-xu-yao-na-xie-lei-xing-ni" class="header-anchor"># </a><span id="wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</span></h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
 <p>基于这些类型，我们可以容易地实现图像连接，图像解除连接，图像加边框，图像去边框以及修改内容。</p>
 <hr>
-<h4 id="我们怎样管理内存？"><a href="#我们怎样管理内存？" class="headerlink" title="我们怎样管理内存？"></a>我们怎样管理内存？</h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
+<h4><a href="#wo-men-zen-yang-guan-li-nei-cun" class="header-anchor"># </a><span id="wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</span></h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
 <p>但是，如下所示的，在断点处，<code>FramedPicture b</code> 的内容物（a）已经被析构，因此输出 b 可能是一个非法操作。</p>
 <pre><code class="cpp">FramedPicture b;
 {
@@ -291,7 +332,7 @@ void Picture::print(void)
 }
 // breakpoint</code></pre>
 <p>经过一系列思考，我们可以推理出引用计数的必要性。</p>
-<h3 id="类型的设计"><a href="#类型的设计" class="headerlink" title="类型的设计"></a>类型的设计</h3><h4 id="Picture-类"><a href="#Picture-类" class="headerlink" title="Picture 类"></a>Picture 类</h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
+<h3><a href="#lei-xing-de-she-ji" class="header-anchor"># </a><span id="lei-xing-de-she-ji">类型的设计</span></h3><h4><a href="#picture-lei" class="header-anchor"># </a><span id="picture-lei">Picture 类</span></h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
 <pre><code class="cpp">class Picture
 {
 public:
@@ -317,7 +358,7 @@ private:
 Picture::Picture(const char* const *, int); // 根据字符串指针和其行数构造一个 Picture
 Picture::Picture(const Picture&amp;); // 拷贝构造函数，例如</code></pre>
 <p><code>reframe</code> 函数用来重设框架格式。<br><code>private</code> 内容则是对外不可见的具体实现。<br><code>PictureEntity *ap</code> 是一个指针，这里的 <code>PictureEntity</code> 即为上面设计中的所有类型的基类 。<br>剩余的函数姑且不考虑。</p>
-<h4 id="PictureEntity-类"><a href="#PictureEntity-类" class="headerlink" title="PictureEntity 类"></a>PictureEntity 类</h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
+<h4><a href="#pictureentity-ji-lei" class="header-anchor"># </a><span id="pictureentity-ji-lei">PictureEntity 基类</span></h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
 <pre><code class="cpp">class PictureEntity
 {
 public:
@@ -340,7 +381,7 @@ protected:
 <p>首先看 <code>public:</code> 部分：<br>继承中的基类必须拥有虚析构函数，在这里，为了防止创建 <code>PictureEntity</code> 的实例，我们将其析构函数设置为纯虚析构函数。<br>其次，其拥有两个对引用进行处理的函数，且均为纯虚函数。</p>
 <p>其次看 <code>protected</code> ：<br><code>use</code> 为引用计数器。<br>其他的函数作用如其名所示。</p>
 <p>这个类无法被实例化。</p>
-<h4 id="BasicPicture"><a href="#BasicPicture" class="headerlink" title="BasicPicture"></a>BasicPicture</h4><pre><code class="cpp">class BasicPicture : public PictureEntity
+<h4><a href="#basicpicture" class="header-anchor"># </a><span id="basicpicture">BasicPicture</span></h4><pre><code class="cpp">class BasicPicture : public PictureEntity
 {
 public:
     BasicPicture(const char* const*, int);
@@ -360,7 +401,7 @@ private:
     int m_maxwidth;
 };</code></pre>
 <p>这个类型看起来更像是我们在<a href="#构造和输出功能">前面</a> 里面实现的类型。其用法也与之相似。</p>
-<h4 id="FramedPicture"><a href="#FramedPicture" class="headerlink" title="FramedPicture"></a>FramedPicture</h4><pre><code class="cpp">class FramedPicture : public PictureEntity
+<h4><a href="#framedpicture" class="header-anchor"># </a><span id="framedpicture">FramedPicture</span></h4><pre><code class="cpp">class FramedPicture : public PictureEntity
 {
 public:
     FramedPicture(const Picture&amp;, char c, char v, char h);
@@ -387,7 +428,7 @@ private:
     char l, r, t, b;
 };</code></pre>
 <p>这个类型 <code>public:</code> 部分有大量构造函数，其余部分与上面的<code>BasicPicture</code> 相似。</p>
-<h4 id="VcatPicture"><a href="#VcatPicture" class="headerlink" title="VcatPicture"></a>VcatPicture</h4><pre><code class="cpp">class VcatPicture : public PictureEntity
+<h4><a href="#vcatpicture" class="header-anchor"># </a><span id="vcatpicture">VcatPicture</span></h4><pre><code class="cpp">class VcatPicture : public PictureEntity
 {
 public:
     VcatPicture(const Picture&amp;, const Picture&amp;);
@@ -405,7 +446,7 @@ private:
     Picture top, bottom;
 };</code></pre>
 <p>这个类表示 <code>top</code> 和 <code>bottom</code> 纵向连接。</p>
-<h4 id="HcatPicture"><a href="#HcatPicture" class="headerlink" title="HcatPicture"></a>HcatPicture</h4><pre><code class="cpp">class HcatPicture :public PictureEntity
+<h4><a href="#hcatpicture" class="header-anchor"># </a><span id="hcatpicture">HcatPicture</span></h4><pre><code class="cpp">class HcatPicture :public PictureEntity
 {
 public:
     HcatPicture(const Picture&amp;, const Picture&amp;);
@@ -423,9 +464,16 @@ private:
     Picture left, right;
 };</code></pre>
 <hr>
-<h2 id="总述及效果展示"><a href="#总述及效果展示" class="headerlink" title="总述及效果展示"></a>总述及效果展示</h2><p><a href="https://redcontritio.github.io/resources/CharacterPicture.zip">源码下载</a></p>
-<p>这节课讲述了面向对象的常见用法和 RAII 的方法。</p>
-<p>希望大家课后能够自己进行更多学习。</p>
+<h2><a href="#zong-shu-ji-xiao-guo-zhan-shi" class="header-anchor"># </a><span id="zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</span></h2><p>通过上面从<a href="#怎么纵向连接？俯瞰继承关系">继承关系设计</a> 到 <a href="#类型的设计">类型的具体设计</a> ，我们基本有了程序的框架。</p>
+<p>在经过具体实现这些类型后，我们就得到了完整的<a href="../../../../resources/CharacterPicture.zip">代码</a>。</p>
+<h3><a href="#cpp-ke-hou-xi-ti" class="header-anchor"># </a><span id="cpp-ke-hou-xi-ti">Cpp 课后习题</span></h3><ul>
+<li>课后习题 1 : 经过上面的示例，我们可以发现一个给定的图可以唯一确定一个（系列性的）输出动作，而 <code>std::string</code> 也可以唯一确定一个输出动作，请将一个给定的图转换为 <code>std::string</code> 。</li>
+<li>课后习题 2 : 请设计一个类，可以独立保存一张图及其结构信息。</li>
+<li>课后习题 3 : 习题 2 自然不难，能否将这个类的 <code>std::cin</code> 和<code>std::cout</code> 的对应操作重载，使其能够被保存和读取。</li>
+<li>课后习题 4 : 如果将<code>&#39;*&#39;</code> 视为黑色，<code>&#39; &#39;</code> 视为白色，那么任何一张只有黑白两色的图可以唯一确定一个字符图，请设计一个方法，能够根据一张图片（<code>.jpg</code> 或<code>.png</code>）生成一个字符图。（可以利用第三方库读入图片）</li>
+<li>课后习题 5 : 相信对于聪明的读者们，习题 4 比较容易。请在习题 4 的基础上，支持字符图的旋转、平移等图形操作。</li>
+<li>课后习题 6 : 其实根据字符密度，纯字符方式可以表现黑白灰色彩（单通道八位），请在习题 4 的基础上，生成一个可以生成黑白灰色彩的图。（如 <code>&#39; &#39;</code> 表示纯黑，<code>&#39;■&#39;</code> 表示纯白，<code>&#39;*&#39;</code> 表示一种灰色）</li>
+</ul>
 ]]></content>
       
         
@@ -440,7 +488,7 @@ private:
     <entry>
       <title><![CDATA[matplotlib编码字体错误的解决过程]]></title>
       <url>/2019/11/07/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/</url>
-      <content type="html"><![CDATA[<h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
+      <content type="html"><![CDATA[<h2><a href="#fa-xian-wen-ti" class="header-anchor"># </a><span id="fa-xian-wen-ti">发现问题</span></h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
 <p>plt.rcParams[‘font.sans-serif’]=[‘SimHei’]  # 用来正常显示中文标签<br>plt.rcParams[‘axes.unicode_minus’]=False  # 用来正常显示负号</p>
 <a id="more"></a>
 
@@ -503,7 +551,7 @@ fig.text(.15, .3, &quot;ASCII hyphen:&quot;, fontsize=20)
 fig.text(.85, .3, &quot;-1&quot;, ha=&#39;right&#39;, fontsize=20)
 plt.show()</code></pre>
 <p>可知，<code>unicode_minus</code> 设置为 <code>False</code> 时，理应不使用 U+2212 输出，而是使用 U+002D，然而上面的错误信息却试图输出 U+2212，我们可以认为是这个选项没有起到作用。</p>
-<h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
+<h2><a href="#ding-wei-wen-ti" class="header-anchor"># </a><span id="ding-wei-wen-ti">定位问题</span></h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
 <p>不妨在库源码中追溯来源。</p>
 <pre><code class="python">import matplotlib.pyplot as plt</code></pre>
 <p>由此可知，错误是在 <code>matplotlib.pyplot.xscale</code> 调用时出现的。</p>
@@ -856,9 +904,9 @@ Cannot read property &#39;each&#39; of undefined</code></pre>
 <p>为了便于讲解，本文采用由浅及深的方式组织行文主线。</p>
 <p>本文主要采用对比 c 和 cpp 差异的方式来进行。</p>
 <hr>
-<h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
+<h1><a href="#tou-wen-jian" class="header-anchor"># </a><span id="tou-wen-jian">头文件</span></h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
 <p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
-<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><pre><code class="c">// module.txt
+<h3><a href="#include-shi-shi-me" class="header-anchor"># </a><span id="include-shi-shi-me">#include 是什么？</span></h3><pre><code class="c">// module.txt
 printf(&quot;%d\n&quot;, a);
 a *= 3;</code></pre>
 <pre><code class="c">// main.c
@@ -878,7 +926,7 @@ int main()
 </blockquote>
 <p>可见，<code>#include</code> 作用是将一段文本直接引入到代码中。</p>
 <p>对头文件使用 <code>#include</code> 时也是如此。</p>
-<h3 id="头文件名称对比"><a href="#头文件名称对比" class="headerlink" title="头文件名称对比"></a>头文件名称对比</h3><table>
+<h3><a href="#tou-wen-jian-ming-cheng-dui-bi" class="header-anchor"># </a><span id="tou-wen-jian-ming-cheng-dui-bi">头文件名称对比</span></h3><table>
 <thead>
 <tr>
 <th>语言</th>
@@ -909,14 +957,14 @@ int main()
 <td>cstring</td>
 </tr>
 </tbody></table>
-<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
+<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size="5"><font color="#green">c</font>stdio<font color="red">.h</font> </font> 。</p>
 <p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
 <pre><code class="c">// cstdio
 ...
 #include &lt;stdio.h&gt;
 ...</code></pre>
 <hr>
-<h1 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h1><pre><code class="cpp">#include &lt;iostream&gt;
+<h1><a href="#iostream" class="header-anchor"># </a><span id="iostream">IOSTREAM</span></h1><pre><code class="cpp">#include &lt;iostream&gt;
 using namespace std;
 ...
 cin &gt;&gt; a;
@@ -924,7 +972,7 @@ cout &lt;&lt; b;</code></pre>
 <p>上面这一段应该是大多数人最早接触的 cpp 代码。</p>
 <p>大概讲解一下这一段内容中每行代码发生了什么。</p>
 <p><code>#include &lt;iostream&gt;</code> 引入 iostream 头文件</p>
-<p><code>using namespace std;</code> 使用 std 命名空间，命名空间如果有时间放在后面讲。<font color=#E0E0E0>反正也没人用得到不如不讲了。</font></p>
+<p><code>using namespace std;</code> 使用 std 命名空间，命名空间如果有时间放在后面讲。<font color="#E0E0E0">反正也没人用得到不如不讲了。</font></p>
 <p>关于 cin 和 cout，我们可以构造这样一个模型：</p>
 <pre class="mermaid">graph LR;
     input-->cin;
@@ -940,11 +988,11 @@ cout &lt;&lt; b;</code></pre>
 <p><code>cin</code> 可以隐式转换为 <code>bool</code> 。</p>
 <p><code>cout</code> 用法同理。</p>
 <hr>
-<h1 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
-<h2 id="简单介绍malloc-系列"><a href="#简单介绍malloc-系列" class="headerlink" title="简单介绍malloc 系列"></a>简单介绍<code>malloc</code> 系列</h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
+<h1><a href="#xin-de-guan-jian-zi" class="header-anchor"># </a><span id="xin-de-guan-jian-zi">新的关键字</span></h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
+<h2><a href="#jian-dan-jie-shao-malloc-xi-lie" class="header-anchor"># </a><span id="jian-dan-jie-shao-malloc-xi-lie">简单介绍<code>malloc</code> 系列</span></h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
 <p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
 <p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
-<h2 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h2><p><code>new</code> 用法示例如下：</p>
+<h2><a href="#new-he-delete-yong-fa" class="header-anchor"># </a><span id="new-he-delete-yong-fa"><code>new</code> 和<code>delete</code> 用法</span></h2><p><code>new</code> 用法示例如下：</p>
 <pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
 &quot;上面这一行等价于&quot;;
 int *a = (int*)malloc(sizeof(int));
@@ -979,8 +1027,8 @@ delete []d; // 删除数组
 
 delete []e;</code></pre>
 <hr>
-<h2 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
-<h1 id="函数多态（重载）与默认参数"><a href="#函数多态（重载）与默认参数" class="headerlink" title="函数多态（重载）与默认参数"></a>函数多态（重载）与默认参数</h1><h2 id="函数多态"><a href="#函数多态" class="headerlink" title="函数多态"></a>函数多态</h2><p>例如，我们有</p>
+<h2><a href="#new-de-si-kao" class="header-anchor"># </a><span id="new-de-si-kao"><code>new</code> 的思考</span></h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color="white"> placement new </font></p>
+<h1><a href="#han-shu-duo-tai-chong-zai-yu-mo-ren-can-shu" class="header-anchor"># </a><span id="han-shu-duo-tai-chong-zai-yu-mo-ren-can-shu">函数多态（重载）与默认参数</span></h1><h2><a href="#han-shu-duo-tai" class="header-anchor"># </a><span id="han-shu-duo-tai">函数多态</span></h2><p>例如，我们有</p>
 <pre><code class="cpp">int max(int a, int b) { return a&gt;b?a:b;}</code></pre>
 <p>如果我们想要三个数比较该怎么做？</p>
 <p>在 c 中，</p>
@@ -1006,7 +1054,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 }</code></pre>
 <p>可以避免浮点误差。</p>
 <hr>
-<h2 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
+<h2><a href="#mo-ren-can-shu" class="header-anchor"># </a><span id="mo-ren-can-shu">默认参数</span></h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
 <p>例如我们需要一个求和函数，我们预定有四个数字要被传入。</p>
 <pre><code class="cpp">int sum(int a, int b, int c, int d) { return a+b+c+d;}</code></pre>
 <p>但是随着时间流逝，我们有时候需要传入三个参数。</p>
@@ -1019,7 +1067,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 <pre><code class="cpp">int sum(void) { return sum(0);}</code></pre>
 <p>这里的求和函数和上面的 max 形式很像，并且一路规约下来也很自然，只是略微冗杂了点。</p>
 <p>能不能更简单呢？</p>
-<p><font size=7>能！</font></p>
+<p><font size="7">能！</font></p>
 <p>cpp 允许函数含有默认参数。</p>
 <p>上面的 <code>sum</code> 系列函数使用默认参数后只需要一个函数即可。</p>
 <pre><code class="cpp">int sum(int a=0, int b=0, int c=0, int d=0) { return a+b+c+d;}</code></pre>
@@ -1028,7 +1076,7 @@ int max(int a, int b, int c, int d, int e, int f) { int t = max(b, c, d, e, f); 
 <p>在 cpp 中，各参数只能从左向右排布，因此默认参数需要从右向左赋值。</p>
 <p>函数的默认参数只能在声明或定义中出现一次。</p>
 <hr>
-<h1 id="新的类型"><a href="#新的类型" class="headerlink" title="新的类型"></a>新的类型</h1><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用类型是值和指针的折中。</p>
+<h1><a href="#xin-de-lei-xing" class="header-anchor"># </a><span id="xin-de-lei-xing">新的类型</span></h1><h2><a href="#yin-yong" class="header-anchor"># </a><span id="yin-yong">引用</span></h2><p>引用类型是值和指针的折中。</p>
 <p>引用的主要用途是函数传参和创建别名。</p>
 <p>函数传递较大的数据类型由于需要整个拷贝，因此在 c 中通常传递指针作为参数，例如：</p>
 <pre><code class="c">typedef struct data
@@ -1054,7 +1102,7 @@ int f(pdata p)
 int &amp;b = a;
 b = 3;</code></pre>
 <p>此时 a 也被改变。</p>
-<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>类是类似结构体的数据类型。</p>
+<h2><a href="#class" class="header-anchor"># </a><span id="class">class</span></h2><p>类是类似结构体的数据类型。</p>
 <pre><code class="cpp">struct A
 {
     int a;
@@ -1083,7 +1131,7 @@ private:
 <p>这时候我们可以使用 b.print() 来输出，但是不能修改 b.b 的内容。 </p>
 <p>特别的，cpp 中的 struct 也不同于 c 中的，它更像是被修改了默认访问权限的 class。</p>
 <hr>
-<h1 id="内联与宏"><a href="#内联与宏" class="headerlink" title="内联与宏"></a>内联与宏</h1><h2 id="内联的好处"><a href="#内联的好处" class="headerlink" title="内联的好处"></a>内联的好处</h2><p>宏是一种功能强大的预处理工具。</p>
+<h1><a href="#nei-lian-yu-hong" class="header-anchor"># </a><span id="nei-lian-yu-hong">内联与宏</span></h1><h2><a href="#nei-lian-de-hao-chu" class="header-anchor"># </a><span id="nei-lian-de-hao-chu">内联的好处</span></h2><p>宏是一种功能强大的预处理工具。</p>
 <p>但是含有隐患。</p>
 <pre><code class="c">#define mult(a, b) a*b</code></pre>
 <p>如果使用 </p>
@@ -1098,7 +1146,7 @@ int x = mult(3+2,2+3);</code></pre><p>这时候，第二行<code>int x = mult(3+
 int b = 2+3;
 int x = a*b;</code></pre>
 <p>可以确保其正确性。</p>
-<h2 id="为什么还要宏？"><a href="#为什么还要宏？" class="headerlink" title="为什么还要宏？"></a>为什么还要宏？</h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
+<h2><a href="#wei-shi-me-huan-yao-hong" class="header-anchor"># </a><span id="wei-shi-me-huan-yao-hong">为什么还要宏？</span></h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
 <p>这里是宏的一些（内联做不到的）用法：</p>
 <pre><code class="cpp">#include &lt;cstdio&gt;
 
@@ -1132,10 +1180,10 @@ int test_function(void)
     <entry>
       <title><![CDATA[看板娘配置]]></title>
       <url>/2019/10/20/%E7%9C%8B%E6%9D%BF%E5%A8%98%E9%85%8D%E7%BD%AE/</url>
-      <content type="html"><![CDATA[<h3 id="看板娘配置"><a href="#看板娘配置" class="headerlink" title="看板娘配置"></a>看板娘配置</h3><p>参考网上教程配置了 Live2D 看板娘。</p>
+      <content type="html"><![CDATA[<h3><a href="#kan-ban-niang-pei-zhi" class="header-anchor"># </a><span id="kan-ban-niang-pei-zhi">看板娘配置</span></h3><p>参考网上教程配置了 Live2D 看板娘。</p>
 <a id="more"></a>
 
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装框架"><a href="#安装框架" class="headerlink" title="安装框架"></a>安装框架</h3><p>根目录下，执行</p>
+<h2><a href="#an-zhuang" class="header-anchor"># </a><span id="an-zhuang">安装</span></h2><h3><a href="#an-zhuang-kuang-jia" class="header-anchor"># </a><span id="an-zhuang-kuang-jia">安装框架</span></h3><p>根目录下，执行</p>
 <pre><code class="bash">npm install --save hexo-helper-live2d</code></pre>
 <p>此后在根目录下 __config.yml 中新增：</p>
 <pre><code class="bash"># Live2D
@@ -1165,11 +1213,11 @@ live2d:
     show: false # 手机中是否展示
     scale: 0.5
 </code></pre>
-<h3 id="安装模型"><a href="#安装模型" class="headerlink" title="安装模型"></a>安装模型</h3><p>安装模型有两种方式，第一种是通过 npm 下载，如：</p>
+<h3><a href="#an-zhuang-mo-xing" class="header-anchor"># </a><span id="an-zhuang-mo-xing">安装模型</span></h3><p>安装模型有两种方式，第一种是通过 npm 下载，如：</p>
 <pre><code class="bash">npm install live2d-widget-model-wanko</code></pre>
 <p>另一种方式是自行下载包，安装到任意位置，此后在 __config.yml 中 live2d-&gt;model 写明适当位置即可。</p>
 <hr>
-<h1 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h1><p>根目录下执行</p>
+<h1><a href="#xie-zai" class="header-anchor"># </a><span id="xie-zai">卸载</span></h1><p>根目录下执行</p>
 <pre><code class="bash">npm uninstall hexo-helper-live2d</code></pre>
 <hr>
 <p><em>感谢 <a href="https://sevencho.github.io/" target="_blank" rel="noopener">曹雪松de博客|CoderBoy’s Blog</a></em></p>
@@ -1187,17 +1235,17 @@ live2d:
     <entry>
       <title><![CDATA[站点搭建过程]]></title>
       <url>/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
-      <content type="html"><![CDATA[<h1 id="站点搭建过程"><a href="#站点搭建过程" class="headerlink" title="站点搭建过程"></a>站点搭建过程</h1><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p>
+      <content type="html"><![CDATA[<h1><a href="#zhan-dian-da-jian-guo-cheng" class="header-anchor"># </a><span id="zhan-dian-da-jian-guo-cheng">站点搭建过程</span></h1><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p>
 <a id="more"></a>
 
-<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><ul>
+<h2><a href="#yi-lai" class="header-anchor"># </a><span id="yi-lai">依赖</span></h2><ul>
 <li>配置 node.js</li>
 <li>配置 hexo</li>
 </ul>
-<h2 id="定制"><a href="#定制" class="headerlink" title="定制"></a>定制</h2><ul>
+<h2><a href="#ding-zhi" class="header-anchor"># </a><span id="ding-zhi">定制</span></h2><ul>
 <li>设置 theme</li>
 </ul>
-<h2 id="命令行操作"><a href="#命令行操作" class="headerlink" title="命令行操作"></a>命令行操作</h2><ol>
+<h2><a href="#ming-ling-xing-cao-zuo" class="header-anchor"># </a><span id="ming-ling-xing-cao-zuo">命令行操作</span></h2><ol>
 <li><p><code>hexo new &lt;title&gt;</code></p>
 <p>创建新文章</p>
 </li>

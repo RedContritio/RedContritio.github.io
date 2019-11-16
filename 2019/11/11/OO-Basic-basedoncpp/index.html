@@ -3,7 +3,7 @@
 
 <head>
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><title>面向对象入门 - Chireiden</title>
+  <title>面向对象入门 - Chireiden</title>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,19 +19,19 @@
 <meta property="og:site_name" content="Chireiden">
 <meta property="og:description" content="If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one? [Tom Cargill]">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-16T04:11:26.985Z">
+<meta property="og:updated_time" content="2019-11-16T06:51:01.404Z">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1573877524172"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <link rel="stylesheet" href="/css/style.css?v=1573887085822">
 </head>
 
 <body class="mdui-drawer-body-left">
   
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="nexmoe-background">
+  <div id="nexmoe-background">
     <div class="nexmoe-bg" style="background-image: url(https://api.btstu.cn/sjbz/api.php?method=zsy&amp;lx=dongman&amp;format=images)"></div>
     <div class="mdui-appbar mdui-shadow-0">
       <div class="mdui-toolbar">
@@ -133,8 +133,8 @@
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年11月11日</a>
-    <a><i class="nexmoefont icon-areachart"></i>3k 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 14 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>3.5k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 16 分钟</a>
     
     
       <a class="nexmoefont icon-tag-fill -link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程</a>
@@ -148,9 +148,50 @@
 
 <p>本文通篇将会构造一个类，并以此类的构造过程为讲解顺序。</p>
 <p>本文需求的先修知识：cpp <em>iostream</em> (<code>std::cin,std::cout</code> &amp; <code>std::endl</code>)，cpp <em>class defination</em>, c <em>struct</em>, c <em>pointer</em> and cpp <em>keywords</em> (<code>const, new, delete, class, public, private</code> [<code>protected, pure, virtual</code>])</p>
-<p>[TOC]</p>
+<div class="toc">
+
+<!-- toc -->
+
+<ul>
+<li><a href="#bian-cheng-mu-biao">编程目标</a></li>
+<li><a href="#mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</a></li>
+<li><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</a><ul>
+<li><a href="#c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</a></li>
+<li><a href="#you-he-que-xian">有何缺陷？</a></li>
+<li><a href="#c-yu-yan-ke-hou-xi-ti">C语言课后习题</a></li>
+</ul>
+</li>
+<li><a href="#cpp-mian-xiang-dui-xiang">Cpp 面向对象</a><ul>
+<li><a href="#gou-zao-he-shu-chu-gong-neng">构造和输出功能</a></li>
+<li><a href="#guan-li-nei-cun">管理内存</a></li>
+<li><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</a><ul>
+<li><a href="#wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</a></li>
+<li><a href="#wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</a></li>
+<li><a href="#wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</a></li>
+</ul>
+</li>
+<li><a href="#lei-xing-de-she-ji">类型的设计</a><ul>
+<li><a href="#picture-lei">Picture 类</a></li>
+<li><a href="#pictureentity-ji-lei">PictureEntity 基类</a></li>
+<li><a href="#basicpicture">BasicPicture</a></li>
+<li><a href="#framedpicture">FramedPicture</a></li>
+<li><a href="#vcatpicture">VcatPicture</a></li>
+<li><a href="#hcatpicture">HcatPicture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</a><ul>
+<li><a href="#cpp-ke-hou-xi-ti">Cpp 课后习题</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+
 <hr>
-<h2 id="编程目标"><a href="#编程目标" class="headerlink" title="编程目标"></a>编程目标</h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
+<h2><a href="#bian-cheng-mu-biao" class="header-anchor"># </a><span id="bian-cheng-mu-biao">编程目标</span></h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
 <pre><code> Hello,
  World!</code></pre><p>像这样的，基于字符构造的，有特定格式、内容的整体，我们姑且称之为 “字符图像”。<br>我们可以给字符图像加上边框：</p>
 <pre><code>.-------.
@@ -162,7 +203,7 @@
 | World!| 世界！
 &#39;-------&#39;</code></pre><p>以及希望能够修改边框的样式等等······</p>
 <hr>
-<h2 id="面向过程可以吗？"><a href="#面向过程可以吗？" class="headerlink" title="面向过程可以吗？"></a>面向过程可以吗？</h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p>
+<h2><a href="#mian-xiang-guo-cheng-ke-yi-ma" class="header-anchor"># </a><span id="mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</span></h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p>
 <pre><code class="cpp">int main()
 {
     const char *content[] = {&quot;Hello,&quot;, &quot;World!&quot;};
@@ -177,8 +218,8 @@
 <p>运行可以得到输出：</p>
 <pre><code> Hello, 
  World!</code></pre><p>但是很显然，这样无法（很难）对多个字符图进行操作。</p>
-<h2 id="C-语言也能面向对象吗？"><a href="#C-语言也能面向对象吗？" class="headerlink" title="C 语言也能面向对象吗？"></a>C 语言也能面向对象吗？</h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
-<h3 id="C-语言面向对象"><a href="#C-语言面向对象" class="headerlink" title="C 语言面向对象"></a>C 语言面向对象</h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p>
+<h2><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma" class="header-anchor"># </a><span id="c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</span></h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
+<h3><a href="#c-yu-yan-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</span></h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p>
 <p>我们用 C 语言来试试看：</p>
 <pre><code class="c">struct tagPicture
 {
@@ -241,14 +282,14 @@ void printPicture(Picture _pic)
 <pre><code>Hello,
 World!</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设置为 1，则会看到：</p>
 <pre><code> Hello
- World</code></pre><h3 id="有何缺陷？"><a href="#有何缺陷？" class="headerlink" title="有何缺陷？"></a>有何缺陷？</h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
-<ul>
+ World</code></pre><h3><a href="#you-he-que-xian" class="header-anchor"># </a><span id="you-he-que-xian">有何缺陷？</span></h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
+<h3><a href="#c-yu-yan-ke-hou-xi-ti" class="header-anchor"># </a><span id="c-yu-yan-ke-hou-xi-ti">C语言课后习题</span></h3><ul>
 <li>课后习题 1 : 经过上面的示例，我们可以发现纵向拼接很容易，在此处不做详解，将 C 语言面向对象实现图像的纵向拼接这一任务留作习题。</li>
 <li>课后习题 2 : 纵向拼接实现很轻松，横向拼接相对来说难度略大，但聪明的读者一定能解决这个问题，请用 C 语言面向对象实现图像的横向拼接。</li>
 <li>课后习题 3 : 请用 C 语言面向对象实现给图像加边框，边框样式需要作为函数参数，如可以指定用 ‘*‘ 来画边框。</li>
 <li>课后习题 4 : 请用 C 语言面向对象实现图像修改边框样式，例如将 ‘*’ 样式的边框改为 ‘+’ 样式。</li>
 </ul>
-<h2 id="Cpp-面向对象"><a href="#Cpp-面向对象" class="headerlink" title="Cpp 面向对象"></a>Cpp 面向对象</h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
+<h2><a href="#cpp-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="cpp-mian-xiang-dui-xiang">Cpp 面向对象</span></h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
 <table>
 <thead>
 <tr>
@@ -278,7 +319,7 @@ World!</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设
 </tr>
 </tbody></table>
 <p>简单用法在此不做赘述。<br>不妨先实现上面程序的内容，让我们看看能否更加优雅。</p>
-<h3 id="构造和输出功能"><a href="#构造和输出功能" class="headerlink" title="构造和输出功能"></a>构造和输出功能</h3><p>我们姑且以此结构构造程序：</p>
+<h3><a href="#gou-zao-he-shu-chu-gong-neng" class="header-anchor"># </a><span id="gou-zao-he-shu-chu-gong-neng">构造和输出功能</span></h3><p>我们姑且以此结构构造程序：</p>
 <pre><code>src
  |-- main.cpp
  |-- Picture.h
@@ -353,7 +394,7 @@ void Picture::print(void)
         if(i+1 != m_height) printf(&quot;\n&quot;);
     }
 }</code></pre>
-<h3 id="管理内存"><a href="#管理内存" class="headerlink" title="管理内存"></a>管理内存</h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
+<h3><a href="#guan-li-nei-cun" class="header-anchor"># </a><span id="guan-li-nei-cun">管理内存</span></h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
 <pre><code class="cpp">// picture.h
 @@ -5,6 +5,7 @@
  {
@@ -377,8 +418,8 @@ void Picture::print(void)
  void Picture::print(void)
  {
         for(int i=0; i&lt;m_height; ++i)</code></pre>
-<h3 id="怎么纵向连接？俯瞰继承关系"><a href="#怎么纵向连接？俯瞰继承关系" class="headerlink" title="怎么纵向连接？俯瞰继承关系"></a>怎么纵向连接？俯瞰继承关系</h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
-<h4 id="我们应该怎样设计呢？"><a href="#我们应该怎样设计呢？" class="headerlink" title="我们应该怎样设计呢？"></a>我们应该怎样设计呢？</h4><p>这里引入一个概念：继承</p>
+<h3><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi" class="header-anchor"># </a><span id="zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</span></h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
+<h4><a href="#wo-men-ying-gai-zen-yang-she-ji-ni" class="header-anchor"># </a><span id="wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</span></h4><p>这里引入一个概念：继承</p>
 <p>如下，是图形之间的继承关系。<br>我们可以认为，如果 A 指向 B ，那么 B 属于 A。</p>
 <p><em>这里涉及到面向对象设计的基本理念，目前主流思路有两种：is-a，has-a <del>和 like-a</del>。</em></p>
 <pre class="mermaid">graph TB;
@@ -415,10 +456,10 @@ void Picture::print(void)
 <p>显然，这两种构造都无法用 is-a 来解释，用 has-a 解释也很勉强。因此，这是一种不合理的构造方式。</p>
 <p><strong>因此，我们采用指针来进行运算，采用共同基类来实现</strong>。</p>
 <hr>
-<h4 id="我们需要哪些类型呢？"><a href="#我们需要哪些类型呢？" class="headerlink" title="我们需要哪些类型呢？"></a>我们需要哪些类型呢？</h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
+<h4><a href="#wo-men-xu-yao-na-xie-lei-xing-ni" class="header-anchor"># </a><span id="wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</span></h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
 <p>基于这些类型，我们可以容易地实现图像连接，图像解除连接，图像加边框，图像去边框以及修改内容。</p>
 <hr>
-<h4 id="我们怎样管理内存？"><a href="#我们怎样管理内存？" class="headerlink" title="我们怎样管理内存？"></a>我们怎样管理内存？</h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
+<h4><a href="#wo-men-zen-yang-guan-li-nei-cun" class="header-anchor"># </a><span id="wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</span></h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
 <p>但是，如下所示的，在断点处，<code>FramedPicture b</code> 的内容物（a）已经被析构，因此输出 b 可能是一个非法操作。</p>
 <pre><code class="cpp">FramedPicture b;
 {
@@ -427,7 +468,7 @@ void Picture::print(void)
 }
 // breakpoint</code></pre>
 <p>经过一系列思考，我们可以推理出引用计数的必要性。</p>
-<h3 id="类型的设计"><a href="#类型的设计" class="headerlink" title="类型的设计"></a>类型的设计</h3><h4 id="Picture-类"><a href="#Picture-类" class="headerlink" title="Picture 类"></a>Picture 类</h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
+<h3><a href="#lei-xing-de-she-ji" class="header-anchor"># </a><span id="lei-xing-de-she-ji">类型的设计</span></h3><h4><a href="#picture-lei" class="header-anchor"># </a><span id="picture-lei">Picture 类</span></h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
 <pre><code class="cpp">class Picture
 {
 public:
@@ -453,7 +494,7 @@ private:
 Picture::Picture(const char* const *, int); // 根据字符串指针和其行数构造一个 Picture
 Picture::Picture(const Picture&amp;); // 拷贝构造函数，例如</code></pre>
 <p><code>reframe</code> 函数用来重设框架格式。<br><code>private</code> 内容则是对外不可见的具体实现。<br><code>PictureEntity *ap</code> 是一个指针，这里的 <code>PictureEntity</code> 即为上面设计中的所有类型的基类 。<br>剩余的函数姑且不考虑。</p>
-<h4 id="PictureEntity-类"><a href="#PictureEntity-类" class="headerlink" title="PictureEntity 类"></a>PictureEntity 类</h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
+<h4><a href="#pictureentity-ji-lei" class="header-anchor"># </a><span id="pictureentity-ji-lei">PictureEntity 基类</span></h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
 <pre><code class="cpp">class PictureEntity
 {
 public:
@@ -476,7 +517,7 @@ protected:
 <p>首先看 <code>public:</code> 部分：<br>继承中的基类必须拥有虚析构函数，在这里，为了防止创建 <code>PictureEntity</code> 的实例，我们将其析构函数设置为纯虚析构函数。<br>其次，其拥有两个对引用进行处理的函数，且均为纯虚函数。</p>
 <p>其次看 <code>protected</code> ：<br><code>use</code> 为引用计数器。<br>其他的函数作用如其名所示。</p>
 <p>这个类无法被实例化。</p>
-<h4 id="BasicPicture"><a href="#BasicPicture" class="headerlink" title="BasicPicture"></a>BasicPicture</h4><pre><code class="cpp">class BasicPicture : public PictureEntity
+<h4><a href="#basicpicture" class="header-anchor"># </a><span id="basicpicture">BasicPicture</span></h4><pre><code class="cpp">class BasicPicture : public PictureEntity
 {
 public:
     BasicPicture(const char* const*, int);
@@ -496,7 +537,7 @@ private:
     int m_maxwidth;
 };</code></pre>
 <p>这个类型看起来更像是我们在<a href="#构造和输出功能">前面</a> 里面实现的类型。其用法也与之相似。</p>
-<h4 id="FramedPicture"><a href="#FramedPicture" class="headerlink" title="FramedPicture"></a>FramedPicture</h4><pre><code class="cpp">class FramedPicture : public PictureEntity
+<h4><a href="#framedpicture" class="header-anchor"># </a><span id="framedpicture">FramedPicture</span></h4><pre><code class="cpp">class FramedPicture : public PictureEntity
 {
 public:
     FramedPicture(const Picture&amp;, char c, char v, char h);
@@ -523,7 +564,7 @@ private:
     char l, r, t, b;
 };</code></pre>
 <p>这个类型 <code>public:</code> 部分有大量构造函数，其余部分与上面的<code>BasicPicture</code> 相似。</p>
-<h4 id="VcatPicture"><a href="#VcatPicture" class="headerlink" title="VcatPicture"></a>VcatPicture</h4><pre><code class="cpp">class VcatPicture : public PictureEntity
+<h4><a href="#vcatpicture" class="header-anchor"># </a><span id="vcatpicture">VcatPicture</span></h4><pre><code class="cpp">class VcatPicture : public PictureEntity
 {
 public:
     VcatPicture(const Picture&amp;, const Picture&amp;);
@@ -541,7 +582,7 @@ private:
     Picture top, bottom;
 };</code></pre>
 <p>这个类表示 <code>top</code> 和 <code>bottom</code> 纵向连接。</p>
-<h4 id="HcatPicture"><a href="#HcatPicture" class="headerlink" title="HcatPicture"></a>HcatPicture</h4><pre><code class="cpp">class HcatPicture :public PictureEntity
+<h4><a href="#hcatpicture" class="header-anchor"># </a><span id="hcatpicture">HcatPicture</span></h4><pre><code class="cpp">class HcatPicture :public PictureEntity
 {
 public:
     HcatPicture(const Picture&amp;, const Picture&amp;);
@@ -559,9 +600,16 @@ private:
     Picture left, right;
 };</code></pre>
 <hr>
-<h2 id="总述及效果展示"><a href="#总述及效果展示" class="headerlink" title="总述及效果展示"></a>总述及效果展示</h2><p><a href="https://redcontritio.github.io/resources/CharacterPicture.zip">源码下载</a></p>
-<p>这节课讲述了面向对象的常见用法和 RAII 的方法。</p>
-<p>希望大家课后能够自己进行更多学习。</p>
+<h2><a href="#zong-shu-ji-xiao-guo-zhan-shi" class="header-anchor"># </a><span id="zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</span></h2><p>通过上面从<a href="#怎么纵向连接？俯瞰继承关系">继承关系设计</a> 到 <a href="#类型的设计">类型的具体设计</a> ，我们基本有了程序的框架。</p>
+<p>在经过具体实现这些类型后，我们就得到了完整的<a href="../../../../resources/CharacterPicture.zip">代码</a>。</p>
+<h3><a href="#cpp-ke-hou-xi-ti" class="header-anchor"># </a><span id="cpp-ke-hou-xi-ti">Cpp 课后习题</span></h3><ul>
+<li>课后习题 1 : 经过上面的示例，我们可以发现一个给定的图可以唯一确定一个（系列性的）输出动作，而 <code>std::string</code> 也可以唯一确定一个输出动作，请将一个给定的图转换为 <code>std::string</code> 。</li>
+<li>课后习题 2 : 请设计一个类，可以独立保存一张图及其结构信息。</li>
+<li>课后习题 3 : 习题 2 自然不难，能否将这个类的 <code>std::cin</code> 和<code>std::cout</code> 的对应操作重载，使其能够被保存和读取。</li>
+<li>课后习题 4 : 如果将<code>&#39;*&#39;</code> 视为黑色，<code>&#39; &#39;</code> 视为白色，那么任何一张只有黑白两色的图可以唯一确定一个字符图，请设计一个方法，能够根据一张图片（<code>.jpg</code> 或<code>.png</code>）生成一个字符图。（可以利用第三方库读入图片）</li>
+<li>课后习题 5 : 相信对于聪明的读者们，习题 4 比较容易。请在习题 4 的基础上，支持字符图的旋转、平移等图形操作。</li>
+<li>课后习题 6 : 其实根据字符密度，纯字符方式可以表现黑白灰色彩（单通道八位），请在习题 4 的基础上，生成一个可以生成黑白灰色彩的图。（如 <code>&#39; &#39;</code> 表示纯黑，<code>&#39;■&#39;</code> 表示纯白，<code>&#39;*&#39;</code> 表示一种灰色）</li>
+</ul>
 
   </article>
   
@@ -616,11 +664,11 @@ private:
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1573877524173"></script>
+<script src="/js/app.js?v=1573887085824"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
 
 
 
