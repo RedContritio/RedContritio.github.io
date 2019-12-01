@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="Chireiden">
 <meta property="og:description" content="本节课将会讲三点内容，链表，栈以及二叉树。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-30T13:51:25.252Z">
+<meta property="og:updated_time" content="2019-12-01T07:42:20.794Z">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.15.8/styles/atom-one-dark.css">
   
   
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1038733_0xvrvpg9c0r.css">
-  <link rel="stylesheet" href="/css/style.css?v=1575121899585">
+  <link rel="stylesheet" href="/css/style.css?v=1575186218271">
 </head>
 
 <body class="mdui-drawer-body-left">
@@ -127,14 +127,14 @@
         <div class="nexmoe-post">
     <div class="nexmoe-post-cover"> 
         
-            <img src="https://api.btstu.cn/sjbz/api.php?method=zsy&amp;lx=dongman&amp;format=images">
+        <img src="https://tva4.sinaimg.cn/large/9bd9b167gy1fwsi4ecagvj21hc0u07wi.jpg">
         
         <h1>简单的链表及二叉树学习</h1>
     </div>
   <div class="nexmoe-post-meta">
     <a><i class="nexmoefont icon-calendar-fill"></i>2019年11月29日</a>
-    <a><i class="nexmoefont icon-areachart"></i>3.3k 字</a>
-    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 14 分钟</a>
+    <a><i class="nexmoefont icon-areachart"></i>4.6k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 20 分钟</a>
     
     
       <a class="nexmoefont icon-tag-fill -link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程 零基础课程</a>
@@ -177,6 +177,9 @@
 <li><a href="#er-cha-shu">二叉树</a><ul>
 <li><a href="#hou-zhui-biao-da-shi-zhuan-zhong-zhui-biao-da-shi">后缀表达式转中缀表达式</a></li>
 <li><a href="#jie-ti-si-lu-2">解题思路</a></li>
+<li><a href="#er-cha-shu-ding-yi">二叉树定义</a></li>
+<li><a href="#zen-me-jie-ti">怎么解题？</a></li>
+<li><a href="#er-cha-shu-bian-li">二叉树遍历</a></li>
 </ul>
 </li>
 </ul>
@@ -645,7 +648,94 @@ Node *head = GetHead();</code></pre>
 </tbody></table>
 <p><strong>数据范围</strong></p>
 <p>无。</p>
-<h3><a href="#jie-ti-si-lu" class="header-anchor"># </a><span id="jie-ti-si-lu">解题思路</span></h3><p>对于后缀表达式</p>
+<h3><a href="#jie-ti-si-lu" class="header-anchor"># </a><span id="jie-ti-si-lu">解题思路</span></h3><p>针对样例，我们可以发现，有这样的层级结构</p>
+<pre class="mermaid">graph TB;
+    A["((3*(5-1))+7)"]-->B["(3*(5-1))"];
+    A-->C["7"];
+    B-->D["3"];
+    B-->E["(5-1)"];
+    E-->F["5"];
+    E-->G["1"];</pre>
+
+<p>每个表达式可以被抽象为 <code>(a op b)</code> 的形式，其中，a、b 为表达式，op 为操作符。</p>
+<p>表达式有两种形式：<code>(a op b)</code> 或者 <code>a</code> ，其中 a、b 为表达式，op 为操作符。</p>
+<p>也就是说，表达式可以是单个数字。</p>
+<p>通过看图，我们可以发现，3、5、1、7 这四个节点，也就是操作数节点，没有下属节点（后称“子节点”）。<br>而当其有子节点的时候，如 <code>(5-1)</code> ，有两个操作数节点，因此有一层括号。</p>
+<p>我们将其所有子节点的层数，取其中的最大值，称之为该节点的深度。<br>例如，<code>(5-1)</code> 深度为 1，<code>3</code> 深度为 0，而最终结果的深度为 <code>max(3, 1) = 3</code>。<br>对于深度为 d 的节点，其有 d 层括号。</p>
+<p>因为这个层级结构像一棵倒置的树，因此这一结构被称为“树”。最上面的节点被称为根节点，而没有子节点的节点被称为叶节点。</p>
+<pre class="mermaid">graph TB;
+    A["根节点 ((3*(5-1))+7)"]-->B["(3*(5-1))"];
+    A-->C["叶节点 7"];
+    B-->D["叶节点 3"];
+    B-->E["(5-1)"];
+    E-->F["叶节点 5"];
+    E-->G["叶节点 1"];</pre>
+
+<p>也就是说，其结构如上所示。</p>
+<p>对于每一组这样结构的节点</p>
+<pre class="mermaid">graph TB;
+    A["亲节点"]-->B["左子节点"];
+    A-->C["右子节点"];</pre>
+
+<p>其中 A 被称为亲节点（或父节点），而 B、C 则称之为子节点。</p>
+<p>亲节点和子节点的定义的相对的，没有绝对的亲节点，也没有绝对的子节点。<br>特别的，仅当节点数量为 1 时，树中不存在亲节点与子节点的关系。</p>
+<p>像表达式树这种，每个节点（最多）有两个子节点的情况，我们分别将这两个子节点称为左子节点和右子节点。而这个树称之为二叉树。</p>
+<h3><a href="#er-cha-shu-ding-yi" class="header-anchor"># </a><span id="er-cha-shu-ding-yi">二叉树定义</span></h3><p>在计算机科学中，二叉树是每个结点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。</p>
+<p>一棵深度为k，且有2^k-1个结点的二叉树，称为满二叉树。这种树的特点是每一层上的结点数都是最大结点数。而在一棵二叉树中，除最后一层外，若其余层都是满的，并且或者最后一层是满的，或者是在右边缺少连续若干结点，则此二叉树为完全二叉树。具有n个结点的完全二叉树的深度为floor(log2n)+1。深度为k的完全二叉树，至少有2k-1个叶子结点，至多有2k-1个结点。</p>
+<h3><a href="#zen-me-jie-ti" class="header-anchor"># </a><span id="zen-me-jie-ti">怎么解题？</span></h3><p>对于上面的题目，我们可以这样做：</p>
+<p>将栈（后缀表达式）部分的计算过程进行修改。</p>
+<p><strong>原来的过程是：</strong></p>
+<p>输入一个元素；</p>
+<p>如果是数字则压栈；</p>
+<p>如果是操作符则出栈两个数字，运算后压栈。</p>
+<p><strong>在这里，我们修改过程：</strong></p>
+<p>输入一个元素；</p>
+<p>如果是数字，则压栈一个值为此数字的节点；</p>
+<p>如果是操作符，则出栈两个节点，生成新的节点后压栈。</p>
+<p><strong>表达式的保存</strong></p>
+<p>我们可以采用这样的结构：</p>
+<pre><code class="cpp">struct Node
+{
+    bool isNum;
+    int val;
+    Node *left, *right;
+};</code></pre>
+<p>这样一来，上面的树就可以如下表示：</p>
+<pre class="mermaid">graph TB;
+    A["A: false | '+' | &B | &C"]-->B["B: false | '*' | &D | &E"];
+    A-->C["C: true | 7 | NULL | NULL"];
+    B-->D["D: true | 3 | NULL | NULL"];
+    B-->E["E: false | '-' | &F | &G"];
+    E-->F["F: true | 5 | NULL | NULL"];
+    E-->G["G: true | 1 | NULL | NULL"];</pre>
+
+<p>通过观察我们可以发现，所有叶节点都是操作数，非叶节点都是操作符。</p>
+<p>因此我们可以使用这样的结构：</p>
+<pre><code class="cpp">struct Node
+{
+    int val;
+    Node *left, *right;
+};</code></pre>
+<pre class="mermaid">graph TB;
+    A["A: '+' | &B | &C"]-->B["B: '*' | &D | &E"];
+    A-->C["C: 7 | NULL | NULL"];
+    B-->D["D: 3 | NULL | NULL"];
+    B-->E["E: '-' | &F | &G"];
+    E-->F["F: 5 | NULL | NULL"];
+    E-->G["G: 1 | NULL | NULL"];</pre>
+
+<p>而要判断一个节点是操作数还是操作符，可以如下判断：</p>
+<pre><code class="cpp">bool isNum(Node *p)
+{
+    return p-&gt;left == NULL &amp;&amp; p-&gt;right == NULL;
+}</code></pre>
+<p>在生成这样一个树形结构后，我们就可以进行输出。</p>
+<h3><a href="#er-cha-shu-bian-li" class="header-anchor"># </a><span id="er-cha-shu-bian-li">二叉树遍历</span></h3><blockquote>
+<p>遍历是对树的一种最基本的运算，所谓遍历二叉树，就是按一定的规则和顺序走遍二叉树的所有结点，使每一个结点都被访问一次，而且只被访问一次。由于二叉树是非线性结构，因此，树的遍历实质上是将二叉树的各个结点转换成为一个线性序列来表示。</p>
+<p>设L、D、R分别表示遍历左子树、访问根结点和遍历右子树， 则对一棵二叉树的遍历有三种情况：DLR（称为先根次序遍历，也叫先序遍历），LDR（称为中根次序遍历，也叫中序遍历），LRD （称为后根次序遍历，也叫后序遍历）。</p>
+</blockquote>
+<p>要输出表达式，我们采用中序遍历的方式。</p>
+<p>对于每个节点，如果其为表达式，则遍历输出，如果为数字，则直接输出。</p>
 
   </article>
   
@@ -700,7 +790,7 @@ Node *head = GetHead();</code></pre>
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
-<script src="/js/app.js?v=1575121899586"></script>
+<script src="/js/app.js?v=1575186218273"></script>
 <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.1.0/lazysizes.min.js"></script>
 
 

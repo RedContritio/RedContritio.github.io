@@ -254,7 +254,7 @@ body {
   -moz-transition: opacity 30s; /* Firefox 4 */
   -webkit-transition: opacity 30s; /* Safari 和 Chrome */
   -o-transition: opacity 30s; /* Opera */
-  opacity: 0;
+  opacity: 1;
   box-shadow: 0 0 1rem rgba(161,177,204,0.4);
   background-color: #fff;
   float: left;
