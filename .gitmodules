@@ -1,0 +1,3 @@
+[submodule "themes/hexo-theme-mellow"]
+	path = themes/hexo-theme-mellow
+	url = https://github.com/codefine/hexo-theme-mellow.git
