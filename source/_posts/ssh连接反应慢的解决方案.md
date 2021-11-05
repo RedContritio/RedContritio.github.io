@@ -20,7 +20,7 @@ tags: ssh sshd 服务器 网络
 
 ## 定位问题
 
-首先，看到了一个有趣的关键词：
+首先，在[网上](https://www.annhe.net/article-4504.html)看到了一个有趣的关键词：
 
 **高效能以太网**
 
