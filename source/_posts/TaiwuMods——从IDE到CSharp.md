@@ -2,6 +2,7 @@
 title: TaiwuMods——从IDE到CSharp
 date: 2020-03-26 23:45:16
 tags: VS CSharp Mods Environment
+cover: https://tva2.sinaimg.cn/large/9bd9b167ly1g2qjwnq07hj21hc0u07ct.jpg
 ---
 
 ## 前情提要

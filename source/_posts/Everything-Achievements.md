@@ -2,6 +2,7 @@
 title: Everything成就获得攻略
 date: 2019-12-22 11:15:42
 tags: Everything 游戏
+cover: https://tva3.sinaimg.cn/large/9bd9b167gy1g4lixess0jj21hc0xcnpd.jpg
 ---
 
 See the Help section when you press Esc in-game for information on how to do specific actions. (If the information about a particular action is not there it means you haven't unlocked it yet, keep playing).

@@ -2,6 +2,7 @@
 title: ssh连接反应慢的解决方案
 date: 2021-11-05 15:53:31
 tags: ssh sshd 服务器 网络
+cover: https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk3q3oboj21hc0u0k4b.jpg
 ---
 
 ## 发现问题
