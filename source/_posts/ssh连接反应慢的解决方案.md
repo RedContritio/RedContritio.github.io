@@ -45,9 +45,7 @@ cover: https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk3q3oboj21hc0u0k4b.jpg
 
 通过观察可以看到，输出中，有 
 
-```text
-EEE status: enabled - active
-```
+> EEE status: enabled - active
 
 因此判断出，问题出现在 EEE 上。
 
