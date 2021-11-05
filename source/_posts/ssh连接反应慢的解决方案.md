@@ -8,6 +8,8 @@ tags: ssh sshd 服务器 网络
 
 最近几次走 ssh 连接树莓派的时候，经常会发生连接速度较慢的问题，表现为每次按键后需要几秒时间才能反应过来，甚至直接断开连接，例如[局域网ssh延迟](https://serverfault.com/questions/961576/ssh-lag-in-lan-on-some-machines-mixed-distros)这篇中所述的情况。
 
+<!--more-->
+
 在发生延迟后，对树莓派ip进行一个的ping，然后，嘿嘿，ping炸了。
 
 简单来说，ping 的时候，丢包率达到了***喜人的 87%*** 以上。
