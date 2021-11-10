@@ -41,7 +41,11 @@ cover: https://tva2.sinaimg.cn/large/9bd9b167gy1g2qk3q3oboj21hc0u0k4b.jpg
 
 综上所述，可以看出，**EEE会采用降低发送频率的方式节能**。
 
-通过 `ethtool --show-eee eth0` 查看是否启用了 EEE。
+执行该命令，查看是否启用了 EEE。
+
+```bash
+ethtool --show-eee eth0
+```
 
 通过观察可以看到，输出中，有 
 
@@ -64,3 +68,13 @@ sudo service sshd restart
 ```
 
 从而解决问题，丝滑 ssh。
+
+## 长期配置
+
+可以将其加入开机启动项中，例如在 Raspberry 4B 上，可以将命令加入到 `/etc/rc.local` 中。
+
+加入的命令如下：
+
+```bash
+sudo ethtool --set-eee eth0 eee off
+```
