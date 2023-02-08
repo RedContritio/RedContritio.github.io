@@ -82,7 +82,7 @@ theme: chireiden
 deploy: # 部署部分的设置
   type: git # 网站类型
   repo: https://github.com/RedContritio/RedContritio.github.io.git
-  branch: master
+  branch: gh-pages
 
 
 # Live2D
