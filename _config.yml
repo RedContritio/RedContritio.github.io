@@ -33,16 +33,17 @@ skip_render: # 跳过指定文件的渲染，您可使用 glob 表达式来匹�
 new_post_name: :title.md # 新文章的文件名称
 default_layout: post # 预设布局
 titlecase: false # 将标题转换为title case
-external_link: true # 在新标签中打开外部链接
+external_link.enable: true # 在新标签中打开外部链接
 filename_case: 0 # 把文件名称转换为 (1) 小写或 (2) 大写
 render_drafts: false # 显示草稿
 post_asset_folder: true # 启动asset文件夹
 relative_link: false # 把链接改为与根目录的相对位址
 future: false # 显示未来的文章
 highlight: # 代码块的设置
-  enable: false # 启动设置
+  enable: true # 启动设置
   line_number: true # 行号
-  auto_detect: false # 自动检测
+  auto_detect: true # 自动检测
+  hljs: true
   tab_replace: # tab替换
   
 # 主页设置
@@ -74,9 +75,10 @@ pagination_dir: page # 分页目录
 # 拓展
 ## 插件：https://hexo.io/plugins/ #
 ## 主题：https://hexo.io/themes/
-#theme: hexo-theme-mellow # 当前主题名称。值为false时禁用主题
-theme: nexmoe
-#theme: hexo-theme-animism
+# theme: hexo-theme-mellow # 当前主题名称。值为false时禁用主题
+# theme: hexo-theme-chireiden
+theme: hexo-theme-nexmoe
+# theme: hexo-theme-animism
 # theme: landscape
 
 # 部署
