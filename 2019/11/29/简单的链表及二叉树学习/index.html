@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852987">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043946">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852987">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043946">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -194,7 +194,7 @@
 
       <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
     
-        <a><i class="chireidenfont icon-areachart"></i>约4.5k字</a>
+        <a><i class="chireidenfont icon-areachart"></i>约4.7k字</a>
         <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要17分钟</a>
     
 </div>
@@ -202,10 +202,51 @@
       <p>本节课将会讲三点内容，链表，栈以及二叉树。</p>
 <span id="more"></span>
 
+<div class="toc">
+
 <!-- toc -->
 
-<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>先来看一个简单的题目：</p>
-<h3 id="约瑟夫问题"><a href="#约瑟夫问题" class="headerlink" title="约瑟夫问题"></a>约瑟夫问题</h3><p> n个人围成一圈，从第一个人开始报数，数到m的人出列，再由下一个人重新从1开始报数，数到m的人再出圈，……依次类推，直到所有的人都出圈，请输出依次出圈人的编号。</p>
+<ul>
+<li><a href="#lian-biao">链表</a><ul>
+<li><a href="#yue-se-fu-wen-ti">约瑟夫问题</a></li>
+<li><a href="#jie-ti-si-lu">解题思路</a><ul>
+<li><a href="#di-yi-chong-si-lu-shu-zu-biao-ji">第一种思路（数组标记）</a></li>
+<li><a href="#di-er-chong-si-lu-suo-yin-shu-zu">第二种思路（索引数组）</a></li>
+<li><a href="#di-san-chong-si-lu-suo-yin-lian-biao">第三种思路（索引链表）</a></li>
+<li><a href="#di-si-chong-si-lu-lian-biao">第四种思路（链表）</a></li>
+</ul>
+</li>
+<li><a href="#shi-me-shi-lian-biao">什么是链表</a></li>
+<li><a href="#lian-biao-he-shu-zu-dui-bi">链表和数组对比</a></li>
+<li><a href="#lian-biao-de-fen-lei">链表的分类</a></li>
+<li><a href="#lian-biao-in-stl">链表 in STL</a></li>
+</ul>
+</li>
+<li><a href="#zhan">栈</a><ul>
+<li><a href="#hou-zhui-biao-da-shi">后缀表达式</a></li>
+<li><a href="#jie-ti-si-lu-1">解题思路</a></li>
+<li><a href="#shi-yong-zhan-lai-jie-ti">使用栈来解题</a></li>
+<li><a href="#zhan-de-ding-yi">栈的定义</a></li>
+<li><a href="#zhan-de-chang-jian-shi-xian">栈的常见实现</a></li>
+<li><a href="#ti-ji-dui-lie">提及队列</a></li>
+<li><a href="#xian-xing-shu-ju-jie-gou-dui-bi">线性数据结构对比</a></li>
+</ul>
+</li>
+<li><a href="#er-cha-shu">二叉树</a><ul>
+<li><a href="#hou-zhui-biao-da-shi-zhuan-zhong-zhui-biao-da-shi">后缀表达式转中缀表达式</a></li>
+<li><a href="#jie-ti-si-lu-2">解题思路</a></li>
+<li><a href="#er-cha-shu-ding-yi">二叉树定义</a></li>
+<li><a href="#zen-me-jie-ti">怎么解题？</a></li>
+<li><a href="#er-cha-shu-bian-li">二叉树遍历</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+
+<h2><a href="#lian-biao" class="header-anchor"># </a><span id="lian-biao">链表</span></h2><p>先来看一个简单的题目：</p>
+<h3><a href="#yue-se-fu-wen-ti" class="header-anchor"># </a><span id="yue-se-fu-wen-ti">约瑟夫问题</span></h3><p> n个人围成一圈，从第一个人开始报数，数到m的人出列，再由下一个人重新从1开始报数，数到m的人再出圈，……依次类推，直到所有的人都出圈，请输出依次出圈人的编号。</p>
 <p><strong>输入</strong></p>
 <p>一行有两个数字，n和m，如题意。</p>
 <p><strong>输出</strong></p>
@@ -225,94 +266,37 @@
 </tbody></table>
 <p><strong>数据范围</strong></p>
 <p>1 &lt;&#x3D; m &lt;&#x3D; n &lt;&#x3D; 100</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>约瑟夫问题是一个典型的模拟问题。</p>
-<h4 id="第一种思路（数组标记）"><a href="#第一种思路（数组标记）" class="headerlink" title="第一种思路（数组标记）"></a>第一种思路（数组标记）</h4><p>我们可以创建一个数组，数组长度不小于总人数，每当一个人出列时，在数组内做一个标记。</p>
-<pre><code class="cpp">int a[105];
+<h3><a href="#jie-ti-si-lu" class="header-anchor"># </a><span id="jie-ti-si-lu">解题思路</span></h3><p>约瑟夫问题是一个典型的模拟问题。</p>
+<h4><a href="#di-yi-chong-si-lu-shu-zu-biao-ji" class="header-anchor"># </a><span id="di-yi-chong-si-lu-shu-zu-biao-ji">第一种思路（数组标记）</span></h4><p>我们可以创建一个数组，数组长度不小于总人数，每当一个人出列时，在数组内做一个标记。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> a[<span class="hljs-number">105</span>];<br><br><span class="hljs-comment">// ...</span><br><br><span class="hljs-type">int</span> num=n,last=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span>(num)&#123;<br>        <span class="hljs-type">int</span> cnt=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=last;cnt!=m;i++)&#123;<br>            <span class="hljs-keyword">if</span>(i&gt;n) i%=n;<br>            <span class="hljs-keyword">if</span>(a[i]==<span class="hljs-number">-1</span>) <span class="hljs-keyword">continue</span>;<br>            ++cnt;<br>            <span class="hljs-keyword">if</span>(cnt==m)&#123;<br>                a[i]=<span class="hljs-number">-1</span>;<br>                num--;<br>                last=i+<span class="hljs-number">1</span>;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>,i);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-// ...
-
-int num=n,last=1;
-    while(num)&#123;
-        int cnt=0;
-        for(int i=last;cnt!=m;i++)&#123;
-            if(i&gt;n) i%=n;
-            if(a[i]==-1) continue;
-            ++cnt;
-            if(cnt==m)&#123;
-                a[i]=-1;
-                num--;
-                last=i+1;
-                printf(&quot;%d &quot;,i);
-                break;
-            &#125;
-        &#125;
-    &#125;
-</code></pre>
-<h4 id="第二种思路（索引数组）"><a href="#第二种思路（索引数组）" class="headerlink" title="第二种思路（索引数组）"></a>第二种思路（索引数组）</h4><p>我们需要一种存储方式，能够在修改后快速找到下一个有效位置，而不是顺序检查。</p>
+<h4><a href="#di-er-chong-si-lu-suo-yin-shu-zu" class="header-anchor"># </a><span id="di-er-chong-si-lu-suo-yin-shu-zu">第二种思路（索引数组）</span></h4><p>我们需要一种存储方式，能够在修改后快速找到下一个有效位置，而不是顺序检查。</p>
 <p>不妨采用这样的方式：</p>
-<pre><code class="cpp">int prev[105], next[105];
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> prev[<span class="hljs-number">105</span>], next[<span class="hljs-number">105</span>];<br><br><span class="hljs-comment">// ...</span><br><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; ++i)<br>&#123;<br>	prev[i] = ((i<span class="hljs-number">-1</span>)<span class="hljs-number">-1</span>+n)%n+<span class="hljs-number">1</span>;<br>	next[i] = ((i<span class="hljs-number">-1</span>)+<span class="hljs-number">1</span>  )%n+<span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">// ...</span><br><br><span class="hljs-comment">// 去掉 下标 i 的人</span><br>next[prev[i]] = next[i];<br>prev[next[i]] = prev[i];<br></code></pre></td></tr></table></figure>
 
-// ...
-
-for(int i=1; i&lt;=n; ++i)
-&#123;
-    prev[i] = ((i-1)-1+n)%n+1;
-    next[i] = ((i-1)+1  )%n+1;
-&#125;
-
-// ...
-
-// 去掉 下标 i 的人
-next[prev[i]] = next[i];
-prev[next[i]] = prev[i];
-</code></pre>
-<h4 id="第三种思路（索引链表）"><a href="#第三种思路（索引链表）" class="headerlink" title="第三种思路（索引链表）"></a>第三种思路（索引链表）</h4><p>上面的 prev 和 next 是分离的，有时候进行一些处理时可能不够直观，因此我们采用数据结构——链表。</p>
+<h4><a href="#di-san-chong-si-lu-suo-yin-lian-biao" class="header-anchor"># </a><span id="di-san-chong-si-lu-suo-yin-lian-biao">第三种思路（索引链表）</span></h4><p>上面的 prev 和 next 是分离的，有时候进行一些处理时可能不够直观，因此我们采用数据结构——链表。</p>
 <p>先定义一个整合了 prev 和 next 的结构体：</p>
-<pre><code class="cpp">struct Node
-&#123;
-    int prev;
-    int next;
-&#125;;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-type">int</span> prev;<br>    <span class="hljs-type">int</span> next;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>如果是 C，为了便于编程，在下面再加一行</p>
-<pre><code class="c">typedef struct Node Node;
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> <span class="hljs-title">Node</span>;</span><br></code></pre></td></tr></table></figure>
+
 <p>在使用的时候，采用这种方式</p>
-<pre><code class="cpp">Node a[105];
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Node a[<span class="hljs-number">105</span>];<br><br><span class="hljs-comment">// ...</span><br><br><span class="hljs-comment">// 去掉 下标 i 的人</span><br>a[a[i].prev].next = a[i].next;<br>a[a[i].next].prev = a[i].prev;<br></code></pre></td></tr></table></figure>
 
-// ...
-
-// 去掉 下标 i 的人
-a[a[i].prev].next = a[i].next;
-a[a[i].next].prev = a[i].prev;
-</code></pre>
 <p>这种方式的使用有一些限制，其中最显然的一点是，a，也即是存储这些 Node 的对象，必须是可以使用整数作为索引的。</p>
 <p>对于数组（和上节课描述过的 <code>std::vector</code> 、 <code>template&lt;typename T&gt; std::map&lt;int, T&gt;</code> 以及<code>std::set&lt;int&gt;</code> ）来说，这一假设可以满足，但是对于更多的情况，这一假设可能会限制我们的使用。</p>
 <p>其次，这种方式使用时，还暗示了，删除一个元素很容易，然而增加新元素却很难。</p>
 <p>考虑到 c 和 cpp 中常见的获取新的存储空间的方式（c：<code>malloc</code> ，<code>realloc</code> 和 <code>calloc</code> ；cpp：<code>new</code> ），我们可以认为，指针是一种通用的存储方式，因此，如果能用指针表示 prev 和 next ，我们就可以避免被上面的限制所束缚。</p>
-<h4 id="第四种思路（链表）"><a href="#第四种思路（链表）" class="headerlink" title="第四种思路（链表）"></a>第四种思路（链表）</h4><p>在这里，我们选择使用指针作为索引。</p>
-<pre><code class="cpp">struct Node
-&#123;
-    int id;
-    Node *prev;
-    Node *next;
-&#125;;
-</code></pre>
+<h4><a href="#di-si-chong-si-lu-lian-biao" class="header-anchor"># </a><span id="di-si-chong-si-lu-lian-biao">第四种思路（链表）</span></h4><p>在这里，我们选择使用指针作为索引。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>	<span class="hljs-type">int</span> id;<br>	Node *prev;<br>	Node *next;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>如果是 C 语言，请在最前面加上 <code>typedef struct Node Node;</code></p>
 <p>去掉某个人，则采用这样的方法：</p>
-<pre><code class="cpp">void remove(Node *p)
-&#123;
-    if(p-&gt;prev &amp;&amp; p-&gt;next)
-    &#123;
-        p-&gt;prev-&gt;next = p-&gt;next;
-        p-&gt;next-&gt;prev = p-&gt;prev;
-        delete p;
-        // if in c, use free
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(Node *p)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(p-&gt;prev &amp;&amp; p-&gt;next)<br>    &#123;<br>        p-&gt;prev-&gt;next = p-&gt;next;<br>        p-&gt;next-&gt;prev = p-&gt;prev;<br>        <span class="hljs-keyword">delete</span> p;<br>        <span class="hljs-comment">// if in c, use free</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>最后一种方式的优点在于，我们不需要事先准备一个足够大的数组，而是可以根据输入数据动态创建一个足够长的链。</p>
-<h3 id="什么是链表"><a href="#什么是链表" class="headerlink" title="什么是链表"></a>什么是链表</h3><p>链表是一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。<br>链表由一系列结点（链表中每一个元素称为结点）组成，结点可以在运行时动态生成。<br>每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。 </p>
+<h3><a href="#shi-me-shi-lian-biao" class="header-anchor"># </a><span id="shi-me-shi-lian-biao">什么是链表</span></h3><p>链表是一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。<br>链表由一系列结点（链表中每一个元素称为结点）组成，结点可以在运行时动态生成。<br>每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。 </p>
 <p>例如，一个长度为 3 的链表可以是这样的。</p>
 <pre class="mermaid">graph LR;
     A-->B;
@@ -322,20 +306,11 @@ a[a[i].next].prev = a[i].prev;
     C["C: 12 | NULL"];</pre>
 
 <p>这个链表共有三个元素，A-C。其中 A 的数据域为 1，指针域为 &amp;B（B的地址）。最后的 C 数据域为 12，指针域为空（NULL）。可以使用一个循环来遍历这个链表：</p>
-<pre><code class="cpp">struct Node
-&#123;
-    int v;
-    Node *next;
-&#125;;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-type">int</span> v;<br>    Node *next;<br>&#125;;<br><br>Node *head = <span class="hljs-built_in">GetHead</span>();<br></code></pre></td></tr></table></figure>
 
-Node *head = GetHead();
-</code></pre>
-<pre><code class="cpp">for(Node *p = head; p; p = p-&gt;next)
-&#123;
-    printf(&quot;%d\n&quot;, p-&gt;v);
-&#125;
-</code></pre>
-<h3 id="链表和数组对比"><a href="#链表和数组对比" class="headerlink" title="链表和数组对比"></a>链表和数组对比</h3><p>此处的数组指广义数组（含<code>std::array</code> 及<code>std::vector</code>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(Node *p = head; p; p = p-&gt;next)<br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, p-&gt;v);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3><a href="#lian-biao-he-shu-zu-dui-bi" class="header-anchor"># </a><span id="lian-biao-he-shu-zu-dui-bi">链表和数组对比</span></h3><p>此处的数组指广义数组（含<code>std::array</code> 及<code>std::vector</code>）</p>
 <table>
 <thead>
 <tr>
@@ -365,7 +340,7 @@ Node *head = GetHead();
 <td>O(n)</td>
 </tr>
 </tbody></table>
-<h3 id="链表的分类"><a href="#链表的分类" class="headerlink" title="链表的分类"></a>链表的分类</h3><ul>
+<h3><a href="#lian-biao-de-fen-lei" class="header-anchor"># </a><span id="lian-biao-de-fen-lei">链表的分类</span></h3><ul>
 <li>单链表<ul>
 <li>数据域：数据；</li>
 <li>指针域：next 指针，表示其下一个节点的地址</li>
@@ -381,7 +356,7 @@ Node *head = GetHead();
 </ul>
 </li>
 </ul>
-<h3 id="链表-in-STL"><a href="#链表-in-STL" class="headerlink" title="链表 in STL"></a>链表 in STL</h3><p>STL 中也有链表类型的实现：std::list</p>
+<h3><a href="#lian-biao-in-stl" class="header-anchor"># </a><span id="lian-biao-in-stl">链表 in STL</span></h3><p>STL 中也有链表类型的实现：std::list</p>
 <p>其支持的方法如下：</p>
 <table>
 <thead>
@@ -499,7 +474,7 @@ Node *head = GetHead();
 <td>删除相邻重复元素</td>
 </tr>
 </tbody></table>
-<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="后缀表达式"><a href="#后缀表达式" class="headerlink" title="后缀表达式"></a>后缀表达式</h3><p>所谓后缀表达式是指这样的一个表达式：式中不再引用括号，运算符号放在两个运算对象之后，所有计算按运算符号出现的顺序，严格地由左而右新进行（不用考虑运算符的优先级）。</p>
+<h2><a href="#zhan" class="header-anchor"># </a><span id="zhan">栈</span></h2><h3><a href="#hou-zhui-biao-da-shi" class="header-anchor"># </a><span id="hou-zhui-biao-da-shi">后缀表达式</span></h3><p>所谓后缀表达式是指这样的一个表达式：式中不再引用括号，运算符号放在两个运算对象之后，所有计算按运算符号出现的顺序，严格地由左而右新进行（不用考虑运算符的优先级）。</p>
 <p>如：<code>3*(5–1)+7</code>对应的后缀表达式为：<code>3 5 1 - * 7 +</code>。</p>
 <p><strong>输入</strong></p>
 <p>一行，其中运算符和运算数之间都用空格分隔，运算数是一个一位非负整数。</p>
@@ -520,7 +495,7 @@ Node *head = GetHead();
 </tbody></table>
 <p><strong>数据范围</strong></p>
 <p>无。</p>
-<h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>这个问题看似麻烦，我们不妨先来手动模拟一次。</p>
+<h3><a href="#jie-ti-si-lu" class="header-anchor"># </a><span id="jie-ti-si-lu">解题思路</span></h3><p>这个问题看似麻烦，我们不妨先来手动模拟一次。</p>
 <p>3 5 1 - * 7 +</p>
 <p>首先参与运算的是 “5 1 -“ ，得到结果 4，将 4 填在原来 “5 1 -“ 的位置。</p>
 <p>这时候，表达式为 3 4 * 7 +</p>
@@ -530,31 +505,26 @@ Node *head = GetHead();
 <hr>
 <p>通过观察我们的求解过程，我们可以发现，我们每次选择最靠前的一个符号，并将其前方的两个数字进行运算。</p>
 <p>但是具体实现起来该如何做呢？</p>
-<p><font size=5><del>&gt;&gt;&gt;&gt;<strong>栈</strong>&lt;&lt;&lt;&lt;</del></font></p>
+<p><font size="5"><del>&gt;&gt;&gt;&gt;<strong>栈</strong>&lt;&lt;&lt;&lt;</del></font></p>
 <p>结合前面的知识，我们发现，可以使用一个链表，这个链表结构如下：</p>
-<pre><code class="cpp">struct Node
-&#123;
-    int type;
-    int v;
-    Node *next, *prev;
-&#125;;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>	<span class="hljs-type">int</span> type;<br>    <span class="hljs-type">int</span> v;<br>    Node *next, *prev;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>其中，type 表示其为数字还是为运算符。</p>
 <p>如果是数字，v 表示 数字的值；如果为运算符，我们不妨用 0123 代指四种运算符。</p>
 <p>接下来，每次从首个节点开始查找，找到第一个 <code>type == 运算符</code> 的节点，然后获得其前方的两个节点的值，运算后用其结果代替这三个节点。</p>
 <p>等到最后，首元素的 next 为 NULL 的时候，即链表长度为 1 时，最后这个节点的 v 就是结果。</p>
 <p><del> 所以跟栈有什么关系 </del></p>
-<h3 id="使用栈来解题"><a href="#使用栈来解题" class="headerlink" title="使用栈来解题"></a>使用栈来解题</h3><p>观察我们的解题思路，我们可以发现这样一个特点。</p>
+<h3><a href="#shi-yong-zhan-lai-jie-ti" class="header-anchor"># </a><span id="shi-yong-zhan-lai-jie-ti">使用栈来解题</span></h3><p>观察我们的解题思路，我们可以发现这样一个特点。</p>
 <p>我们每次处理的时候，都只对前面的一部分数据进行处理。</p>
 <p>如下：</p>
 <ol>
-<li><p><font color=gree>3 </font><font color=blue>5 1 </font><font color=red>-</font> <font color=gray>* 7 +</font></p>
+<li><p><font color="gree">3 </font><font color="blue">5 1 </font><font color="red">-</font> <font color="gray">* 7 +</font></p>
 </li>
-<li><p><font color=blue>3 4 </font><font color=red>*</font> <font color=gray>7 +</font></p>
+<li><p><font color="blue">3 4 </font><font color="red">*</font> <font color="gray">7 +</font></p>
 </li>
-<li><p><font color=blue>12 7 </font><font color=red>+</font></p>
+<li><p><font color="blue">12 7 </font><font color="red">+</font></p>
 </li>
-<li><p><font color=blue>19</font></p>
+<li><p><font color="blue">19</font></p>
 </li>
 </ol>
 <p>其中，我们可以发现，绿色和灰色的部分是完全不用考虑的。</p>
@@ -579,15 +549,15 @@ Node *head = GetHead();
 <p>输入数据：</p>
 <p>如果数据为 数字 ，则压栈；</p>
 <p>如果数据为 操作符，则弹出两个数字，并将运算结果压栈。</p>
-<h3 id="栈的定义"><a href="#栈的定义" class="headerlink" title="栈的定义"></a>栈的定义</h3><p>栈（stack）又名堆栈，它是一种运算受限的线性表。<br>限定仅在表尾进行插入和删除操作的线性表。这一端被称为栈顶，相对地，把另一端称为栈底。<br>向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；<br>从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。</p>
+<h3><a href="#zhan-de-ding-yi" class="header-anchor"># </a><span id="zhan-de-ding-yi">栈的定义</span></h3><p>栈（stack）又名堆栈，它是一种运算受限的线性表。<br>限定仅在表尾进行插入和删除操作的线性表。这一端被称为栈顶，相对地，把另一端称为栈底。<br>向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；<br>从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。</p>
 <p><strong>栈的特点可以概括为 FILO (First In Last Out)，即越先进去的元素，越后出来</strong></p>
-<h3 id="栈的常见实现"><a href="#栈的常见实现" class="headerlink" title="栈的常见实现"></a>栈的常见实现</h3><ol>
+<h3><a href="#zhan-de-chang-jian-shi-xian" class="header-anchor"># </a><span id="zhan-de-chang-jian-shi-xian">栈的常见实现</span></h3><ol>
 <li>可以用数组和一个数字模拟栈</li>
 <li>STL std::stack</li>
 <li>用链表来实现栈。</li>
 </ol>
-<h3 id="提及队列"><a href="#提及队列" class="headerlink" title="提及队列"></a>提及队列</h3><p>队列与栈相似，不同点在于其为先进先出。</p>
-<h3 id="线性数据结构对比"><a href="#线性数据结构对比" class="headerlink" title="线性数据结构对比"></a>线性数据结构对比</h3><table>
+<h3><a href="#ti-ji-dui-lie" class="header-anchor"># </a><span id="ti-ji-dui-lie">提及队列</span></h3><p>队列与栈相似，不同点在于其为先进先出。</p>
+<h3><a href="#xian-xing-shu-ju-jie-gou-dui-bi" class="header-anchor"># </a><span id="xian-xing-shu-ju-jie-gou-dui-bi">线性数据结构对比</span></h3><table>
 <thead>
 <tr>
 <th align="left"></th>
@@ -654,7 +624,7 @@ Node *head = GetHead();
     A-->D[队列];
     B-->D;</pre>
 
-<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="后缀表达式转中缀表达式"><a href="#后缀表达式转中缀表达式" class="headerlink" title="后缀表达式转中缀表达式"></a>后缀表达式转中缀表达式</h3><p>后缀表达式定义如前，请根据给定后缀表达式，采用完全加括号的形式，输出其确定的中缀表达式。</p>
+<h2><a href="#er-cha-shu" class="header-anchor"># </a><span id="er-cha-shu">二叉树</span></h2><h3><a href="#hou-zhui-biao-da-shi-zhuan-zhong-zhui-biao-da-shi" class="header-anchor"># </a><span id="hou-zhui-biao-da-shi-zhuan-zhong-zhui-biao-da-shi">后缀表达式转中缀表达式</span></h3><p>后缀表达式定义如前，请根据给定后缀表达式，采用完全加括号的形式，输出其确定的中缀表达式。</p>
 <p>如：<code>3*(5–1)+7</code>对应的后缀表达式为：<code>3 5 1 - * 7 +</code>，我们对其完全加括号，可以得到<code>((3*(5-1))+7)</code> 。</p>
 <p><strong>输入</strong></p>
 <p>一行，其中运算符和运算数之间都用空格分隔，运算数是一个一位非负整数。</p>
@@ -675,7 +645,7 @@ Node *head = GetHead();
 </tbody></table>
 <p><strong>数据范围</strong></p>
 <p>无。</p>
-<h3 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h3><p>针对样例，我们可以发现，有这样的层级结构</p>
+<h3><a href="#jie-ti-si-lu" class="header-anchor"># </a><span id="jie-ti-si-lu">解题思路</span></h3><p>针对样例，我们可以发现，有这样的层级结构</p>
 <pre class="mermaid">graph TB;
     A["((3*(5-1))+7)"]-->B["(3*(5-1))"];
     A-->C["7"];
@@ -707,9 +677,9 @@ Node *head = GetHead();
 <p>其中 A 被称为亲节点（或父节点），而 B、C 则称之为子节点。</p>
 <p>亲节点和子节点的定义的相对的，没有绝对的亲节点，也没有绝对的子节点。<br>特别的，仅当节点数量为 1 时，树中不存在亲节点与子节点的关系。</p>
 <p>像表达式树这种，每个节点（最多）有两个子节点的情况，我们分别将这两个子节点称为左子节点和右子节点。而这个树称之为二叉树。</p>
-<h3 id="二叉树定义"><a href="#二叉树定义" class="headerlink" title="二叉树定义"></a>二叉树定义</h3><p>在计算机科学中，二叉树是每个结点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。</p>
+<h3><a href="#er-cha-shu-ding-yi" class="header-anchor"># </a><span id="er-cha-shu-ding-yi">二叉树定义</span></h3><p>在计算机科学中，二叉树是每个结点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。</p>
 <p>一棵深度为k，且有2^k-1个结点的二叉树，称为满二叉树。这种树的特点是每一层上的结点数都是最大结点数。而在一棵二叉树中，除最后一层外，若其余层都是满的，并且或者最后一层是满的，或者是在右边缺少连续若干结点，则此二叉树为完全二叉树。具有n个结点的完全二叉树的深度为floor(log2n)+1。深度为k的完全二叉树，至少有2k-1个叶子结点，至多有2k-1个结点。</p>
-<h3 id="怎么解题？"><a href="#怎么解题？" class="headerlink" title="怎么解题？"></a>怎么解题？</h3><p>对于上面的题目，我们可以这样做：</p>
+<h3><a href="#zen-me-jie-ti" class="header-anchor"># </a><span id="zen-me-jie-ti">怎么解题？</span></h3><p>对于上面的题目，我们可以这样做：</p>
 <p>将栈（后缀表达式）部分的计算过程进行修改。</p>
 <p><strong>原来的过程是：</strong></p>
 <p>输入一个元素；</p>
@@ -721,13 +691,8 @@ Node *head = GetHead();
 <p>如果是操作符，则出栈两个节点，生成新的节点后压栈。</p>
 <p><strong>表达式的保存</strong></p>
 <p>我们可以采用这样的结构：</p>
-<pre><code class="cpp">struct Node
-&#123;
-    bool isNum;
-    int val;
-    Node *left, *right;
-&#125;;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-type">bool</span> isNum;<br>    <span class="hljs-type">int</span> val;<br>    Node *left, *right;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <p>这样一来，上面的树就可以如下表示：</p>
 <pre class="mermaid">graph TB;
     A["A: false | '+' | &B | &C"]-->B["B: false | '*' | &D | &E"];
@@ -739,12 +704,8 @@ Node *head = GetHead();
 
 <p>通过观察我们可以发现，所有叶节点都是操作数，非叶节点都是操作符。</p>
 <p>因此我们可以使用这样的结构：</p>
-<pre><code class="cpp">struct Node
-&#123;
-    int val;
-    Node *left, *right;
-&#125;;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Node</span><br>&#123;<br>    <span class="hljs-type">int</span> val;<br>    Node *left, *right;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
 <pre class="mermaid">graph TB;
     A["A: '+' | &B | &C"]-->B["B: '*' | &D | &E"];
     A-->C["C: 7 | NULL | NULL"];
@@ -754,13 +715,10 @@ Node *head = GetHead();
     E-->G["G: 1 | NULL | NULL"];</pre>
 
 <p>而要判断一个节点是操作数还是操作符，可以如下判断：</p>
-<pre><code class="cpp">bool isNum(Node *p)
-&#123;
-    return p-&gt;left == NULL &amp;&amp; p-&gt;right == NULL;
-&#125;
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isNum</span><span class="hljs-params">(Node *p)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> p-&gt;left == <span class="hljs-literal">NULL</span> &amp;&amp; p-&gt;right == <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>在生成这样一个树形结构后，我们就可以进行输出。</p>
-<h3 id="二叉树遍历"><a href="#二叉树遍历" class="headerlink" title="二叉树遍历"></a>二叉树遍历</h3><blockquote>
+<h3><a href="#er-cha-shu-bian-li" class="header-anchor"># </a><span id="er-cha-shu-bian-li">二叉树遍历</span></h3><blockquote>
 <p>遍历是对树的一种最基本的运算，所谓遍历二叉树，就是按一定的规则和顺序走遍二叉树的所有结点，使每一个结点都被访问一次，而且只被访问一次。由于二叉树是非线性结构，因此，树的遍历实质上是将二叉树的各个结点转换成为一个线性序列来表示。</p>
 <p>设L、D、R分别表示遍历左子树、访问根结点和遍历右子树， 则对一棵二叉树的遍历有三种情况：DLR（称为先根次序遍历，也叫先序遍历），LDR（称为中根次序遍历，也叫中序遍历），LRD （称为后根次序遍历，也叫后序遍历）。</p>
 </blockquote>
@@ -844,7 +802,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852988"></script>
+<script async src="/js/app.js?v=1675842043947"></script>
 
 
 

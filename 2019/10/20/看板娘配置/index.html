@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852993">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043953">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852993">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043953">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -199,48 +199,25 @@
     
 </div>
 
-      <h3 id="看板娘配置"><a href="#看板娘配置" class="headerlink" title="看板娘配置"></a>看板娘配置</h3><p>参考网上教程配置了 Live2D 看板娘。</p>
+      <h3><a href="#kan-ban-niang-pei-zhi" class="header-anchor"># </a><span id="kan-ban-niang-pei-zhi">看板娘配置</span></h3><p>参考网上教程配置了 Live2D 看板娘。</p>
 <span id="more"></span>
 
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装框架"><a href="#安装框架" class="headerlink" title="安装框架"></a>安装框架</h3><p>根目录下，执行</p>
-<pre><code class="bash">npm install --save hexo-helper-live2d
-</code></pre>
+<h2><a href="#an-zhuang" class="header-anchor"># </a><span id="an-zhuang">安装</span></h2><h3><a href="#an-zhuang-kuang-jia" class="header-anchor"># </a><span id="an-zhuang-kuang-jia">安装框架</span></h3><p>根目录下，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-helper-live2d<br></code></pre></td></tr></table></figure>
+
 <p>此后在根目录下 __config.yml 中新增：</p>
-<pre><code class="bash"># Live2D
-## https://github.com/EYHN/hexo-helper-live2d
-live2d:
-  enable: true
-  # enable: false
-  scriptFrom: local # 默认
-  pluginRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
-  pluginJsPath: lib/ # 脚本文件相对与插件根目录路径
-  pluginModelPath: assets/ # 模型文件相对与插件根目录路径
-  # scriptFrom: jsdelivr # jsdelivr CDN
-  # scriptFrom: unpkg # unpkg CDN
-  # scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url
-  tagMode: false # 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
-  debug: false # 调试, 是否在控制台输出日志
-  model:
-    use: live2d-widget-model-wanko # npm-module package name
-    # use: wanko # 博客根目录/live2d_models/ 下的目录名
-    #use: ./source/live2d/wanko # 相对于博客根目录的路径
-    # use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # 你的自定义 url
-  display:
-    position: right
-    width: 150
-    height: 300
-  mobile:
-    show: false # 手机中是否展示
-    scale: 0.5
-</code></pre>
-<h3 id="安装模型"><a href="#安装模型" class="headerlink" title="安装模型"></a>安装模型</h3><p>安装模型有两种方式，第一种是通过 npm 下载，如：</p>
-<pre><code class="bash">npm install live2d-widget-model-wanko
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Live2D</span><br><span class="hljs-comment">## https://github.com/EYHN/hexo-helper-live2d</span><br>live2d:<br>  <span class="hljs-built_in">enable</span>: <span class="hljs-literal">true</span><br>  <span class="hljs-comment"># enable: false</span><br>  scriptFrom: <span class="hljs-built_in">local</span> <span class="hljs-comment"># 默认</span><br>  pluginRootPath: live2dw/ <span class="hljs-comment"># 插件在站点上的根目录(相对路径)</span><br>  pluginJsPath: lib/ <span class="hljs-comment"># 脚本文件相对与插件根目录路径</span><br>  pluginModelPath: assets/ <span class="hljs-comment"># 模型文件相对与插件根目录路径</span><br>  <span class="hljs-comment"># scriptFrom: jsdelivr # jsdelivr CDN</span><br>  <span class="hljs-comment"># scriptFrom: unpkg # unpkg CDN</span><br>  <span class="hljs-comment"># scriptFrom: https://cdn.jsdelivr.net/npm/live2d-widget@3.x/lib/L2Dwidget.min.js # 你的自定义 url</span><br>  tagMode: <span class="hljs-literal">false</span> <span class="hljs-comment"># 标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中</span><br>  debug: <span class="hljs-literal">false</span> <span class="hljs-comment"># 调试, 是否在控制台输出日志</span><br>  model:<br>    use: live2d-widget-model-wanko <span class="hljs-comment"># npm-module package name</span><br>    <span class="hljs-comment"># use: wanko # 博客根目录/live2d_models/ 下的目录名</span><br>    <span class="hljs-comment">#use: ./source/live2d/wanko # 相对于博客根目录的路径</span><br>    <span class="hljs-comment"># use: https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json # 你的自定义 url</span><br>  display:<br>    position: right<br>    width: 150<br>    height: 300<br>  mobile:<br>    show: <span class="hljs-literal">false</span> <span class="hljs-comment"># 手机中是否展示</span><br>    scale: 0.5<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3><a href="#an-zhuang-mo-xing" class="header-anchor"># </a><span id="an-zhuang-mo-xing">安装模型</span></h3><p>安装模型有两种方式，第一种是通过 npm 下载，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install live2d-widget-model-wanko<br></code></pre></td></tr></table></figure>
+
 <p>另一种方式是自行下载包，安装到任意位置，此后在 __config.yml 中 live2d-&gt;model 写明适当位置即可。</p>
 <hr>
-<h1 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h1><p>根目录下执行</p>
-<pre><code class="bash">npm uninstall hexo-helper-live2d
-</code></pre>
+<h1><a href="#xie-zai" class="header-anchor"># </a><span id="xie-zai">卸载</span></h1><p>根目录下执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm uninstall hexo-helper-live2d<br></code></pre></td></tr></table></figure>
+
 <hr>
 <p><em>感谢 <a target="_blank" rel="noopener" href="https://sevencho.github.io/">曹雪松de博客|CoderBoy’s Blog</a></em></p>
 
@@ -321,7 +298,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852994"></script>
+<script async src="/js/app.js?v=1675842043954"></script>
 
 
 

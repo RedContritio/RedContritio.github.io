@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852991">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043950">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852991">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043950">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -205,13 +205,8 @@
 <ol>
 <li>设置好 index.ejs 布局后 hexo generate 出错</li>
 </ol>
-<pre><code class="bash">ERROR D:\GitHub\RedContritio.github.io\themes\landscape\layout\index.ejs:1
- &gt;&gt; 1| &lt;% page.posts.each(function(post)&#123; %&gt;
-    2|
-    3| &lt;% &#125;) %&gt;
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">ERROR D:\GitHub\RedContritio.github.io\themes\landscape\layout\index.ejs:1<br> &gt;&gt; 1| &lt;% page.posts.each(<span class="hljs-keyword">function</span>(post)&#123; %&gt;<br>    2|<br>    3| &lt;% &#125;) %&gt;<br><br>Cannot <span class="hljs-built_in">read</span> property <span class="hljs-string">&#x27;each&#x27;</span> of undefined<br></code></pre></td></tr></table></figure>
 
-Cannot read property &#39;each&#39; of undefined
-</code></pre>
 <p>这个现象会出现是因为没有找到其他的布局框架，导致 post 也用 index.ejs 布局，但是 post 页面内无法进行 posts 的迭代从而出错。</p>
 
   </article>
@@ -291,7 +286,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852992"></script>
+<script async src="/js/app.js?v=1675842043951"></script>
 
 
 

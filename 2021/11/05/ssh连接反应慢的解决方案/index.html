@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852981">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043941">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852981">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043941">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -199,7 +199,7 @@
     
 </div>
 
-      <h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>最近几次走 ssh 连接树莓派的时候，经常会发生连接速度较慢的问题，表现为每次按键后需要几秒时间才能反应过来，甚至直接断开连接，例如<a target="_blank" rel="noopener" href="https://serverfault.com/questions/961576/ssh-lag-in-lan-on-some-machines-mixed-distros">局域网ssh延迟</a>这篇中所述的情况。</p>
+      <h2><a href="#fa-xian-wen-ti" class="header-anchor"># </a><span id="fa-xian-wen-ti">发现问题</span></h2><p>最近几次走 ssh 连接树莓派的时候，经常会发生连接速度较慢的问题，表现为每次按键后需要几秒时间才能反应过来，甚至直接断开连接，例如<a target="_blank" rel="noopener" href="https://serverfault.com/questions/961576/ssh-lag-in-lan-on-some-machines-mixed-distros">局域网ssh延迟</a>这篇中所述的情况。</p>
 <span id="more"></span>
 
 <p>在发生延迟后，对树莓派ip进行一个的ping，然后，嘿嘿，ping炸了。</p>
@@ -207,7 +207,7 @@
 <p>哇，那怎么会这么高呢？</p>
 <p>通过直接在树莓派上操作，网络什么也都正常。</p>
 <p>唔，所以大致是 ping 不稳定，导致的 ssh 连接不稳？</p>
-<h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><p>首先，在<a target="_blank" rel="noopener" href="https://www.annhe.net/article-4504.html">网上</a>看到了一个有趣的关键词：</p>
+<h2><a href="#ding-wei-wen-ti" class="header-anchor"># </a><span id="ding-wei-wen-ti">定位问题</span></h2><p>首先，在<a target="_blank" rel="noopener" href="https://www.annhe.net/article-4504.html">网上</a>看到了一个有趣的关键词：</p>
 <p><strong>高效能以太网</strong></p>
 <blockquote>
 <p>高能效以太网（英语：Energy-Efficient Ethernet，简称EEE）是一套对双绞线与计算机网络标准之以太网家族的背板的增强，使其在低数据活动期间消耗较少的功率。</p>
@@ -218,25 +218,23 @@
 </blockquote>
 <p>综上所述，可以看出，<strong>EEE会采用降低发送频率的方式节能</strong>。</p>
 <p>执行该命令，查看是否启用了 EEE。</p>
-<pre><code class="bash">ethtool --show-eee eth0
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ethtool --show-eee eth0<br></code></pre></td></tr></table></figure>
+
 <p>通过观察可以看到，输出中，有 </p>
 <blockquote>
 <p>EEE status: enabled - active</p>
 </blockquote>
 <p>因此判断出，问题出现在 EEE 上。</p>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><pre><code class="bash">sudo ethtool --set-eee eth0 eee off
-</code></pre>
+<h2><a href="#jie-jue-wen-ti" class="header-anchor"># </a><span id="jie-jue-wen-ti">解决问题</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ethtool --set-eee eth0 eee off<br></code></pre></td></tr></table></figure>
+
 <p>执行后再次检查 EEE 状态，可以看到其已关闭（disabled）。</p>
 <p>为了保险，进行</p>
-<pre><code class="bash">sudo service sshd restart
-</code></pre>
-<p>从而解决问题，丝滑 ssh。</p>
-<h2 id="长期配置"><a href="#长期配置" class="headerlink" title="长期配置"></a>长期配置</h2><p>可以将其加入开机启动项中，例如在 Raspberry 4B 上，可以将命令加入到 <code>/etc/rc.local</code> 中。</p>
-<p>加入的命令如下：</p>
-<pre><code class="bash">sudo ethtool --set-eee eth0 eee off
-</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo service sshd restart<br></code></pre></td></tr></table></figure>
 
+<p>从而解决问题，丝滑 ssh。</p>
+<h2><a href="#chang-qi-pei-zhi" class="header-anchor"># </a><span id="chang-qi-pei-zhi">长期配置</span></h2><p>可以将其加入开机启动项中，例如在 Raspberry 4B 上，可以将命令加入到 <code>/etc/rc.local</code> 中。</p>
+<p>加入的命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ethtool --set-eee eth0 eee off<br></code></pre></td></tr></table></figure>
   </article>
 
   
@@ -314,7 +312,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852982"></script>
+<script async src="/js/app.js?v=1675842043941"></script>
 
 
 

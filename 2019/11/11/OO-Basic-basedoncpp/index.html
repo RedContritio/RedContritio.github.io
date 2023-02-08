@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852988">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043948">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852988">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043948">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -194,7 +194,7 @@
 
       <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
     
-        <a><i class="chireidenfont icon-areachart"></i>约3.5k字</a>
+        <a><i class="chireidenfont icon-areachart"></i>约3.6k字</a>
         <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要15分钟</a>
     
 </div>
@@ -206,125 +206,96 @@
 
 <p>本文通篇将会构造一个类，并以此类的构造过程为讲解顺序。</p>
 <p>本文需求的先修知识：cpp <em>iostream</em> (<code>std::cin,std::cout</code> &amp; <code>std::endl</code>)，cpp <em>class defination</em>, c <em>struct</em>, c <em>pointer</em> and cpp <em>keywords</em> (<code>const, new, delete, class, public, private</code> [<code>protected, pure, virtual</code>])</p>
+<div class="toc">
+
 <!-- toc -->
 
+<ul>
+<li><a href="#bian-cheng-mu-biao">编程目标</a></li>
+<li><a href="#mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</a></li>
+<li><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</a><ul>
+<li><a href="#c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</a></li>
+<li><a href="#you-he-que-xian">有何缺陷？</a></li>
+<li><a href="#c-yu-yan-ke-hou-xi-ti">C语言课后习题</a></li>
+</ul>
+</li>
+<li><a href="#cpp-mian-xiang-dui-xiang">Cpp 面向对象</a><ul>
+<li><a href="#gou-zao-he-shu-chu-gong-neng">构造和输出功能</a></li>
+<li><a href="#guan-li-nei-cun">管理内存</a></li>
+<li><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</a><ul>
+<li><a href="#wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</a></li>
+<li><a href="#wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</a></li>
+<li><a href="#wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</a></li>
+</ul>
+</li>
+<li><a href="#lei-xing-de-she-ji">类型的设计</a><ul>
+<li><a href="#picture-lei">Picture 类</a></li>
+<li><a href="#pictureentity-ji-lei">PictureEntity 基类</a></li>
+<li><a href="#basicpicture">BasicPicture</a></li>
+<li><a href="#framedpicture">FramedPicture</a></li>
+<li><a href="#vcatpicture">VcatPicture</a></li>
+<li><a href="#hcatpicture">HcatPicture</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</a><ul>
+<li><a href="#cpp-ke-hou-xi-ti">Cpp 课后习题</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+
 <hr>
-<h2 id="编程目标"><a href="#编程目标" class="headerlink" title="编程目标"></a>编程目标</h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
-<pre><code> Hello,
- World!
-</code></pre>
+<h2><a href="#bian-cheng-mu-biao" class="header-anchor"># </a><span id="bian-cheng-mu-biao">编程目标</span></h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">Hello,</span><br>World!<br></code></pre></td></tr></table></figure>
+
 <p>像这样的，基于字符构造的，有特定格式、内容的整体，我们姑且称之为 “字符图像”。<br>我们可以给字符图像加上边框：</p>
-<pre><code>.-------.
-| Hello,|
-| World!|
-&#39;-------&#39;
-</code></pre>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">.-------.<br>|<span class="hljs-string"> Hello,</span>|<br>|<span class="hljs-string"> World!</span>|<br>&#x27;-------&#x27;<br></code></pre></td></tr></table></figure>
+
 <p>更多地，可能会希望支持两个这样的字符图拼接，形成新的图像。</p>
-<pre><code>.-------.
-| Hello,| 你好，
-| World!| 世界！
-&#39;-------&#39;
-</code></pre>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">.-------.<br>|<span class="hljs-string"> Hello,</span>|<span class="hljs-string"> 你好，</span><br><span class="hljs-string"></span>|<span class="hljs-string"> World!</span>|<span class="hljs-string"> 世界！</span><br><span class="hljs-string">&#x27;-------&#x27;</span><br></code></pre></td></tr></table></figure>
+
 <p>以及希望能够修改边框的样式等等······</p>
 <hr>
-<h2 id="面向过程可以吗？"><a href="#面向过程可以吗？" class="headerlink" title="面向过程可以吗？"></a>面向过程可以吗？</h2><p>如我们所学过的 C&#x2F;Cpp， 我们可能会想到这样做：</p>
-<pre><code class="cpp">int main()
-&#123;
-    const char *content[] = &#123;&quot;Hello,&quot;, &quot;World!&quot;&#125;;
-    int left_padding = 1;
-    for(int i=0; i&lt;2; ++i)
-    &#123;
-        for(int j=0; j&lt; left_padding; ++j) printf(&quot; &quot;);
-        printf(&quot;%s&quot;, content[i]);
-        printf(&quot;\n&quot;);
-    &#125;
-&#125;
-</code></pre>
-<p>运行可以得到输出：</p>
-<pre><code> Hello, 
- World!
-</code></pre>
-<p>但是很显然，这样无法（很难）对多个字符图进行操作。</p>
-<h2 id="C-语言也能面向对象吗？"><a href="#C-语言也能面向对象吗？" class="headerlink" title="C 语言也能面向对象吗？"></a>C 语言也能面向对象吗？</h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
-<h3 id="C-语言面向对象"><a href="#C-语言面向对象" class="headerlink" title="C 语言面向对象"></a>C 语言面向对象</h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std&#x3D;c99 或 -std&#x3D;c11</em></p>
-<p>我们用 C 语言来试试看：</p>
-<pre><code class="c">struct tagPicture
-&#123;
-    char **m_content;
-    int m_padding_left, m_padding_top;
-    int m_height, m_width;
-&#125;;
+<h2><a href="#mian-xiang-guo-cheng-ke-yi-ma" class="header-anchor"># </a><span id="mian-xiang-guo-cheng-ke-yi-ma">面向过程可以吗？</span></h2><p>如我们所学过的 C&#x2F;Cpp， 我们可能会想到这样做：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *content[] = &#123;<span class="hljs-string">&quot;Hello,&quot;</span>, <span class="hljs-string">&quot;World!&quot;</span>&#125;;<br>    <span class="hljs-type">int</span> left_padding = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">2</span>; ++i)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt; left_padding; ++j) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s&quot;</span>, content[i]);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-typedef struct tagPicture Picture;
-</code></pre>
+<p>运行可以得到输出：</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">Hello,</span> <br>World!<br></code></pre></td></tr></table></figure>
+
+<p>但是很显然，这样无法（很难）对多个字符图进行操作。</p>
+<h2><a href="#c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma" class="header-anchor"># </a><span id="c-yu-yan-ye-neng-mian-xiang-dui-xiang-ma">C 语言也能面向对象吗？</span></h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p>
+<h3><a href="#c-yu-yan-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="c-yu-yan-mian-xiang-dui-xiang">C 语言面向对象</span></h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std&#x3D;c99 或 -std&#x3D;c11</em></p>
+<p>我们用 C 语言来试试看：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tagPicture</span></span><br><span class="hljs-class">&#123;</span><br>	<span class="hljs-type">char</span> **m_content;<br>	<span class="hljs-type">int</span> m_padding_left, m_padding_top;<br>	<span class="hljs-type">int</span> m_height, m_width;<br>&#125;;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tagPicture</span> <span class="hljs-title">Picture</span>;</span><br></code></pre></td></tr></table></figure>
+
 <p>在这个结构体 <code>struct tagPicture</code> （或记作<code>Picture</code>）中，我们使用 <code>m_content</code> 来保存图像内容，<code>m_height, m_width</code> 表示图像的宽与高，<code>m_padding_left</code> 和<code>m_padding_top</code> 表示图像左侧和上侧内边界大小。</p>
 <p>怎么创建一个 <code>Picture</code> 呢？<br>在 C 语言中，我们需要定义一个函数来创建该类型：</p>
-<pre><code class="c">// 此处需要库文件 stdlib.h 和 string.h
-Picture getPicture(const char **_ArrayOfCharArray, int _Lines)
-&#123;
-    Picture t;
-    t.m_content = (char **) malloc(_Lines *sizeof(char *));
-    t.m_padding_left = t.m_padding_top = 0;
-    t.m_height = _Lines;
-    t.m_width = 0;
-    for(int i=0; i&lt;_Lines; ++i)
-    &#123;
-        int n = _ArrayOfCharArray[i] ? strlen(_ArrayOfCharArray[i]) : 0;
-        if( t.m_width &lt; n ) t.m_width = n; 
-    &#125;
-    for(int i=0; i&lt;_Lines; ++i)
-    &#123;
-        t.m_content[i] = (char *) malloc((t.m_width+1) * sizeof(char));
-        strcpy(t.m_content[i], _ArrayOfCharArray[i]);
-    &#125;
-    return t;
-&#125;
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 此处需要库文件 stdlib.h 和 string.h</span><br>Picture <span class="hljs-title function_">getPicture</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> **_ArrayOfCharArray, <span class="hljs-type">int</span> _Lines)</span><br>&#123;<br>	Picture t;<br>	t.m_content = (<span class="hljs-type">char</span> **) <span class="hljs-built_in">malloc</span>(_Lines *<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">char</span> *));<br>	t.m_padding_left = t.m_padding_top = <span class="hljs-number">0</span>;<br>	t.m_height = _Lines;<br>	t.m_width = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;_Lines; ++i)<br>	&#123;<br>		<span class="hljs-type">int</span> n = _ArrayOfCharArray[i] ? <span class="hljs-built_in">strlen</span>(_ArrayOfCharArray[i]) : <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">if</span>( t.m_width &lt; n ) t.m_width = n; <br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;_Lines; ++i)<br>	&#123;<br>		t.m_content[i] = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">malloc</span>((t.m_width+<span class="hljs-number">1</span>) * <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">char</span>));<br>		<span class="hljs-built_in">strcpy</span>(t.m_content[i], _ArrayOfCharArray[i]);<br>	&#125;<br>	<span class="hljs-keyword">return</span> t;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>还需要设定一个输出用的函数：</p>
-<pre><code class="c">// 此处需要库文件 stdio.h
-void printPicture(Picture _pic)
-&#123;
-    for(int i=0; i&lt;_pic.m_height; ++i)
-    &#123;
-        if(!(i &lt; _pic.m_padding_top))
-        &#123;
-            for(int j=0; j&lt;_pic.m_width; ++j)
-            &#123;
-                if(j &lt; _pic.m_padding_left) printf(&quot; &quot;);
-                else if(_pic.m_content[j-_pic.m_padding_left])
-                    printf(&quot;%c&quot;, _pic.m_content[i-_pic.m_padding_top][j-_pic.m_padding_left]);
-                else break;
-            &#125;
-        &#125;
-        if(i+1 != _pic.m_height) printf(&quot;\n&quot;);
-    &#125;
-&#125;
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 此处需要库文件 stdio.h</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">printPicture</span><span class="hljs-params">(Picture _pic)</span><br>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;_pic.m_height; ++i)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(!(i &lt; _pic.m_padding_top))<br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;_pic.m_width; ++j)<br>			&#123;<br>				<span class="hljs-keyword">if</span>(j &lt; _pic.m_padding_left) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(_pic.m_content[j-_pic.m_padding_left])<br>					<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c&quot;</span>, _pic.m_content[i-_pic.m_padding_top][j-_pic.m_padding_left]);<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">if</span>(i+<span class="hljs-number">1</span> != _pic.m_height) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>接下来在主函数调用试试：</p>
-<pre><code class="c">int main()
-&#123;
-    const char *content[] = &#123;&quot;Hello,&quot;, &quot;World!&quot;&#125;;
-    Picture a = getPicture(content, 2);
-//  a.m_padding_left = 1;
-    printPicture(a);
-&#125;
-</code></pre>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span> *content[] = &#123;<span class="hljs-string">&quot;Hello,&quot;</span>, <span class="hljs-string">&quot;World!&quot;</span>&#125;;<br>	Picture a = getPicture(content, <span class="hljs-number">2</span>);<br><span class="hljs-comment">//  a.m_padding_left = 1;</span><br>	printPicture(a);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>编译运行后可以得到这样的输出：</p>
-<pre><code>Hello,
-World!
-</code></pre>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><span class="hljs-built_in">Hello,</span><br>World!<br></code></pre></td></tr></table></figure>
+
 <p>我们在主函数中将 <code>a.m_padding_left</code> 设置为 1，则会看到：</p>
-<pre><code> Hello
- World
-</code></pre>
-<h3 id="有何缺陷？"><a href="#有何缺陷？" class="headerlink" title="有何缺陷？"></a>有何缺陷？</h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
-<h3 id="C语言课后习题"><a href="#C语言课后习题" class="headerlink" title="C语言课后习题"></a>C语言课后习题</h3><ul>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Hello</span><br><span class="hljs-attribute">World</span><br></code></pre></td></tr></table></figure>
+
+<h3><a href="#you-he-que-xian" class="header-anchor"># </a><span id="you-he-que-xian">有何缺陷？</span></h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p>
+<h3><a href="#c-yu-yan-ke-hou-xi-ti" class="header-anchor"># </a><span id="c-yu-yan-ke-hou-xi-ti">C语言课后习题</span></h3><ul>
 <li>课后习题 1 : 经过上面的示例，我们可以发现纵向拼接很容易，在此处不做详解，将 C 语言面向对象实现图像的纵向拼接这一任务留作习题。</li>
 <li>课后习题 2 : 纵向拼接实现很轻松，横向拼接相对来说难度略大，但聪明的读者一定能解决这个问题，请用 C 语言面向对象实现图像的横向拼接。</li>
 <li>课后习题 3 : 请用 C 语言面向对象实现给图像加边框，边框样式需要作为函数参数，如可以指定用 ‘*‘ 来画边框。</li>
 <li>课后习题 4 : 请用 C 语言面向对象实现图像修改边框样式，例如将 ‘*’ 样式的边框改为 ‘+’ 样式。</li>
 </ul>
-<h2 id="Cpp-面向对象"><a href="#Cpp-面向对象" class="headerlink" title="Cpp 面向对象"></a>Cpp 面向对象</h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
+<h2><a href="#cpp-mian-xiang-dui-xiang" class="header-anchor"># </a><span id="cpp-mian-xiang-dui-xiang">Cpp 面向对象</span></h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p>
 <table>
 <thead>
 <tr>
@@ -354,114 +325,26 @@ World!
 </tr>
 </tbody></table>
 <p>简单用法在此不做赘述。<br>不妨先实现上面程序的内容，让我们看看能否更加优雅。</p>
-<h3 id="构造和输出功能"><a href="#构造和输出功能" class="headerlink" title="构造和输出功能"></a>构造和输出功能</h3><p>我们姑且以此结构构造程序：</p>
-<pre><code>src
- |-- main.cpp
- |-- Picture.h
- &#39;-- Picture.cpp
-</code></pre>
+<h3><a href="#gou-zao-he-shu-chu-gong-neng" class="header-anchor"># </a><span id="gou-zao-he-shu-chu-gong-neng">构造和输出功能</span></h3><p>我们姑且以此结构构造程序：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ada">src<br> |<span class="hljs-comment">-- main.cpp</span><br> |<span class="hljs-comment">-- Picture.h</span><br> &#x27;<span class="hljs-comment">-- Picture.cpp</span><br></code></pre></td></tr></table></figure>
+
 <p>首先得定义这个类，并声明其方法。</p>
-<pre><code class="cpp">#ifndef __PICTURE__INC
-#define __PICTURE__INC
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __PICTURE__INC</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __PICTURE__INC</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Picture</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span> **_Strs, <span class="hljs-type">int</span> _Lines);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">char</span> **m_content;<br>	<span class="hljs-type">int</span> m_width, m_height;<br>	<span class="hljs-type">int</span> m_padding_left, m_padding_top;<br>&#125;;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
 
-class Picture
-&#123;
-public:
-    Picture(const char **_Strs, int _Lines);
-    void print(void);
-private:
-    char **m_content;
-    int m_width, m_height;
-    int m_padding_left, m_padding_top;
-&#125;;
-
-#endif
-</code></pre>
 <p>接下来我们在主函数内直接定义 Picture 的实例 pic，并以此初始化字符串数组初始化这个实例。</p>
 <p>此后，我们调用其输出方法。</p>
-<pre><code class="cpp">//main.cpp
-#include &quot;picture.h&quot;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//main.cpp</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;picture.h&quot;</span></span><br><br><span class="hljs-type">const</span> <span class="hljs-type">char</span> *initstrs[] = &#123;<span class="hljs-string">&quot;Hello,&quot;</span>, <span class="hljs-string">&quot;World!&quot;</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function">Picture <span class="hljs-title">pic</span><span class="hljs-params">(initstrs, <span class="hljs-number">2</span>)</span></span>;<br>	pic.<span class="hljs-built_in">print</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 
-const char *initstrs[] = &#123;&quot;Hello,&quot;, &quot;World!&quot;&#125;;
-
-int main()
-&#123;
-    Picture pic(initstrs, 2);
-    pic.print();
-&#125;
-</code></pre>
 <p>最后，我们实现这两个函数。</p>
-<pre><code class="cpp">// picture.cpp
-#include &quot;picture.h&quot;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;cstring&gt;
- 
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// picture.cpp</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;picture.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdio&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstring&gt;</span></span><br> <br><br>Picture::<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span> **_Strs, <span class="hljs-type">int</span> _Lines)<br>&#123;<br>	m_content = (<span class="hljs-type">char</span> **) <span class="hljs-built_in">malloc</span>(_Lines *<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">char</span> *));<br>	m_padding_left = m_padding_top = <span class="hljs-number">0</span>;<br>	m_height = _Lines;<br>	m_width = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;_Lines; ++i)<br>	&#123;<br>		<span class="hljs-type">int</span> n = _Strs[i] ? <span class="hljs-built_in">strlen</span>(_Strs[i]) : <span class="hljs-number">0</span>;<br>		<span class="hljs-keyword">if</span>( m_width &lt; n ) m_width = n; <br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;_Lines; ++i)<br>	&#123;<br>		m_content[i] = (<span class="hljs-type">char</span> *) <span class="hljs-built_in">malloc</span>((m_width+<span class="hljs-number">1</span>) * <span class="hljs-built_in">sizeof</span>(<span class="hljs-type">char</span>));<br>		<span class="hljs-built_in">strcpy</span>(m_content[i], _Strs[i]);<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Picture::print</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m_height; ++i)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(!(i &lt; m_padding_top))<br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;m_width; ++j)<br>			&#123;<br>				<span class="hljs-keyword">if</span>(j &lt; m_padding_left) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; &quot;</span>);<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(m_content[j-m_padding_left])<br>					<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%c&quot;</span>, m_content[i-m_padding_top][j-m_padding_left]);<br>				<span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">if</span>(i+<span class="hljs-number">1</span> != m_height) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-Picture::Picture(const char **_Strs, int _Lines)
-&#123;
-    m_content = (char **) malloc(_Lines *sizeof(char *));
-    m_padding_left = m_padding_top = 0;
-    m_height = _Lines;
-    m_width = 0;
-    for(int i=0; i&lt;_Lines; ++i)
-    &#123;
-        int n = _Strs[i] ? strlen(_Strs[i]) : 0;
-        if( m_width &lt; n ) m_width = n; 
-    &#125;
-    for(int i=0; i&lt;_Lines; ++i)
-    &#123;
-        m_content[i] = (char *) malloc((m_width+1) * sizeof(char));
-        strcpy(m_content[i], _Strs[i]);
-    &#125;
-&#125;
+<h3><a href="#guan-li-nei-cun" class="header-anchor"># </a><span id="guan-li-nei-cun">管理内存</span></h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// picture.h</span><br>@@ <span class="hljs-number">-5</span>,<span class="hljs-number">6</span> +<span class="hljs-number">5</span>,<span class="hljs-number">7</span> @@<br> &#123;<br> <span class="hljs-keyword">public</span>:<br>        <span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span> **_Strs, <span class="hljs-type">int</span> _Lines);<br>+       ~<span class="hljs-built_in">Picture</span>(<span class="hljs-type">void</span>);<br>        <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br> <span class="hljs-keyword">private</span>:<br>        <span class="hljs-type">char</span> **m_content;<br></code></pre></td></tr></table></figure>
 
-void Picture::print(void)
-&#123;
-    for(int i=0; i&lt;m_height; ++i)
-    &#123;
-        if(!(i &lt; m_padding_top))
-        &#123;
-            for(int j=0; j&lt;m_width; ++j)
-            &#123;
-                if(j &lt; m_padding_left) printf(&quot; &quot;);
-                else if(m_content[j-m_padding_left])
-                    printf(&quot;%c&quot;, m_content[i-m_padding_top][j-m_padding_left]);
-                else break;
-            &#125;
-        &#125;
-        if(i+1 != m_height) printf(&quot;\n&quot;);
-    &#125;
-&#125;
-</code></pre>
-<h3 id="管理内存"><a href="#管理内存" class="headerlink" title="管理内存"></a>管理内存</h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p>
-<pre><code class="cpp">// picture.h
-@@ -5,6 +5,7 @@
- &#123;
- public:
-        Picture(const char **_Strs, int _Lines);
-+       ~Picture(void);
-        void print(void);
- private:
-        char **m_content;
-</code></pre>
-<pre><code class="cpp">@@ -23,6 +23,13 @@
-        &#125;
- &#125;
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cpp">@@ <span class="hljs-number">-23</span>,<span class="hljs-number">6</span> +<span class="hljs-number">23</span>,<span class="hljs-number">13</span> @@<br>        &#125;<br> &#125;<br><br>+Picture::~<span class="hljs-built_in">Picture</span>(<span class="hljs-type">void</span>)<br>+&#123;<br>+       <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m_height; ++i)<br>+               <span class="hljs-built_in">free</span>(m_content[i]);<br>+       <span class="hljs-built_in">free</span>(m_content);<br>+&#125;<br>+<br> <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Picture::print</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span><br><span class="hljs-function"> </span>&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;m_height; ++i)<br></code></pre></td></tr></table></figure>
 
-+Picture::~Picture(void)
-+&#123;
-+       for(int i=0; i&lt;m_height; ++i)
-+               free(m_content[i]);
-+       free(m_content);
-+&#125;
-+
- void Picture::print(void)
- &#123;
-        for(int i=0; i&lt;m_height; ++i)
-</code></pre>
-<h3 id="怎么纵向连接？俯瞰继承关系"><a href="#怎么纵向连接？俯瞰继承关系" class="headerlink" title="怎么纵向连接？俯瞰继承关系"></a>怎么纵向连接？俯瞰继承关系</h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
-<h4 id="我们应该怎样设计呢？"><a href="#我们应该怎样设计呢？" class="headerlink" title="我们应该怎样设计呢？"></a>我们应该怎样设计呢？</h4><p>这里引入一个概念：继承</p>
+<h3><a href="#zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi" class="header-anchor"># </a><span id="zen-me-zong-xiang-lian-jie-fu-kan-ji-cheng-guan-xi">怎么纵向连接？俯瞰继承关系</span></h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p>
+<h4><a href="#wo-men-ying-gai-zen-yang-she-ji-ni" class="header-anchor"># </a><span id="wo-men-ying-gai-zen-yang-she-ji-ni">我们应该怎样设计呢？</span></h4><p>这里引入一个概念：继承</p>
 <p>如下，是图形之间的继承关系。<br>我们可以认为，如果 A 指向 B ，那么 B 属于 A。</p>
 <p><em>这里涉及到面向对象设计的基本理念，目前主流思路有两种：is-a，has-a <del>和 like-a</del>。</em></p>
 <pre class="mermaid">graph TB;
@@ -498,161 +381,42 @@ void Picture::print(void)
 <p>显然，这两种构造都无法用 is-a 来解释，用 has-a 解释也很勉强。因此，这是一种不合理的构造方式。</p>
 <p><strong>因此，我们采用指针来进行运算，采用共同基类来实现</strong>。</p>
 <hr>
-<h4 id="我们需要哪些类型呢？"><a href="#我们需要哪些类型呢？" class="headerlink" title="我们需要哪些类型呢？"></a>我们需要哪些类型呢？</h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
+<h4><a href="#wo-men-xu-yao-na-xie-lei-xing-ni" class="header-anchor"># </a><span id="wo-men-xu-yao-na-xie-lei-xing-ni">我们需要哪些类型呢？</span></h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。<br><code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针<br><code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p>
 <p>基于这些类型，我们可以容易地实现图像连接，图像解除连接，图像加边框，图像去边框以及修改内容。</p>
 <hr>
-<h4 id="我们怎样管理内存？"><a href="#我们怎样管理内存？" class="headerlink" title="我们怎样管理内存？"></a>我们怎样管理内存？</h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
+<h4><a href="#wo-men-zen-yang-guan-li-nei-cun" class="header-anchor"># </a><span id="wo-men-zen-yang-guan-li-nei-cun">我们怎样管理内存？</span></h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p>
 <p>但是，如下所示的，在断点处，<code>FramedPicture b</code> 的内容物（a）已经被析构，因此输出 b 可能是一个非法操作。</p>
-<pre><code class="cpp">FramedPicture b;
-&#123;
-    BasicPicture a = ...;
-    b = enframe(a);
-&#125;
-// breakpoint
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">FramedPicture b;<br>&#123;<br>    BasicPicture a = ...;<br>    b = <span class="hljs-built_in">enframe</span>(a);<br>&#125;<br><span class="hljs-comment">// breakpoint</span><br></code></pre></td></tr></table></figure>
+
 <p>经过一系列思考，我们可以推理出引用计数的必要性。</p>
-<h3 id="类型的设计"><a href="#类型的设计" class="headerlink" title="类型的设计"></a>类型的设计</h3><h4 id="Picture-类"><a href="#Picture-类" class="headerlink" title="Picture 类"></a>Picture 类</h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
-<pre><code class="cpp">class Picture
-&#123;
-public:
-    Picture(void);
-    Picture(const char* const *, int);
-    Picture(const Picture&amp;);
-    ~Picture(void);
+<h3><a href="#lei-xing-de-she-ji" class="header-anchor"># </a><span id="lei-xing-de-she-ji">类型的设计</span></h3><h4><a href="#picture-lei" class="header-anchor"># </a><span id="picture-lei">Picture 类</span></h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Picture</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">Picture</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> *, <span class="hljs-type">int</span>);<br>	<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> Picture&amp;);<br>	~<span class="hljs-built_in">Picture</span>(<span class="hljs-type">void</span>);<br><br>	Picture&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Picture&amp;);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">int</span> p, <span class="hljs-type">char</span> c)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">char</span> c, <span class="hljs-type">char</span> v, <span class="hljs-type">char</span> h)</span></span>;<br>	<span class="hljs-function">Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span></span>;<br><span class="hljs-keyword">private</span>:<br>	PictureEntity *ap ;<br>	<span class="hljs-built_in">Picture</span>(PictureEntity* p);<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function">std::ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(std::ostream&amp;, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span> <span class="hljs-type">const</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-    Picture&amp; operator=(const Picture&amp;);
-    void reframe(int p, char c);
-    void reframe(char c, char v, char h);
-    Picture split(int id);
-private:
-    PictureEntity *ap ;
-    Picture(PictureEntity* p);
-
-    int width(void) const;
-    int height(void) const;
-    std::ostream&amp; display(std::ostream&amp;, int, int) const;
-&#125;;
-</code></pre>
 <p>最上面的三个构造函数，分别有以下作用：</p>
-<pre><code class="cpp">Picture::Picture(void); // 构造一个空的 Picture 对象
-Picture::Picture(const char* const *, int); // 根据字符串指针和其行数构造一个 Picture
-Picture::Picture(const Picture&amp;); // 拷贝构造函数，例如
-</code></pre>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">Picture::<span class="hljs-built_in">Picture</span>(<span class="hljs-type">void</span>); <span class="hljs-comment">// 构造一个空的 Picture 对象</span><br>Picture::<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> *, <span class="hljs-type">int</span>); <span class="hljs-comment">// 根据字符串指针和其行数构造一个 Picture</span><br>Picture::<span class="hljs-built_in">Picture</span>(<span class="hljs-type">const</span> Picture&amp;); <span class="hljs-comment">// 拷贝构造函数，例如</span><br></code></pre></td></tr></table></figure>
+
 <p><code>reframe</code> 函数用来重设框架格式。<br><code>private</code> 内容则是对外不可见的具体实现。<br><code>PictureEntity *ap</code> 是一个指针，这里的 <code>PictureEntity</code> 即为上面设计中的所有类型的基类 。<br>剩余的函数姑且不考虑。</p>
-<h4 id="PictureEntity-基类"><a href="#PictureEntity-基类" class="headerlink" title="PictureEntity 基类"></a>PictureEntity 基类</h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
-<pre><code class="cpp">class PictureEntity
-&#123;
-public:
-    PictureEntity(void);
-    virtual ~PictureEntity(void) = 0;
-    virtual void incuse(void) = 0;
-    virtual int decuse(void) = 0;
-    friend class Picture;
-protected:
-    int use;
-    virtual int width(void) const = 0;
-    virtual int height(void) const = 0;
-    virtual ostream&amp; display(ostream&amp;, int, int) const = 0;
-    ostream&amp; fillEmpty(ostream&amp;, int, int, char _ch = &#39; &#39;) const;
-    static int max(int a, int b);
-    virtual void reframe(int pos, char c);
-    virtual void reframe(char corner, char vlimit, char hlimit);
-    virtual Picture split(int id) = 0;
-&#125;
-</code></pre>
+<h4><a href="#pictureentity-ji-lei" class="header-anchor"># </a><span id="pictureentity-ji-lei">PictureEntity 基类</span></h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PictureEntity</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">PictureEntity</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">PictureEntity</span>(<span class="hljs-type">void</span>) = <span class="hljs-number">0</span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">incuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> </span>= <span class="hljs-number">0</span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">int</span> <span class="hljs-title">decuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> </span>= <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Picture</span>;<br><span class="hljs-keyword">protected</span>:<br>	<span class="hljs-type">int</span> use;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<br>	<span class="hljs-function">ostream&amp; <span class="hljs-title">fillEmpty</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">char</span> _ch = <span class="hljs-string">&#x27; &#x27;</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">int</span> <span class="hljs-title">max</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">int</span> pos, <span class="hljs-type">char</span> c)</span></span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">char</span> corner, <span class="hljs-type">char</span> vlimit, <span class="hljs-type">char</span> hlimit)</span></span>;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span> </span>= <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>首先看 <code>public:</code> 部分：<br>继承中的基类必须拥有虚析构函数，在这里，为了防止创建 <code>PictureEntity</code> 的实例，我们将其析构函数设置为纯虚析构函数。<br>其次，其拥有两个对引用进行处理的函数，且均为纯虚函数。</p>
 <p>其次看 <code>protected</code> ：<br><code>use</code> 为引用计数器。<br>其他的函数作用如其名所示。</p>
 <p>这个类无法被实例化。</p>
-<h4 id="BasicPicture"><a href="#BasicPicture" class="headerlink" title="BasicPicture"></a>BasicPicture</h4><pre><code class="cpp">class BasicPicture : public PictureEntity
-&#123;
-public:
-    BasicPicture(const char* const*, int);
-    ~BasicPicture(void);
-    void incuse(void);
-    int decuse(void);
+<h4><a href="#basicpicture" class="header-anchor"># </a><span id="basicpicture">BasicPicture</span></h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">BasicPicture</span> : <span class="hljs-keyword">public</span> PictureEntity<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">BasicPicture</span>(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span>*, <span class="hljs-type">int</span>);<br>	~<span class="hljs-built_in">BasicPicture</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">incuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">decuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function">ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span><span class="hljs-type">const</span></span>;<br>	<br>	<span class="hljs-function">Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span></span>;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-type">char</span> **m_data;<br>	<span class="hljs-type">int</span> m_size;<br>	<span class="hljs-type">int</span> *m_width;<br>	<span class="hljs-type">int</span> m_maxwidth;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-    int width(void) const;
-    int height(void) const;
-    ostream&amp; display(ostream&amp;, int, int)const;
-    
-    Picture split(int id);
-private:
-    char **m_data;
-    int m_size;
-    int *m_width;
-    int m_maxwidth;
-&#125;;
-</code></pre>
 <p>这个类型看起来更像是我们在<a href="#%E6%9E%84%E9%80%A0%E5%92%8C%E8%BE%93%E5%87%BA%E5%8A%9F%E8%83%BD">前面</a> 里面实现的类型。其用法也与之相似。</p>
-<h4 id="FramedPicture"><a href="#FramedPicture" class="headerlink" title="FramedPicture"></a>FramedPicture</h4><pre><code class="cpp">class FramedPicture : public PictureEntity
-&#123;
-public:
-    FramedPicture(const Picture&amp;, char c, char v, char h);
-    FramedPicture(const Picture&amp;, char ct, char cb, char v, char h);
-    FramedPicture(const Picture&amp;, char ct, char cb, char t, char b, char l, char r);
-    FramedPicture(const Picture&amp;, char c1, char c2, char c3, char c4, char t, char b, char l, char r);
-    ~FramedPicture(void);
-    void incuse(void);
-    int decuse(void);
-    
-    void reframe(int pos, char c);
-    void reframe(char corner, char v, char h);
+<h4><a href="#framedpicture" class="header-anchor"># </a><span id="framedpicture">FramedPicture</span></h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">FramedPicture</span> : <span class="hljs-keyword">public</span> PictureEntity<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">FramedPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">char</span> c, <span class="hljs-type">char</span> v, <span class="hljs-type">char</span> h);<br>	<span class="hljs-built_in">FramedPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">char</span> ct, <span class="hljs-type">char</span> cb, <span class="hljs-type">char</span> v, <span class="hljs-type">char</span> h);<br>	<span class="hljs-built_in">FramedPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">char</span> ct, <span class="hljs-type">char</span> cb, <span class="hljs-type">char</span> t, <span class="hljs-type">char</span> b, <span class="hljs-type">char</span> l, <span class="hljs-type">char</span> r);<br>	<span class="hljs-built_in">FramedPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">char</span> c1, <span class="hljs-type">char</span> c2, <span class="hljs-type">char</span> c3, <span class="hljs-type">char</span> c4, <span class="hljs-type">char</span> t, <span class="hljs-type">char</span> b, <span class="hljs-type">char</span> l, <span class="hljs-type">char</span> r);<br>	~<span class="hljs-built_in">FramedPicture</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">incuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">decuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">int</span> pos, <span class="hljs-type">char</span> c)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">reframe</span><span class="hljs-params">(<span class="hljs-type">char</span> corner, <span class="hljs-type">char</span> v, <span class="hljs-type">char</span> h)</span></span>;<br><br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function">ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span> y, <span class="hljs-type">int</span> mw)</span> <span class="hljs-type">const</span></span>;<br>	<br>	<span class="hljs-function">Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span></span>;<br><br>	<span class="hljs-function"><span class="hljs-keyword">friend</span> Picture <span class="hljs-title">enframe</span><span class="hljs-params">(<span class="hljs-type">const</span> Picture&amp;)</span></span>;<br><span class="hljs-keyword">private</span>:<br>	Picture m_insidePic;<br>	<span class="hljs-type">char</span> c1, c2, c3, c4;<br>	<span class="hljs-type">char</span> l, r, t, b;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-    int width(void) const;
-    int height(void) const;
-    ostream&amp; display(ostream&amp;, int y, int mw) const;
-    
-    Picture split(int id);
-
-    friend Picture enframe(const Picture&amp;);
-private:
-    Picture m_insidePic;
-    char c1, c2, c3, c4;
-    char l, r, t, b;
-&#125;;
-</code></pre>
 <p>这个类型 <code>public:</code> 部分有大量构造函数，其余部分与上面的<code>BasicPicture</code> 相似。</p>
-<h4 id="VcatPicture"><a href="#VcatPicture" class="headerlink" title="VcatPicture"></a>VcatPicture</h4><pre><code class="cpp">class VcatPicture : public PictureEntity
-&#123;
-public:
-    VcatPicture(const Picture&amp;, const Picture&amp;);
-    ~VcatPicture(void);
-    void incuse(void);
-    int decuse(void);
-    
-    int width(void)const ;
-    int height(void)const ;
-    ostream&amp; display(ostream&amp;, int y, int mw) const;
-    Picture split(int id);
+<h4><a href="#vcatpicture" class="header-anchor"># </a><span id="vcatpicture">VcatPicture</span></h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">VcatPicture</span> : <span class="hljs-keyword">public</span> PictureEntity<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">VcatPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">const</span> Picture&amp;);<br>	~<span class="hljs-built_in">VcatPicture</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">incuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">decuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><span class="hljs-type">const</span> </span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><span class="hljs-type">const</span> </span>;<br>	<span class="hljs-function">ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span> y, <span class="hljs-type">int</span> mw)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function">Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span></span>;<br><br>	<span class="hljs-keyword">friend</span> Picture <span class="hljs-keyword">operator</span>&amp;(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">const</span> Picture&amp;);<br><span class="hljs-keyword">private</span>:<br>	Picture top, bottom;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-    friend Picture operator&amp;(const Picture&amp;, const Picture&amp;);
-private:
-    Picture top, bottom;
-&#125;;
-</code></pre>
 <p>这个类表示 <code>top</code> 和 <code>bottom</code> 纵向连接。</p>
-<h4 id="HcatPicture"><a href="#HcatPicture" class="headerlink" title="HcatPicture"></a>HcatPicture</h4><pre><code class="cpp">class HcatPicture :public PictureEntity
-&#123;
-public:
-    HcatPicture(const Picture&amp;, const Picture&amp;);
-    ~HcatPicture(void);
-    void incuse(void);
-    int decuse(void);
-    
-    int width(void)const ;
-    int height(void)const ;
-    ostream&amp; display(ostream&amp;, int y, int mw) const;
-    Picture split(int id);
+<h4><a href="#hcatpicture" class="header-anchor"># </a><span id="hcatpicture">HcatPicture</span></h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">HcatPicture</span> :<span class="hljs-keyword">public</span> PictureEntity<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">HcatPicture</span>(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">const</span> Picture&amp;);<br>	~<span class="hljs-built_in">HcatPicture</span>(<span class="hljs-type">void</span>);<br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">incuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">decuse</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span></span>;<br>	<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">width</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><span class="hljs-type">const</span> </span>;<br>	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">height</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><span class="hljs-type">const</span> </span>;<br>	<span class="hljs-function">ostream&amp; <span class="hljs-title">display</span><span class="hljs-params">(ostream&amp;, <span class="hljs-type">int</span> y, <span class="hljs-type">int</span> mw)</span> <span class="hljs-type">const</span></span>;<br>	<span class="hljs-function">Picture <span class="hljs-title">split</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span></span>;<br><br>	<span class="hljs-keyword">friend</span> Picture <span class="hljs-keyword">operator</span>|(<span class="hljs-type">const</span> Picture&amp;, <span class="hljs-type">const</span> Picture&amp;);<br><span class="hljs-keyword">private</span>:<br>	Picture left, right;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-    friend Picture operator|(const Picture&amp;, const Picture&amp;);
-private:
-    Picture left, right;
-&#125;;
-</code></pre>
 <hr>
-<h2 id="总述及效果展示"><a href="#总述及效果展示" class="headerlink" title="总述及效果展示"></a>总述及效果展示</h2><p>通过上面从<a href="#%E6%80%8E%E4%B9%88%E7%BA%B5%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%9F%E4%BF%AF%E7%9E%B0%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB">继承关系设计</a> 到 <a href="#%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1">类型的具体设计</a> ，我们基本有了程序的框架。</p>
+<h2><a href="#zong-shu-ji-xiao-guo-zhan-shi" class="header-anchor"># </a><span id="zong-shu-ji-xiao-guo-zhan-shi">总述及效果展示</span></h2><p>通过上面从<a href="#%E6%80%8E%E4%B9%88%E7%BA%B5%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%9F%E4%BF%AF%E7%9E%B0%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB">继承关系设计</a> 到 <a href="#%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1">类型的具体设计</a> ，我们基本有了程序的框架。</p>
 <p>在经过具体实现这些类型后，我们就得到了完整的<a href="../../../../resources/CharacterPicture.zip">代码</a>。</p>
-<h3 id="Cpp-课后习题"><a href="#Cpp-课后习题" class="headerlink" title="Cpp 课后习题"></a>Cpp 课后习题</h3><ul>
+<h3><a href="#cpp-ke-hou-xi-ti" class="header-anchor"># </a><span id="cpp-ke-hou-xi-ti">Cpp 课后习题</span></h3><ul>
 <li>课后习题 1 : 经过上面的示例，我们可以发现一个给定的图可以唯一确定一个（系列性的）输出动作，而 <code>std::string</code> 也可以唯一确定一个输出动作，请将一个给定的图转换为 <code>std::string</code> 。</li>
 <li>课后习题 2 : 请设计一个类，可以独立保存一张图及其结构信息。</li>
 <li>课后习题 3 : 习题 2 自然不难，能否将这个类的 <code>std::cin</code> 和<code>std::cout</code> 的对应操作重载，使其能够被保存和读取。</li>
@@ -738,7 +502,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852989"></script>
+<script async src="/js/app.js?v=1675842043948"></script>
 
 
 

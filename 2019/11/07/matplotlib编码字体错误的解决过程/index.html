@@ -30,9 +30,9 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852990">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675842043949">
     
-    <link rel="stylesheet" href="/css/style.css?v=1675841852990">
+    <link rel="stylesheet" href="/css/style.css?v=1675842043949">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -199,7 +199,7 @@
     
 </div>
 
-      <h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
+      <h2><a href="#fa-xian-wen-ti" class="header-anchor"># </a><span id="fa-xian-wen-ti">发现问题</span></h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
 <p>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]  # 用来正常显示中文标签<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False  # 用来正常显示负号</p>
 <span id="more"></span>
 
@@ -207,105 +207,43 @@
 <p>第二行则是设置减号（<code>-</code> ）采用 ASCII 码查找字体，而非 unicode 编码。</p>
 <p>但是，在使用过程中发生了错误。</p>
 <p>复现错误：</p>
-<pre><code class="python"># -*- coding: UTF-8 -*-
-%matplotlib inline
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br>%matplotlib inline<br><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>]=[<span class="hljs-string">&#x27;SimHei&#x27;</span>]<br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>]=<span class="hljs-literal">False</span><br><br><br><br>plt.figure(figsize=(<span class="hljs-number">18</span>,<span class="hljs-number">9</span>))<br><br>data = [<span class="hljs-number">0.001</span>*(<span class="hljs-number">10</span>**i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4</span>)]<br>bins = <span class="hljs-number">10</span>**(np.linspace(-<span class="hljs-number">3</span>, <span class="hljs-number">2</span>))<br>plt.hist(data, bins = bins, label = <span class="hljs-string">&#x27;test&#x27;</span>)<br><br>plt.xscale(<span class="hljs-string">&#x27;log&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;English test&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;汉字测试&#x27;</span>)<br><br>plt.show()<br></code></pre></td></tr></table></figure>
 
-import matplotlib.pyplot as plt
-
-plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
-plt.rcParams[&#39;axes.unicode_minus&#39;]=False
-
-
-
-plt.figure(figsize=(18,9))
-
-data = [0.001*(10**i) for i in range(4)]
-bins = 10**(np.linspace(-3, 2))
-plt.hist(data, bins = bins, label = &#39;test&#39;)
-
-plt.xscale(&#39;log&#39;)
-plt.ylabel(&#39;English test&#39;)
-plt.title(&#39;汉字测试&#39;)
-
-plt.show()
-</code></pre>
 <p>会发生这样的错误：</p>
 <blockquote>
-<pre><code>%pythonlib%\matplotlib\mathtext.py:849: MathTextWarning: Font &#39;default&#39; does not have a glyph for &#39;-&#39; [U+2212]
-  MathTextWarning)
-%pythonlib%\matplotlib\mathtext.py:850: MathTextWarning: Substituting with a dummy symbol.
-  warn(&quot;Substituting with a dummy symbol.&quot;, MathTextWarning)
-</code></pre>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mel">%pythonlib%\matplotlib\mathtext.py:<span class="hljs-number">849</span>: MathTextWarning: Font <span class="hljs-string">&#x27;default&#x27;</span> does not have a glyph <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;-&#x27;</span> [U+<span class="hljs-number">2212</span>]<br>  MathTextWarning)<br>%pythonlib%\matplotlib\mathtext.py:<span class="hljs-number">850</span>: MathTextWarning: Substituting with a dummy symbol.<br>  warn(<span class="hljs-string">&quot;Substituting with a dummy symbol.&quot;</span>, MathTextWarning)<br></code></pre></td></tr></table></figure>
 </blockquote>
 <p>我们可以认为是 ‘-‘ 导致的出错。</p>
 <p>通过在 github 上的 <a target="_blank" rel="noopener" href="https://github.com/matplotlib/matplotlib">matplotlib 项目</a> 查找，可以找到这个文件 <a target="_blank" rel="noopener" href="https://github.com/matplotlib/matplotlib/blob/master/examples/text_labels_and_annotations/unicode_minus.py">matplotlib&#x2F;examples&#x2F;text_labels_and_annotations&#x2F;unicode_minus.py</a> ，通过看文件名，大致可知其为 <code>unicode_minus</code> 的示例文件。</p>
 <p>内容如下：</p>
-<pre><code class="python">&quot;&quot;&quot;
-=============
-Unicode minus
-=============
-By default, tick labels at negative values are rendered using a `Unicode
-minus`__ (U+2212) rather than an ASCII hyphen (U+002D).  This can be controlled
-by setting :rc:`axes.unicode_minus`.
-__ https://en.wikipedia.org/wiki/Plus_and_minus_signs#Character_codes
-The replacement is performed at draw time of the tick labels (usually during a
-`.pyplot.show()` or `.pyplot.savefig()` call). Therefore, all tick labels of
-the figure follow the same setting and we cannot demonstrate both glyphs on
-real tick labels of the same figure simultaneously.
-Instead, this example simply showcases the difference between the two glyphs
-in a magnified font.
-&quot;&quot;&quot;
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">=============</span><br><span class="hljs-string">Unicode minus</span><br><span class="hljs-string">=============</span><br><span class="hljs-string">By default, tick labels at negative values are rendered using a `Unicode</span><br><span class="hljs-string">minus`__ (U+2212) rather than an ASCII hyphen (U+002D).  This can be controlled</span><br><span class="hljs-string">by setting :rc:`axes.unicode_minus`.</span><br><span class="hljs-string">__ https://en.wikipedia.org/wiki/Plus_and_minus_signs#Character_codes</span><br><span class="hljs-string">The replacement is performed at draw time of the tick labels (usually during a</span><br><span class="hljs-string">`.pyplot.show()` or `.pyplot.savefig()` call). Therefore, all tick labels of</span><br><span class="hljs-string">the figure follow the same setting and we cannot demonstrate both glyphs on</span><br><span class="hljs-string">real tick labels of the same figure simultaneously.</span><br><span class="hljs-string">Instead, this example simply showcases the difference between the two glyphs</span><br><span class="hljs-string">in a magnified font.</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>fig = plt.figure(figsize=(<span class="hljs-number">4</span>, <span class="hljs-number">2</span>))<br>fig.text(<span class="hljs-number">.15</span>, <span class="hljs-number">.6</span>, <span class="hljs-string">&quot;Unicode minus:&quot;</span>, fontsize=<span class="hljs-number">20</span>)<br>fig.text(<span class="hljs-number">.85</span>, <span class="hljs-number">.6</span>, <span class="hljs-string">&quot;\N&#123;MINUS SIGN&#125;1&quot;</span>, ha=<span class="hljs-string">&#x27;right&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>fig.text(<span class="hljs-number">.15</span>, <span class="hljs-number">.3</span>, <span class="hljs-string">&quot;ASCII hyphen:&quot;</span>, fontsize=<span class="hljs-number">20</span>)<br>fig.text(<span class="hljs-number">.85</span>, <span class="hljs-number">.3</span>, <span class="hljs-string">&quot;-1&quot;</span>, ha=<span class="hljs-string">&#x27;right&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
 
-import matplotlib.pyplot as plt
-
-fig = plt.figure(figsize=(4, 2))
-fig.text(.15, .6, &quot;Unicode minus:&quot;, fontsize=20)
-fig.text(.85, .6, &quot;\N&#123;MINUS SIGN&#125;1&quot;, ha=&#39;right&#39;, fontsize=20)
-fig.text(.15, .3, &quot;ASCII hyphen:&quot;, fontsize=20)
-fig.text(.85, .3, &quot;-1&quot;, ha=&#39;right&#39;, fontsize=20)
-plt.show()
-</code></pre>
 <p>可知，<code>unicode_minus</code> 设置为 <code>False</code> 时，理应不使用 U+2212 输出，而是使用 U+002D，然而上面的错误信息却试图输出 U+2212，我们可以认为是这个选项没有起到作用。</p>
-<h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
+<h2><a href="#ding-wei-wen-ti" class="header-anchor"># </a><span id="ding-wei-wen-ti">定位问题</span></h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale(&#39;log&#39;)</code> 一行。</p>
 <p>不妨在库源码中追溯来源。</p>
-<pre><code class="python">import matplotlib.pyplot as plt
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br></code></pre></td></tr></table></figure>
+
 <p>由此可知，错误是在 <code>matplotlib.pyplot.xscale</code> 调用时出现的。</p>
 <p>追溯<code>matplotlib.pyplot.xscale</code> 可得：</p>
-<pre><code class="python">def xscale(*args, **kwargs):
-    gca().set_xscale(*args, **kwargs)
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">xscale</span>(<span class="hljs-params">*args, **kwargs</span>):<br>    gca().set_xscale(*args, **kwargs)<br></code></pre></td></tr></table></figure>
+
 <p>首先判断 <code>gca()</code> 类型，由 <code>print(gca().__module__)</code> 输出 <code>matplotlib.axes._subplots</code> 。</p>
 <p>打开对应模块，会发现找不到 <code>gca()</code> 的定义。</p>
 <p>改为 <code>print(type(gca()))</code> ，输出<code>&lt;class &#39;matplotlib.axes._subplots.AxesSubplot&#39;&gt;</code> 。</p>
 <p>虽然未能找到 <code>AxesSubplot</code> ，但是观察可得，<code>AxesSubplot</code> 应该是 <code>matplotlib.axes._subplots.SubplotBase</code>  的一个子类&#x2F;别名。</p>
 <p>然而，在该基类中未能找到对应的函数。</p>
 <p>由于 python 具有反射机制，我们想当然地去<code>matplotlib\axes\_base.py</code> 中，在<code>matplotlib.axes._base._AxesBase</code> 内，可以找到</p>
-<pre><code class="python">    def set_xscale(self, value, **kwargs):
-        g = self.get_shared_x_axes()
-        for ax in g.get_siblings(self):
-            ax.xaxis._set_scale(value, **kwargs)
-            ax._update_transScale()
-            ax.stale = True
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_xscale</span>(<span class="hljs-params">self, value, **kwargs</span>):<br>    g = self.get_shared_x_axes()<br>    <span class="hljs-keyword">for</span> ax <span class="hljs-keyword">in</span> g.get_siblings(self):<br>        ax.xaxis._set_scale(value, **kwargs)<br>        ax._update_transScale()<br>        ax.stale = <span class="hljs-literal">True</span><br><br>    self.autoscale_view(scaley=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
 
-        self.autoscale_view(scaley=False)
-</code></pre>
 <p>简单分析可知，我们出错的情况下， <code>set_xscale</code> 传入参数为 <code>set_xscale(this, &#39;log&#39;)</code> 。</p>
 <p>也即通过该函数呈递给  <code>ax.xaxis._set_scale(value, **kwargs)</code> ，此时<code>value = &#39;log&#39;, kwargs=&#123;&#125;</code> 。</p>
 <p>在呈递前插入</p>
-<pre><code class="python">            print(type(ax.xaxis))
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(ax.xaxis))<br></code></pre></td></tr></table></figure>
+
 <p>得到输出<code>&lt;class &#39;matplotlib.axis.XAxis&#39;&gt;</code> 。</p>
 <p>由于<code>XAxis</code> 继承于<code>Axis</code> ，搜索<code>_set_scale</code> 可发现其定义于后者，即基类中。</p>
-<pre><code class="python">    def _set_scale(self, value, **kwargs):
-        self._scale = mscale.scale_factory(value, self, **kwargs)
-        self._scale.set_default_locators_and_formatters(self)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_set_scale</span>(<span class="hljs-params">self, value, **kwargs</span>):<br>    self._scale = mscale.scale_factory(value, self, **kwargs)<br>    self._scale.set_default_locators_and_formatters(self)<br><br>    self.isDefault_majloc = <span class="hljs-literal">True</span><br>    self.isDefault_minloc = <span class="hljs-literal">True</span><br>    self.isDefault_majfmt = <span class="hljs-literal">True</span><br>    self.isDefault_minfmt = <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
 
-        self.isDefault_majloc = True
-        self.isDefault_minloc = True
-        self.isDefault_majfmt = True
-        self.isDefault_minfmt = True
-</code></pre>
 <p>通过尝试输出<code>self._scale</code> ，可以得到缩放类型为<code>&quot;log&quot;</code> 时，该变量类型为<code>matplotlib.scale.LogScale</code> 。</p>
 <p>目前，我们可以得到这样的呈递关系图：</p>
 <pre class="mermaid">graph TB;
@@ -319,54 +257,20 @@ axis[axis.XAxis._set_scale&#40'log'&#41]
 mscale[scale.LogScale.set_default_locators_and_formatters&#40&#41]</pre>
 
 <p>根据</p>
-<pre><code class="python">class LogitScale(ScaleBase):
-    ...
-</code></pre>
-<pre><code class="python">_scale_mapping = &#123;
-    &#39;linear&#39;: LinearScale,
-    &#39;log&#39;:    LogScale,
-    &#39;symlog&#39;: SymmetricalLogScale,
-    &#39;logit&#39;:  LogitScale,
-    &#125;
-</code></pre>
-<pre><code class="python">def scale_factory(scale, axis, **kwargs):
-    &quot;&quot;&quot;
-    Return a scale class by name.
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LogitScale</span>(<span class="hljs-title class_ inherited__">ScaleBase</span>):<br>    ...<br></code></pre></td></tr></table></figure>
 
-    ACCEPTS: [ %(names)s ]
-    &quot;&quot;&quot;
-    scale = scale.lower()
-    if scale is None:
-        scale = &#39;linear&#39;
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">_scale_mapping = &#123;<br>    <span class="hljs-string">&#x27;linear&#x27;</span>: LinearScale,<br>    <span class="hljs-string">&#x27;log&#x27;</span>:    LogScale,<br>    <span class="hljs-string">&#x27;symlog&#x27;</span>: SymmetricalLogScale,<br>    <span class="hljs-string">&#x27;logit&#x27;</span>:  LogitScale,<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-    if scale not in _scale_mapping:
-        raise ValueError(&quot;Unknown scale type &#39;%s&#39;&quot; % scale)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">scale_factory</span>(<span class="hljs-params">scale, axis, **kwargs</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Return a scale class by name.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    ACCEPTS: [ %(names)s ]</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    scale = scale.lower()<br>    <span class="hljs-keyword">if</span> scale <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        scale = <span class="hljs-string">&#x27;linear&#x27;</span><br><br>    <span class="hljs-keyword">if</span> scale <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> _scale_mapping:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;Unknown scale type &#x27;%s&#x27;&quot;</span> % scale)<br><br>    <span class="hljs-keyword">return</span> _scale_mapping[scale](axis, **kwargs)<br>scale_factory.__doc__ = cbook.dedent(scale_factory.__doc__) % \<br>    &#123;<span class="hljs-string">&#x27;names&#x27;</span>: <span class="hljs-string">&quot; | &quot;</span>.join(get_scale_names())&#125;<br></code></pre></td></tr></table></figure>
 
-    return _scale_mapping[scale](axis, **kwargs)
-scale_factory.__doc__ = cbook.dedent(scale_factory.__doc__) % \
-    &#123;&#39;names&#39;: &quot; | &quot;.join(get_scale_names())&#125;
-</code></pre>
 <p>可得<code>self._scale = mscale.scale_factory(&#39;log&#39;)</code> 等价于<code>self._scale = mscale.LogScale(self)</code> 。</p>
 <p>到 <code>class &#39;matplotlib.scale.LogScale&#39;</code> 中可以看到方法</p>
-<pre><code class="python">    def set_default_locators_and_formatters(self, axis):
-        &quot;&quot;&quot;
-        Set the locators and formatters to specialized versions for
-        log scaling.
-        &quot;&quot;&quot;
-        axis.set_major_locator(LogLocator(self.base))
-        axis.set_major_formatter(LogFormatterSciNotation(self.base))
-        axis.set_minor_locator(LogLocator(self.base, self.subs))
-        axis.set_minor_formatter(
-            LogFormatterSciNotation(self.base,
-                                    labelOnlyBase=(self.subs is not None)))
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">set_default_locators_and_formatters</span>(<span class="hljs-params">self, axis</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Set the locators and formatters to specialized versions for</span><br><span class="hljs-string">    log scaling.</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    axis.set_major_locator(LogLocator(self.base))<br>    axis.set_major_formatter(LogFormatterSciNotation(self.base))<br>    axis.set_minor_locator(LogLocator(self.base, self.subs))<br>    axis.set_minor_formatter(<br>        LogFormatterSciNotation(self.base,<br>                                labelOnlyBase=(self.subs <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>)))<br></code></pre></td></tr></table></figure>
+
 <p>观察易知，其分别设置刻度的标值和格式。</p>
 <p>将设置四行改为</p>
-<pre><code class="python">        axis.set_major_locator(NullLocator())
-        axis.set_major_formatter(NullFormatter())
-        axis.set_minor_locator(NullLocator())
-        axis.set_minor_formatter(NullFormatter())
-</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">axis.set_major_locator(NullLocator())<br>axis.set_major_formatter(NullFormatter())<br>axis.set_minor_locator(NullLocator())<br>axis.set_minor_formatter(NullFormatter())<br></code></pre></td></tr></table></figure>
+
 <p>可以发现，<code>plt.show()</code> 没有了水平刻度值，也没有警告信息。</p>
 <p>通过观察可知，<code>set_major_XXX</code> 控制刻度值，而<code>set_minor_XXX</code> 控制刻度格。</p>
 <p>并且错误原因在于<code>axis.set_major_formatter(LogFormatterSciNotation(self.base))</code> 。</p>
@@ -375,48 +279,10 @@ scale_factory.__doc__ = cbook.dedent(scale_factory.__doc__) % \
 <p>其中，<code>LogFormatterSciNotation</code> 类型为 <code>matplotlib.ticker.LogFormatterSciNotation</code> 。</p>
 <hr>
 <p>根据输出的警告信息，我们在对应位置前生成一个异常，可以得到</p>
-<pre><code class="python">matplotlib\mathtext.py in __init__(self, c, state, math)
-   1454         # The real width, height and depth will be set during the
-   1455         # pack phase, after we know the real fontsize
--&gt; 1456         self._update_metrics()
-   1457 
-   1458     def __internal_repr__(self):
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python">matplotlib\mathtext.py <span class="hljs-keyword">in</span> __init__(self, c, state, math)<br>   <span class="hljs-number">1454</span>         <span class="hljs-comment"># The real width, height and depth will be set during the</span><br>   <span class="hljs-number">1455</span>         <span class="hljs-comment"># pack phase, after we know the real fontsize</span><br>-&gt; <span class="hljs-number">1456</span>         self._update_metrics()<br>   <span class="hljs-number">1457</span> <br>   <span class="hljs-number">1458</span>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">__internal_repr__</span>(<span class="hljs-params">self</span>):<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _update_metrics(self)<br>   <span class="hljs-number">1461</span>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">_update_metrics</span>(<span class="hljs-params">self</span>):<br>   <span class="hljs-number">1462</span>         metrics = self._metrics = self.font_output.get_metrics(<br>-&gt; <span class="hljs-number">1463</span>             self.font, self.font_class, self.c, self.fontsize, self.dpi, self.math)<br>   <span class="hljs-number">1464</span>         <span class="hljs-keyword">if</span> self.c == <span class="hljs-string">&#x27; &#x27;</span>:<br>   <span class="hljs-number">1465</span>             self.width = metrics.advance<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> get_metrics(self, font, font_class, sym, fontsize, dpi, math)<br>    <span class="hljs-number">456</span>             <span class="hljs-string">&quot;height&quot;</span>.<br>    <span class="hljs-number">457</span>         <span class="hljs-string">&quot;&quot;&quot;&quot;&quot;&quot;</span><span class="hljs-string">&quot; # 为了不影响代码高亮，补全引号</span><br><span class="hljs-string">--&gt; 458         info = self._get_info(font, font_class, sym, fontsize, dpi, math)</span><br><span class="hljs-string">    459         return info.metrics</span><br><span class="hljs-string">    460 </span><br><span class="hljs-string"></span><br><span class="hljs-string">matplotlib\mathtext.py in _get_info(self, fontname, font_class, sym, fontsize, dpi, math)</span><br><span class="hljs-string">    579 </span><br><span class="hljs-string">    580         font, num, symbol_name, fontsize, slanted = \</span><br><span class="hljs-string">--&gt; 581             self._get_glyph(fontname, font_class, sym, fontsize, math)</span><br><span class="hljs-string">    582 </span><br><span class="hljs-string">    583         font.set_size(fontsize, dpi)</span><br><span class="hljs-string"></span><br><span class="hljs-string">matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)</span><br><span class="hljs-string">    907             # otherwise return regular glyph</span><br><span class="hljs-string">    908             return super(DejaVuFonts, self).\_get_glyph(fontname,</span><br><span class="hljs-string">--&gt; 909                     font_class, sym, fontsize, math)</span><br><span class="hljs-string">    910 </span><br><span class="hljs-string">    911 </span><br><span class="hljs-string"></span><br><span class="hljs-string">matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)</span><br><span class="hljs-string">    787 </span><br><span class="hljs-string">    788     def _get_glyph(self, fontname, font_class, sym, fontsize, math=True):</span><br><span class="hljs-string">--&gt; 789         raise &quot;</span>test<span class="hljs-string">&quot;</span><br><span class="hljs-string">    790         found_symbol = False</span><br><span class="hljs-string">    791 </span><br></code></pre></td></tr></table></figure>
 
-matplotlib\mathtext.py in _update_metrics(self)
-   1461     def _update_metrics(self):
-   1462         metrics = self._metrics = self.font_output.get_metrics(
--&gt; 1463             self.font, self.font_class, self.c, self.fontsize, self.dpi, self.math)
-   1464         if self.c == &#39; &#39;:
-   1465             self.width = metrics.advance
 
-matplotlib\mathtext.py in get_metrics(self, font, font_class, sym, fontsize, dpi, math)
-    456             &quot;height&quot;.
-    457         &quot;&quot;&quot;&quot;&quot;&quot;&quot; # 为了不影响代码高亮，补全引号
---&gt; 458         info = self._get_info(font, font_class, sym, fontsize, dpi, math)
-    459         return info.metrics
-    460 
 
-matplotlib\mathtext.py in _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
-    579 
-    580         font, num, symbol_name, fontsize, slanted = \
---&gt; 581             self._get_glyph(fontname, font_class, sym, fontsize, math)
-    582 
-    583         font.set_size(fontsize, dpi)
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    907             # otherwise return regular glyph
-    908             return super(DejaVuFonts, self).\_get_glyph(fontname,
---&gt; 909                     font_class, sym, fontsize, math)
-    910 
-    911 
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    787 
-    788     def _get_glyph(self, fontname, font_class, sym, fontsize, math=True):
---&gt; 789         raise &quot;test&quot;
-    790         found_symbol = False
-    791 
-</code></pre>
 <p>此时的 fontname 为 ‘default’，应当改为其他内容（以满足条件 <code>fontname in (&#39;it&#39;, &#39;regular&#39;)</code> ）</p>
 <hr>
 <p>经测试，改 UnicodeFonts 类中 _get_glyph 内 fontname 为 ‘it’ 可解决问题。</p>
@@ -424,167 +290,21 @@ matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, 
 <p>经测试，改 Fonts 基类中的 get_metrics 方法的 font 为 ‘it’ 无效。</p>
 <p>在 _get_info 添加输出，可以发现其被多处调用。</p>
 <p>重新获取另一调用链，可得</p>
-<pre><code class="python">matplotlib\mathtext.py in group(self, s, loc, toks)
-   2814 
-   2815     def group(self, s, loc, toks):
--&gt; 2816         grp = Hlist(toks[0])
-   2817         return [grp]
-   2818     required_group = simple_group = group
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs python">matplotlib\mathtext.py <span class="hljs-keyword">in</span> group(self, s, loc, toks)<br>   <span class="hljs-number">2814</span> <br>   <span class="hljs-number">2815</span>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">group</span>(<span class="hljs-params">self, s, loc, toks</span>):<br>-&gt; <span class="hljs-number">2816</span>         grp = Hlist(toks[<span class="hljs-number">0</span>])<br>   <span class="hljs-number">2817</span>         <span class="hljs-keyword">return</span> [grp]<br>   <span class="hljs-number">2818</span>     required_group = simple_group = group<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> __init__(self, elements, w, m, do_kern)<br>   <span class="hljs-number">1609</span>         <span class="hljs-type">List</span>.__init__(self, elements)<br>   <span class="hljs-number">1610</span>         <span class="hljs-keyword">if</span> do_kern:<br>-&gt; <span class="hljs-number">1611</span>             self.kern()<br>   <span class="hljs-number">1612</span>         self.hpack()<br>   <span class="hljs-number">1613</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> kern(self)<br>   <span class="hljs-number">1631</span> <br>   <span class="hljs-number">1632</span>                 new_children.append(elem)<br>-&gt; <span class="hljs-number">1633</span>                 kerning_distance = elem.get_kerning(<span class="hljs-built_in">next</span>)<br>   <span class="hljs-number">1634</span>                 <span class="hljs-keyword">if</span> kerning_distance != <span class="hljs-number">0.</span>:<br>   <span class="hljs-number">1635</span>                     kern = Kern(kerning_distance)<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> get_kerning(self, <span class="hljs-built_in">next</span>)<br>   <span class="hljs-number">1486</span>                 self.font, self.font_class, self.c, self.fontsize,<br>   <span class="hljs-number">1487</span>                 <span class="hljs-built_in">next</span>.font, <span class="hljs-built_in">next</span>.font_class, <span class="hljs-built_in">next</span>.c, <span class="hljs-built_in">next</span>.fontsize,<br>-&gt; <span class="hljs-number">1488</span>                 self.dpi)<br>   <span class="hljs-number">1489</span>         <span class="hljs-keyword">return</span> advance + kern<br>   <span class="hljs-number">1490</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)<br>    <span class="hljs-number">634</span>                  font2, fontclass2, sym2, fontsize2, dpi):<br>    <span class="hljs-number">635</span>         <span class="hljs-keyword">if</span> font1 == font2 <span class="hljs-keyword">and</span> fontsize1 == fontsize2:<br>--&gt; <span class="hljs-number">636</span>             info1 = self._get_info(font1, fontclass1, sym1, fontsize1, dpi)<br>    <span class="hljs-number">637</span>             info2 = self._get_info(font2, fontclass2, sym2, fontsize2, dpi)<br>    <span class="hljs-number">638</span>             font = info1.font<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_info(self, fontname, font_class, sym, fontsize, dpi, math)<br>    <span class="hljs-number">580</span> <br>    <span class="hljs-number">581</span>         font, num, symbol_name, fontsize, slanted = \<br>--&gt; <span class="hljs-number">582</span>             self._get_glyph(fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">583</span> <br>    <span class="hljs-number">584</span>         font.set_size(fontsize, dpi)<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">909</span>             <span class="hljs-comment"># otherwise return regular glyph</span><br>    <span class="hljs-number">910</span>             <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>(DejaVuFonts, self)._get_glyph(fontname,<br>--&gt; <span class="hljs-number">911</span>                     font_class, sym, fontsize, math)<br>    <span class="hljs-number">912</span> <br>    <span class="hljs-number">913</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">840</span>                 <span class="hljs-keyword">else</span>:<br>    <span class="hljs-number">841</span>                     <span class="hljs-keyword">return</span> self.cm_fallback._get_glyph(<br>--&gt; <span class="hljs-number">842</span>                         fontname, font_class, sym, fontsize)<br>    <span class="hljs-number">843</span>             <span class="hljs-keyword">else</span>:<br>    <span class="hljs-number">844</span>                 <span class="hljs-keyword">if</span> fontname <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;it&#x27;</span>, <span class="hljs-string">&#x27;regular&#x27;</span>) <span class="hljs-keyword">and</span> <span class="hljs-built_in">isinstance</span>(self, StixFonts):<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">845</span>                     <span class="hljs-keyword">return</span> self._get_glyph(<span class="hljs-string">&#x27;rm&#x27;</span>, font_class, sym, fontsize)<br>    <span class="hljs-number">846</span>                 <span class="hljs-built_in">print</span>(fontname)<br>--&gt; <span class="hljs-number">847</span>                 <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;error&#x27;</span><br>    <span class="hljs-number">848</span>                 warn(<span class="hljs-string">&quot;Font &#x27;%s&#x27; does not have a glyph for &#x27;%s&#x27; [U+%x]&quot;</span> %<br>    <span class="hljs-number">849</span>                      (new_fontname,<br></code></pre></td></tr></table></figure>
 
-matplotlib\mathtext.py in __init__(self, elements, w, m, do_kern)
-   1609         List.__init__(self, elements)
-   1610         if do_kern:
--&gt; 1611             self.kern()
-   1612         self.hpack()
-   1613 
-
-matplotlib\mathtext.py in kern(self)
-   1631 
-   1632                 new_children.append(elem)
--&gt; 1633                 kerning_distance = elem.get_kerning(next)
-   1634                 if kerning_distance != 0.:
-   1635                     kern = Kern(kerning_distance)
-
-matplotlib\mathtext.py in get_kerning(self, next)
-   1486                 self.font, self.font_class, self.c, self.fontsize,
-   1487                 next.font, next.font_class, next.c, next.fontsize,
--&gt; 1488                 self.dpi)
-   1489         return advance + kern
-   1490 
-
-matplotlib\mathtext.py in get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)
-    634                  font2, fontclass2, sym2, fontsize2, dpi):
-    635         if font1 == font2 and fontsize1 == fontsize2:
---&gt; 636             info1 = self._get_info(font1, fontclass1, sym1, fontsize1, dpi)
-    637             info2 = self._get_info(font2, fontclass2, sym2, fontsize2, dpi)
-    638             font = info1.font
-
-matplotlib\mathtext.py in _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
-    580 
-    581         font, num, symbol_name, fontsize, slanted = \
---&gt; 582             self._get_glyph(fontname, font_class, sym, fontsize, math)
-    583 
-    584         font.set_size(fontsize, dpi)
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    909             # otherwise return regular glyph
-    910             return super(DejaVuFonts, self)._get_glyph(fontname,
---&gt; 911                     font_class, sym, fontsize, math)
-    912 
-    913 
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    840                 else:
-    841                     return self.cm_fallback._get_glyph(
---&gt; 842                         fontname, font_class, sym, fontsize)
-    843             else:
-    844                 if fontname in (&#39;it&#39;, &#39;regular&#39;) and isinstance(self, StixFonts):
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    845                     return self._get_glyph(&#39;rm&#39;, font_class, sym, fontsize)
-    846                 print(fontname)
---&gt; 847                 raise &#39;error&#39;
-    848                 warn(&quot;Font &#39;%s&#39; does not have a glyph for &#39;%s&#39; [U+%x]&quot; %
-    849                      (new_fontname,
-</code></pre>
 <p>为了方便此后调试，在改动部分加上 <code># RecoDebugging</code> 。</p>
 <p>该次 Bug 出错在于 <code>mathtext.Char.font = &#39;default&#39;</code> ，经过捕捉可发现其被 <code>state.font</code> 赋值，即 <code>matplotlib.mathtext.Parser.State.font</code> 。</p>
 <p>追踪这个构造函数调用，可得</p>
-<pre><code class="python">matplotlib\mathtext.py in symbol(self, s, loc, toks)
-   2638         c = toks[0]
-   2639         try:
--&gt; 2640             char = Char(c, self.get_state())
-   2641         except ValueError:
-   2642             raise ParseFatalException(s, loc, &quot;Unknown symbol: %s&quot; % c)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">matplotlib\mathtext.py <span class="hljs-keyword">in</span> symbol(self, s, loc, toks)<br>   <span class="hljs-number">2638</span>         c = toks[<span class="hljs-number">0</span>]<br>   <span class="hljs-number">2639</span>         <span class="hljs-keyword">try</span>:<br>-&gt; <span class="hljs-number">2640</span>             char = Char(c, self.get_state())<br>   <span class="hljs-number">2641</span>         <span class="hljs-keyword">except</span> ValueError:<br>   <span class="hljs-number">2642</span>             <span class="hljs-keyword">raise</span> ParseFatalException(s, loc, <span class="hljs-string">&quot;Unknown symbol: %s&quot;</span> % c)<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> __init__(self, c, state, math)<br>   <span class="hljs-number">1449</span>         self.c = c<br>   <span class="hljs-number">1450</span>         self.font_output = state.font_output<br>-&gt; <span class="hljs-number">1451</span>         <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;test&#x27;</span><br>   <span class="hljs-number">1452</span>         self.font = state.font<br>   <span class="hljs-number">1453</span>         self.font_class = state.font_class<br></code></pre></td></tr></table></figure>
 
-matplotlib\mathtext.py in __init__(self, c, state, math)
-   1449         self.c = c
-   1450         self.font_output = state.font_output
--&gt; 1451         raise &#39;test&#39;
-   1452         self.font = state.font
-   1453         self.font_class = state.font_class
-</code></pre>
 <p>观察 <code>matplotlib.mathtext.Parser.symbol</code> 可得，<code>Parser.State</code> 构造函数被调用于 </p>
-<pre><code class="python">matplotlib\mathtext.py in parse(self, s, fonts_object, fontsize, dpi)
-   2513         Returns the parse tree of :class:`Node` instances.
-   2514         &quot;&quot;&quot;&quot;&quot;&quot; # end the comment
--&gt; 2515         self._state_stack = [self.State(fonts_object, &#39;default&#39;, &#39;rm&#39;, fontsize, dpi)]
-   2516         self._em_width_cache = &#123;&#125;
-   2517         try:
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">matplotlib\mathtext.py <span class="hljs-keyword">in</span> parse(self, s, fonts_object, fontsize, dpi)<br>   <span class="hljs-number">2513</span>         Returns the parse tree of :<span class="hljs-keyword">class</span>:`Node` instances.<br>   <span class="hljs-number">2514</span>         <span class="hljs-string">&quot;&quot;&quot;&quot;&quot;&quot;</span> <span class="hljs-comment"># end the comment</span><br>-&gt; <span class="hljs-number">2515</span>         self._state_stack = [self.State(fonts_object, <span class="hljs-string">&#x27;default&#x27;</span>, <span class="hljs-string">&#x27;rm&#x27;</span>, fontsize, dpi)]<br>   <span class="hljs-number">2516</span>         self._em_width_cache = &#123;&#125;<br>   <span class="hljs-number">2517</span>         <span class="hljs-keyword">try</span>:<br><br>C:\ProgramData\Anaconda3\lib\site-packages\matplotlib\mathtext.py <span class="hljs-keyword">in</span> __init__(self, font_output, font, font_class, fontsize, dpi)<br>   <span class="hljs-number">2540</span>         <span class="hljs-string">&quot;&quot;&quot;&quot;&quot;&quot;</span>  <span class="hljs-comment"># end the comment</span><br>   <span class="hljs-number">2541</span>         <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, font_output, font, font_class, fontsize, dpi</span>):<br>-&gt; <span class="hljs-number">2542</span>             <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;generate state&#x27;</span><br>   <span class="hljs-number">2543</span>             self.font_output = font_output<br>   <span class="hljs-number">2544</span>             self._font = font<br></code></pre></td></tr></table></figure>
 
-C:\ProgramData\Anaconda3\lib\site-packages\matplotlib\mathtext.py in __init__(self, font_output, font, font_class, fontsize, dpi)
-   2540         &quot;&quot;&quot;&quot;&quot;&quot;  # end the comment
-   2541         def __init__(self, font_output, font, font_class, fontsize, dpi):
--&gt; 2542             raise &#39;generate state&#39;
-   2543             self.font_output = font_output
-   2544             self._font = font
-</code></pre>
 <p>最终可以发现，<code>state</code> 被赋值于此处，只需要修改 <code>matplotlib.mathtext.Parser.parse</code> 即可结束此支错误。</p>
 <hr>
 <p>暂改为 ‘it’，运行仍然出错，主动抛出异常，捕获链如下：</p>
-<pre><code class="python">matplotlib\mathtext.py in group(self, s, loc, toks)
-   2815 
-   2816     def group(self, s, loc, toks):
--&gt; 2817         grp = Hlist(toks[0])
-   2818         return [grp]
-   2819     required_group = simple_group = group
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs python">matplotlib\mathtext.py <span class="hljs-keyword">in</span> group(self, s, loc, toks)<br>   <span class="hljs-number">2815</span> <br>   <span class="hljs-number">2816</span>     <span class="hljs-keyword">def</span> <span class="hljs-title function_">group</span>(<span class="hljs-params">self, s, loc, toks</span>):<br>-&gt; <span class="hljs-number">2817</span>         grp = Hlist(toks[<span class="hljs-number">0</span>])<br>   <span class="hljs-number">2818</span>         <span class="hljs-keyword">return</span> [grp]<br>   <span class="hljs-number">2819</span>     required_group = simple_group = group<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> __init__(self, elements, w, m, do_kern)<br>   <span class="hljs-number">1609</span>         <span class="hljs-type">List</span>.__init__(self, elements)<br>   <span class="hljs-number">1610</span>         <span class="hljs-keyword">if</span> do_kern:<br>-&gt; <span class="hljs-number">1611</span>             self.kern()<br>   <span class="hljs-number">1612</span>         self.hpack()<br>   <span class="hljs-number">1613</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> kern(self)<br>   <span class="hljs-number">1631</span> <br>   <span class="hljs-number">1632</span>                 new_children.append(elem)<br>-&gt; <span class="hljs-number">1633</span>                 kerning_distance = elem.get_kerning(<span class="hljs-built_in">next</span>)<br>   <span class="hljs-number">1634</span>                 <span class="hljs-keyword">if</span> kerning_distance != <span class="hljs-number">0.</span>:<br>   <span class="hljs-number">1635</span>                     kern = Kern(kerning_distance)<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> get_kerning(self, <span class="hljs-built_in">next</span>)<br>   <span class="hljs-number">1486</span>                 self.font, self.font_class, self.c, self.fontsize,<br>   <span class="hljs-number">1487</span>                 <span class="hljs-built_in">next</span>.font, <span class="hljs-built_in">next</span>.font_class, <span class="hljs-built_in">next</span>.c, <span class="hljs-built_in">next</span>.fontsize,<br>-&gt; <span class="hljs-number">1488</span>                 self.dpi)<br>   <span class="hljs-number">1489</span>         <span class="hljs-keyword">return</span> advance + kern<br>   <span class="hljs-number">1490</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)<br>    <span class="hljs-number">634</span>                  font2, fontclass2, sym2, fontsize2, dpi):<br>    <span class="hljs-number">635</span>         <span class="hljs-keyword">if</span> font1 == font2 <span class="hljs-keyword">and</span> fontsize1 == fontsize2:<br>--&gt; <span class="hljs-number">636</span>             info1 = self._get_info(font1, fontclass1, sym1, fontsize1, dpi)<br>    <span class="hljs-number">637</span>             info2 = self._get_info(font2, fontclass2, sym2, fontsize2, dpi)<br>    <span class="hljs-number">638</span>             font = info1.font<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_info(self, fontname, font_class, sym, fontsize, dpi, math)<br>    <span class="hljs-number">580</span> <br>    <span class="hljs-number">581</span>         font, num, symbol_name, fontsize, slanted = \<br>--&gt; <span class="hljs-number">582</span>             self._get_glyph(fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">583</span> <br>    <span class="hljs-number">584</span>         font.set_size(fontsize, dpi)<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">909</span>             <span class="hljs-comment"># otherwise return regular glyph</span><br>    <span class="hljs-number">910</span>             <span class="hljs-keyword">return</span> <span class="hljs-built_in">super</span>(DejaVuFonts, self)._get_glyph(fontname,<br>--&gt; <span class="hljs-number">911</span>                     font_class, sym, fontsize, math)<br>    <span class="hljs-number">912</span> <br>    <span class="hljs-number">913</span> <br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">840</span>                 <span class="hljs-keyword">else</span>:<br>    <span class="hljs-number">841</span>                     <span class="hljs-keyword">return</span> self.cm_fallback._get_glyph(<br>--&gt; <span class="hljs-number">842</span>                         fontname, font_class, sym, fontsize)<br>    <span class="hljs-number">843</span>             <span class="hljs-keyword">else</span>:<br>    <span class="hljs-number">844</span>                 <span class="hljs-keyword">if</span> fontname <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;it&#x27;</span>, <span class="hljs-string">&#x27;regular&#x27;</span>) <span class="hljs-keyword">and</span> <span class="hljs-built_in">isinstance</span>(self, StixFonts):<br><br>matplotlib\mathtext.py <span class="hljs-keyword">in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)<br>    <span class="hljs-number">845</span>                     <span class="hljs-keyword">return</span> self._get_glyph(<span class="hljs-string">&#x27;rm&#x27;</span>, font_class, sym, fontsize)<br>    <span class="hljs-number">846</span>                 <span class="hljs-comment">#print(fontname)</span><br>--&gt; <span class="hljs-number">847</span>                 <span class="hljs-keyword">raise</span> <span class="hljs-string">&#x27;error&#x27;</span> <span class="hljs-comment"># RecoDebugging</span><br>    <span class="hljs-number">848</span>                 warn(<span class="hljs-string">&quot;Font &#x27;%s&#x27; does not have a glyph for &#x27;%s&#x27; [U+%x]&quot;</span> %<br>    <span class="hljs-number">849</span>                      (new_fontname,<br></code></pre></td></tr></table></figure>
 
-matplotlib\mathtext.py in __init__(self, elements, w, m, do_kern)
-   1609         List.__init__(self, elements)
-   1610         if do_kern:
--&gt; 1611             self.kern()
-   1612         self.hpack()
-   1613 
-
-matplotlib\mathtext.py in kern(self)
-   1631 
-   1632                 new_children.append(elem)
--&gt; 1633                 kerning_distance = elem.get_kerning(next)
-   1634                 if kerning_distance != 0.:
-   1635                     kern = Kern(kerning_distance)
-
-matplotlib\mathtext.py in get_kerning(self, next)
-   1486                 self.font, self.font_class, self.c, self.fontsize,
-   1487                 next.font, next.font_class, next.c, next.fontsize,
--&gt; 1488                 self.dpi)
-   1489         return advance + kern
-   1490 
-
-matplotlib\mathtext.py in get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)
-    634                  font2, fontclass2, sym2, fontsize2, dpi):
-    635         if font1 == font2 and fontsize1 == fontsize2:
---&gt; 636             info1 = self._get_info(font1, fontclass1, sym1, fontsize1, dpi)
-    637             info2 = self._get_info(font2, fontclass2, sym2, fontsize2, dpi)
-    638             font = info1.font
-
-matplotlib\mathtext.py in _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
-    580 
-    581         font, num, symbol_name, fontsize, slanted = \
---&gt; 582             self._get_glyph(fontname, font_class, sym, fontsize, math)
-    583 
-    584         font.set_size(fontsize, dpi)
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    909             # otherwise return regular glyph
-    910             return super(DejaVuFonts, self)._get_glyph(fontname,
---&gt; 911                     font_class, sym, fontsize, math)
-    912 
-    913 
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    840                 else:
-    841                     return self.cm_fallback._get_glyph(
---&gt; 842                         fontname, font_class, sym, fontsize)
-    843             else:
-    844                 if fontname in (&#39;it&#39;, &#39;regular&#39;) and isinstance(self, StixFonts):
-
-matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, math)
-    845                     return self._get_glyph(&#39;rm&#39;, font_class, sym, fontsize)
-    846                 #print(fontname)
---&gt; 847                 raise &#39;error&#39; # RecoDebugging
-    848                 warn(&quot;Font &#39;%s&#39; does not have a glyph for &#39;%s&#39; [U+%x]&quot; %
-    849                      (new_fontname,
-</code></pre>
 
   </article>
 
@@ -663,7 +383,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675841852990"></script>
+<script async src="/js/app.js?v=1675842043950"></script>
 
 
 
