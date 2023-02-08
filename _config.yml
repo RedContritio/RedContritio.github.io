@@ -75,11 +75,7 @@ pagination_dir: page # 分页目录
 # 拓展
 ## 插件：https://hexo.io/plugins/ #
 ## 主题：https://hexo.io/themes/
-# theme: hexo-theme-mellow # 当前主题名称。值为false时禁用主题
-# theme: hexo-theme-chireiden
-theme: hexo-theme-nexmoe
-# theme: hexo-theme-animism
-# theme: landscape
+theme: chireiden 
 
 # 部署
 ## 文档: https://hexo.io/docs/deployment.html
