@@ -1263,6 +1263,12 @@ body {
   width: 100%;
   z-index: -1;
 }
+#chireiden-content .chireiden-post .chireiden-post-cover h1.no-gradient-h1:after {
+  opacity: 0;
+}
+#chireiden-content .chireiden-post .chireiden-post-cover h1.no-gradient-h1 {
+  color: #000;
+}
 #chireiden-content .chireiden-post .chireiden-post-meta {
   margin: 25px 0px;
   font-size: 0;

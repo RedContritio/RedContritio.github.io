@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Paddle开发入门</title>
+      <link href="/2023/02/08/Paddle%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/"/>
+      <url>/2023/02/08/Paddle%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<p>过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程，</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>编程通解 第一章 资质平平也要寻仙问道</title>
       <link href="/2021/11/12/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0/"/>
       <url>/2021/11/12/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0/</url>
@@ -217,7 +230,7 @@
       <link href="/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
       <url>/2019/10/20/%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
       
-        <content type="html"><![CDATA[<h1><a href="#zhan-dian-da-jian-guo-cheng" class="header-anchor"># </a><span id="zhan-dian-da-jian-guo-cheng">站点搭建过程</span></h1><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p><span id="more"></span><h2><a href="#yi-lai" class="header-anchor"># </a><span id="yi-lai">依赖</span></h2><ul><li>配置 node.js</li><li>配置 hexo</li></ul><h2><a href="#ding-zhi" class="header-anchor"># </a><span id="ding-zhi">定制</span></h2><ul><li>设置 theme</li></ul><h2><a href="#ming-ling-xing-cao-zuo" class="header-anchor"># </a><span id="ming-ling-xing-cao-zuo">命令行操作</span></h2><ol><li><p><code>hexo new &lt;title&gt;</code></p><p>创建新文章</p></li><li><p><code>hexo g</code></p><p>构建静态页面(<code>hexo generate</code> )</p></li><li><p><code>hexo clean</code></p><p>清除已构建的页面</p></li><li><p><code>hexo s</code></p><p>本地服务器(<code>hexo server</code>)</p></li><li><p><code>hexo d</code></p><p>发布、部署(<code>hexo deploy</code>)</p></li></ol><h2><a href="#npm-dai-li" class="header-anchor"># </a><span id="npm-dai-li">NPM 代理</span></h2><p>特别的，如果 <code>ping raw.githubusercontent.com</code> 不通，可能需要设置代理。以本机为例，代理设置方式：</p><figure class="highlight ps1"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ps1">npm config <span class="hljs-built_in">set</span> proxy=http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7890</span><br>npm config <span class="hljs-built_in">set</span> registry=http://registry.npmjs.org<br></code></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h2><a href="#zhan-dian-da-jian-guo-cheng" class="header-anchor"># </a><span id="zhan-dian-da-jian-guo-cheng">站点搭建过程</span></h2><p>基于 hexo 搭建了自己的站点，在此发布一下搭建教程。</p><span id="more"></span><h3><a href="#yi-lai" class="header-anchor"># </a><span id="yi-lai">依赖</span></h3><ul><li>配置 node.js</li><li>配置 hexo</li></ul><h3><a href="#ding-zhi" class="header-anchor"># </a><span id="ding-zhi">定制</span></h3><ul><li>设置 theme</li></ul><h3><a href="#ming-ling-xing-cao-zuo" class="header-anchor"># </a><span id="ming-ling-xing-cao-zuo">命令行操作</span></h3><ol><li><p><code>hexo new &lt;title&gt;</code></p><p>创建新文章</p></li><li><p><code>hexo g</code></p><p>构建静态页面(<code>hexo generate</code> )</p></li><li><p><code>hexo clean</code></p><p>清除已构建的页面</p></li><li><p><code>hexo s</code></p><p>本地服务器(<code>hexo server</code>)</p></li><li><p><code>hexo d</code></p><p>发布、部署(<code>hexo deploy</code>)</p></li></ol><h3><a href="#npm-dai-li" class="header-anchor"># </a><span id="npm-dai-li">NPM 代理</span></h3><p>特别的，如果 <code>ping raw.githubusercontent.com</code> 不通，可能需要设置代理。以本机为例，代理设置方式：</p><figure class="highlight ps1"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ps1">npm config <span class="hljs-built_in">set</span> proxy=http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7890</span><br>npm config <span class="hljs-built_in">set</span> registry=http://registry.npmjs.org<br></code></pre></td></tr></table></figure>]]></content>
       
       
       
