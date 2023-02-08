@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>Cpp 入门 - Chireiden</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it.  [Linus">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cpp 入门">
+<meta property="og:url" content="https://redcontritio.github.io/2019/10/20/basic-cpp-knowledge/index.html">
+<meta property="og:site_name" content="Chireiden">
+<meta property="og:description" content="C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it.  [Linus">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-20T13:06:47.000Z">
+<meta property="article:modified_time" content="2023-02-07T14:13:59.719Z">
+<meta property="article:author" content="RedContritio">
+<meta property="article:tag" content="社团课程">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852992">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1675841852992">
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="chireiden-background">
+        <div class="chireiden-bg" style="background-image: url(/resources/Jupiter.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon chireidenfont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="RedContritio" class="mdui-btn mdui-btn-icon"><img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio"></a>
+            </div>
+        </div>
+    </div>
+    <div id="chireiden-header">
+        <div class="chireiden-drawer mdui-drawer" id="drawer">
+    <div class="chireiden-avatar mdui-ripple">
+        <a href="/" title="RedContritio">
+            <img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio" alt="RedContritio">
+        </a>
+    </div>
+    <div class="chireiden-count">
+        <div><span>文章</span>12</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="chireiden-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon chireidenfont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon chireidenfont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon chireidenfont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="chireiden-sidebar">
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-social">
+        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="chireidenfont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="chireidenfont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="chireidenfont icon-github"></i>
+        </a>
+    </div>
+</div>
+    
+    
+
+    
+    
+  <div class="chireiden-widget-wrap">
+    <div id="randomtagcloud" class="chireiden-widget tagcloud chireiden-rainbow">
+      <a href="/tags/Everything-%E6%B8%B8%E6%88%8F/" style="font-size: 10px;">Everything 游戏</a> <a href="/tags/VS-CSharp-Mods-Environment/" style="font-size: 10px;">VS CSharp Mods Environment</a> <a href="/tags/python-matplotlib/" style="font-size: 10px;">python matplotlib</a> <a href="/tags/ssh-sshd-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">ssh sshd 服务器 网络</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-centOS/" style="font-size: 10px;">服务器 环境配置 centOS</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" style="font-size: 15px;">社团课程</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" style="font-size: 10px;">社团课程 零基础课程</a> <a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 20px;">维护</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%B0%8F%E8%AF%B4/" style="font-size: 10px;">编程通解 编程思想 小说</a>
+    </div>
+    
+  </div>
+
+    
+    <!-- 一言 -->
+
+  <div class="chireiden-widget-wrap">
+    <h3 class="chireiden-widget-title">
+      一言
+    </h3>
+    <div class="chireiden-widget">
+      <ul class="hitokoto-box">
+        <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+          <a href="#" id="hitokoto_text">
+            
+          </a>
+          <a href="#" id="hitokoto_error_text" style="display: none;">
+            
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let hitokotoText = document.getElementById('hitokoto_text')
+    let hitokotoErroText = document.getElementById('hitokoto_error_text')
+    let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+    window.onload = function () {
+      let url = 'https://v1.hitokoto.cn'
+      if (hitokotoCategory) {
+        url += '?c=' + hitokotoCategory
+      }
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+          hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        })
+        .catch((reason) => {
+          console.error(11, reason)
+          hitokotoText.style.display = 'none'
+          hitokotoErroText.style.display = 'block'
+        })
+    }
+  </script>
+  
+    
+</aside>
+    <div class="chireiden-copyright">
+        &copy; 2023 RedContritio
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-chireiden/hexo-theme-chireiden" target="_blank">Chireiden</a>
+        <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a><script data-ad-client="ca-pub-2058306854838448" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+</div><!-- .chireiden-drawer -->
+    </div>
+    <div id="chireiden-content">
+        <div class="chireiden-primary">
+            <div class="chireiden-post">
+
+  <article>
+      
+          <div class="chireiden-post-cover" style="padding-bottom: NaN%;"> 
+              <img src="https://tva1.sinaimg.cn/large/9bd9b167gy1g2ql5g4bm5j21hc0u07wh.jpg" alt="Cpp 入门" loading="lazy">
+              <h1>Cpp 入门</h1>
+          </div>
+      
+      
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    <a><i class="chireidenfont icon-calendar-fill"></i>2019年10月20日</a>
+</div>
+
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约2.5k字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要10分钟</a>
+    
+</div>
+
+      <blockquote><p>C++ is a horrible language. It’s made more horrible by the fact that a lot of substandard programmers use it, to the point where it’s much much easier to generate total and utter crap with it. </p>
+<footer><strong>[Linus Torvalds]</strong></footer></blockquote>
+
+<span id="more"></span>
+
+<p>为了便于讲解，本文采用由浅及深的方式组织行文主线。</p>
+<p>本文主要采用对比 c 和 cpp 差异的方式来进行。</p>
+<hr>
+<h1 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h1><p>几乎所有的 c 语言代码都需要头文件，cpp 和 c 的头文件对比是开始编程前必须的一步。</p>
+<p><em>几乎所有的 c 代码中 <code>#include</code> 命令都可以直接复制到 cpp 中使用，但是这并不推荐</em></p>
+<h3 id="include-是什么？"><a href="#include-是什么？" class="headerlink" title="#include 是什么？"></a>#include 是什么？</h3><pre><code class="c">// module.txt
+printf(&quot;%d\n&quot;, a);
+a *= 3;
+</code></pre>
+<pre><code class="c">// main.c
+#include &lt;stdio.h&gt;
+
+int main()
+&#123;
+    int a = 1, b = 2;
+#include &quot;module.txt&quot;
+    printf(&quot;%d %d\n&quot;, a, b);
+    return 0;
+&#125;
+</code></pre>
+<p>编译执行 main.c 后，输出应该是</p>
+<blockquote>
+<p>1</p>
+<p>3 2</p>
+</blockquote>
+<p>可见，<code>#include</code> 作用是将一段文本直接引入到代码中。</p>
+<p>对头文件使用 <code>#include</code> 时也是如此。</p>
+<h3 id="头文件名称对比"><a href="#头文件名称对比" class="headerlink" title="头文件名称对比"></a>头文件名称对比</h3><table>
+<thead>
+<tr>
+<th>语言</th>
+<th>———–</th>
+<th>————</th>
+<th>———–</th>
+<th>———–</th>
+<th>———–</th>
+<th>———–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>c</td>
+<td>stdio.h</td>
+<td>stdlib.h</td>
+<td>math.h</td>
+<td>\</td>
+<td>windows.h</td>
+<td>string.h</td>
+</tr>
+<tr>
+<td>cpp</td>
+<td>cstdio</td>
+<td>cstdlib</td>
+<td>cmath</td>
+<td>vector</td>
+<td>windows.h</td>
+<td>cstring</td>
+</tr>
+</tbody></table>
+<p>可见，对于常见的头文件，是将 c 头文件的 .h 去掉，在前面加上 c，如 <font size=5><font color=#green>c</font>stdio<font color=red>.h</font> </font> 。</p>
+<p>尤其注意 string.h 文件，cstring 和 string 完全不同。</p>
+<pre><code class="c">// cstdio
+...
+#include &lt;stdio.h&gt;
+...
+</code></pre>
+<hr>
+<h1 id="IOSTREAM"><a href="#IOSTREAM" class="headerlink" title="IOSTREAM"></a>IOSTREAM</h1><pre><code class="cpp">#include &lt;iostream&gt;
+using namespace std;
+...
+cin &gt;&gt; a;
+cout &lt;&lt; b;
+</code></pre>
+<p>上面这一段应该是大多数人最早接触的 cpp 代码。</p>
+<p>大概讲解一下这一段内容中每行代码发生了什么。</p>
+<p><code>#include &lt;iostream&gt;</code> 引入 iostream 头文件</p>
+<p><code>using namespace std;</code> 使用 std 命名空间，命名空间如果有时间放在后面讲。<font color=#E0E0E0>反正也没人用得到不如不讲了。</font></p>
+<p>关于 cin 和 cout，我们可以构造这样一个模型：</p>
+<pre class="mermaid">graph LR;
+    input-->cin;
+    cin-->variable;
+    variable-->cout;
+    cout-->output;
+    style cin fill:#CFC,stroke:#333,stroke-width:0.5px
+    style cout fill:#CFC,stroke:#333,stroke-width:0.5px
+    style variable fill:#FFC,stroke:#333,stroke-width:0.5px</pre>
+
+<p>cin 和 cout 仅仅是一个管道，用来让数据从中流过（data stream），这就是所谓的 iostream（input &amp; output stream）。</p>
+<p><code>cin</code> 可以用来输入多个值，如 <code>cin &gt;&gt; a &gt;&gt; b;</code></p>
+<p><code>cin</code> 可以隐式转换为 <code>bool</code> 。</p>
+<p><code>cout</code> 用法同理。</p>
+<hr>
+<h1 id="新的关键字"><a href="#新的关键字" class="headerlink" title="新的关键字"></a>新的关键字</h1><p>本篇只介绍 <code>new</code> 和 <code>delete</code> 。</p>
+<h2 id="简单介绍malloc-系列"><a href="#简单介绍malloc-系列" class="headerlink" title="简单介绍malloc 系列"></a>简单介绍<code>malloc</code> 系列</h2><p><code>malloc</code> 及其内存分配系列函数（如<code>calloc</code> ）均在 stdlib.h 中，而 <code>new</code> 和<code>delete</code> 是语言本身的内存分配机制。</p>
+<p><code>malloc</code> 需要一个参数，<code>void * malloc(size_t _NumOfBytes)</code> ，这个参数表示所需空间的大小，并且不对这段空间进行清空，用法如<code>int *arr = (int *)malloc(n * sizeof(int));</code> 表示分配 n 个 int 的空间。</p>
+<p>其衍生函数，<code>calloc</code> ，需要两个参数，声明形式如<code>void * calloc(int _NumOfElements, size_t SizePerElement)</code> ，用法如<code>int *arr = (int *)calloc(n, sizeof(int));</code> ，需要注意，这个函数分配后会将这一段内存置为 0。</p>
+<h2 id="new-和delete-用法"><a href="#new-和delete-用法" class="headerlink" title="new 和delete 用法"></a><code>new</code> 和<code>delete</code> 用法</h2><p><code>new</code> 用法示例如下：</p>
+<pre><code class="cpp">int *a = new int; // 表示让 a 指向分配的 int 类型值，值未初始化
+&quot;上面这一行等价于&quot;;
+int *a = (int*)malloc(sizeof(int));
+
+int *b = new int(); // 表示让 b 指向分配的 int 类型值，并在分配后采用默认方式初始化这个值
+// 对于 int 类型，默认方式初始化意味着置为 0
+
+int *c = new int(3); // 表示让 c 指向分配的 int 类型值，并在分配后初始化这个值为 3
+// *c == 3
+
+int *d = new int[n]; // 表示让 d 指向分配的长度为 n 的 int 数组，内存未初始化
+&quot;上面这一行等价于&quot;;
+int *d = (int*)malloc(n*sizeof(int));
+
+int *e = new int[n](); // 表示让 e 指向分配的长度为 n 的 int 数组，并采用默认方式初始化每个值
+// e[0] == e[1] == e[2] == ... == e[n-1] == 0
+
+// 特别的，有些类型分配的时候略微麻烦一点（类型系统的进阶使用）
+int **a= new (int *[n]); // 长度为 n 的 int* 数组
+int (**pf)()= new (int (*)()); // pf 为指向函数指针的指针，指向的函数 f 声明形式如 int f(void);
+int (**pfs)()= new (int (*[n])()); // pfs 为函数指针数组
+</code></pre>
+<p><strong>无法用 new 在创建一个数组的同时初始化每个元素</strong></p>
+<hr>
+<p><code>delete</code> 用法类似。（采用<code>new</code> 举例中所用的变量）</p>
+<pre><code class="cpp">delete a;
+
+delete b;
+
+delete c;
+
+delete []d; // 删除数组
+
+delete []e;
+</code></pre>
+<hr>
+<h2 id="new-的思考"><a href="#new-的思考" class="headerlink" title="new 的思考"></a><code>new</code> 的思考</h2><p>能否用<code>new</code> 在创建一个数组后初始化每个元素呢？<font color=white> placement new </font></p>
+<h1 id="函数多态（重载）与默认参数"><a href="#函数多态（重载）与默认参数" class="headerlink" title="函数多态（重载）与默认参数"></a>函数多态（重载）与默认参数</h1><h2 id="函数多态"><a href="#函数多态" class="headerlink" title="函数多态"></a>函数多态</h2><p>例如，我们有</p>
+<pre><code class="cpp">int max(int a, int b) &#123; return a&gt;b?a:b;&#125;
+</code></pre>
+<p>如果我们想要三个数比较该怎么做？</p>
+<p>在 c 中，</p>
+<pre><code class="c">int max3i(int a, int b, int c) &#123; int t = max(a, b); return t&gt;c?t:c;&#125;
+</code></pre>
+<p>而在 cpp 中，我们可以直接使用</p>
+<pre><code class="cpp">int max(int a, int b, int c) &#123; int t = max(a, b); return t&gt;c?t:c;&#125;
+</code></pre>
+<p>cpp 可以根据参数的数量和类型来自动判断调用哪一个函数。</p>
+<p>以至于我们可以</p>
+<pre><code class="cpp">int max(int a) &#123; int t = a; return t&gt;a?t:a;&#125;
+int max(int a, int b) &#123; int t = max(b); return t&gt;a?t:a;&#125;
+int max(int a, int b, int c) &#123; int t = max(b, c); return t&gt;a?t:a;&#125;
+int max(int a, int b, int c, int d) &#123; int t = max(b, c, d); return t&gt;a?t:a;&#125;
+int max(int a, int b, int c, int d, int e) &#123; int t = max(b, c, d, e); return t&gt;a?t:a;&#125;
+int max(int a, int b, int c, int d, int e, int f) &#123; int t = max(b, c, d, e, f); return t&gt;a?t:a;&#125;
+</code></pre>
+<p>这时候我们可以传入 1-6 个参数来最大值，并且除了单个参数的情况，其他具有一致性。</p>
+<p>再例如，常见的错误代码 <code>int a = pow(5, 2)</code> ，我们可以定义 pow 的多态：</p>
+<pre><code class="cpp">int pow(int a, int n)
+&#123;
+    if(n&lt;0) return 0;
+    int res = 1;
+    for(int i=0; i&lt;n; ++i) res *= a;
+    return a;
+&#125;
+</code></pre>
+<p>可以避免浮点误差。</p>
+<hr>
+<h2 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h2><p>上面介绍了函数多态，这里介绍函数默认参数。</p>
+<p>例如我们需要一个求和函数，我们预定有四个数字要被传入。</p>
+<pre><code class="cpp">int sum(int a, int b, int c, int d) &#123; return a+b+c+d;&#125;
+</code></pre>
+<p>但是随着时间流逝，我们有时候需要传入三个参数。</p>
+<pre><code class="cpp">int sum(int a, int b, int c) &#123; return sum(a, b, c, 0);&#125;
+</code></pre>
+<p>以及两个······</p>
+<pre><code class="cpp">int sum(int a, int b) &#123; return sum(a, b, 0);&#125;
+</code></pre>
+<p>甚至一个············</p>
+<pre><code class="cpp">int sum(int a) &#123; return sum(a, 0);&#125;
+</code></pre>
+<p>甚至没有参数<del>（👈这样的函数有意义吗？？？）</del></p>
+<pre><code class="cpp">int sum(void) &#123; return sum(0);&#125;
+</code></pre>
+<p>这里的求和函数和上面的 max 形式很像，并且一路规约下来也很自然，只是略微冗杂了点。</p>
+<p>能不能更简单呢？</p>
+<p><font size=7>能！</font></p>
+<p>cpp 允许函数含有默认参数。</p>
+<p>上面的 <code>sum</code> 系列函数使用默认参数后只需要一个函数即可。</p>
+<pre><code class="cpp">int sum(int a=0, int b=0, int c=0, int d=0) &#123; return a+b+c+d;&#125;
+</code></pre>
+<p>这个函数的定义表示，如果没有传入对应参数，则对应参数默认置为 0。</p>
+<p>如 <code>sum(1,2,3)</code> ，其中各参数即为<code>a=1, b=2, c=3, d=0</code> 。</p>
+<p>在 cpp 中，各参数只能从左向右排布，因此默认参数需要从右向左赋值。</p>
+<p>函数的默认参数只能在声明或定义中出现一次。</p>
+<hr>
+<h1 id="新的类型"><a href="#新的类型" class="headerlink" title="新的类型"></a>新的类型</h1><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用类型是值和指针的折中。</p>
+<p>引用的主要用途是函数传参和创建别名。</p>
+<p>函数传递较大的数据类型由于需要整个拷贝，因此在 c 中通常传递指针作为参数，例如：</p>
+<pre><code class="c">typedef struct data
+&#123;
+    int a[1000000];
+    int b[1000000];
+&#125;data, *pdate;
+
+int f(pdata p)
+&#123;
+    pdata-&gt;a ...
+    pdata-&gt;b ...
+&#125;
+</code></pre>
+<p>但是频繁的指针操作并不优雅，因此我们使用引用。</p>
+<pre><code class="cpp">int f(data&amp; d)
+&#123;
+    d.a ...
+    d.b ...
+&#125;
+</code></pre>
+<p>在这里我们可以像使用一个 data 类型一样使用 data&amp; 类型。</p>
+<p>引用和其实体共享一个对象，例如</p>
+<pre><code class="cpp">int a = 2;
+int &amp;b = a;
+b = 3;
+</code></pre>
+<p>此时 a 也被改变。</p>
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>类是类似结构体的数据类型。</p>
+<pre><code class="cpp">struct A
+&#123;
+    int a;
+&#125; a;
+
+class B
+&#123;
+    int b;
+&#125; b;
+
+int main()
+&#123;
+    printf(&quot;%d\n&quot;, a.a);
+    printf(&quot;%d\n&quot;, b.b);
+&#125;
+</code></pre>
+<p>类的内容默认对外不开放。</p>
+<p>类内可以定义函数（方法）。</p>
+<pre><code class="cpp">class B
+&#123;
+public:
+    int print();
+private:
+    int b;
+&#125; b;
+</code></pre>
+<p>public 表示类外可以访问，private 表示类外无法访问。</p>
+<p>这时候我们可以使用 b.print() 来输出，但是不能修改 b.b 的内容。 </p>
+<p>特别的，cpp 中的 struct 也不同于 c 中的，它更像是被修改了默认访问权限的 class。</p>
+<hr>
+<h1 id="内联与宏"><a href="#内联与宏" class="headerlink" title="内联与宏"></a>内联与宏</h1><h2 id="内联的好处"><a href="#内联的好处" class="headerlink" title="内联的好处"></a>内联的好处</h2><p>宏是一种功能强大的预处理工具。</p>
+<p>但是含有隐患。</p>
+<pre><code class="c">#define mult(a, b) a*b
+</code></pre>
+<p>如果使用 </p>
+<pre><code class="c">int x = mult(3+2,2+3);
+</code></pre>
+<p>如常理所想应该是 x 被赋值为 (3+2)*(2+3) &#x3D;&#x3D; 25，但是实际上，这句在展开后会成为</p>
+<pre><code class="c">int x = 3+2*2+3; // x == 10
+</code></pre>
+<p>诚然，我们可以采用加括号的方式来封闭宏，但是总有力所不逮之处（为什么不行？思考题）。</p>
+<p>因此，cpp 创建了内联的语法。</p>
+<pre><code>inline int mult(int a, int b) &#123; return a*b;&#125;
+int x = mult(3+2,2+3);
+</code></pre>
+<p>这时候，第二行<code>int x = mult(3+2,2+3);</code> 就相当于展开成这样的三行：</p>
+<pre><code class="cpp">int a = 3+2;
+int b = 2+3;
+int x = a*b;
+</code></pre>
+<p>可以确保其正确性。</p>
+<h2 id="为什么还要宏？"><a href="#为什么还要宏？" class="headerlink" title="为什么还要宏？"></a>为什么还要宏？</h2><p>内联如此方便、强大、安全，为什么要宏呢？</p>
+<p>这里是宏的一些（内联做不到的）用法：</p>
+<pre><code class="cpp">#include &lt;cstdio&gt;
+
+int test_function(void);
+
+int main()
+&#123;
+    test_function();
+    printf(&quot;%s\n&quot;, __FUNCTION__);
+&#125;
+
+int test_function(void)
+&#123;
+    printf(&quot;%s\n&quot;, __FUNCTION__);
+&#125;
+</code></pre>
+<hr>
+<p>例如上面的 <code>mult</code> ，也可以使用宏的方式来正确处理。</p>
+<pre><code class="cpp">#define mult(a, b) ((a)*(b))
+</code></pre>
+<p>但是，它在维持原有参数结构的情况下，不能做到和内联一样安全。</p>
+
+  </article>
+
+  
+      
+    <div class="chireiden-post-copyright">
+        <strong>本文作者：</strong>RedContritio<br>
+        <strong>本文链接：</strong><a href="https://redcontritio.github.io/2019/10/20/basic-cpp-knowledge/" title="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;10&#x2F;20&#x2F;basic-cpp-knowledge&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;10&#x2F;20&#x2F;basic-cpp-knowledge&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="chireiden-post-meta chireiden-rainbow">
+    
+    
+        <a class="chireidenfont icon-tag-fill -none-link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程</a>
+    
+</div>
+
+  
+      <div class="chireiden-post-footer">
+          <section class="chireiden-comment">
+    <div id="gitment"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'RedContritio', // 你的 GitHub ID
+    repo: 'RedContritio.github.io', // 存储评论的 repo
+    oauth: {
+        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
+        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+    },
+})
+gitment.render('gitment')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="chireiden-post-right">
+              <div class="chireiden-fixed">
+                  <div class="chireiden-tool"> 
+                    
+                      
+                    
+                      <a href="#chireiden-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="chireidenfont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="chireiden-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="搜索" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1675841852993"></script>
+
+
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>

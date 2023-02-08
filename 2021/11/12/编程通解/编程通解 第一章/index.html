@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>编程通解 第一章 资质平平也要寻仙问道 - Chireiden</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="竹林里站着一个孩子，十来岁的孩子。 他什么也没做，只是站着，盯着竹子，满脸的愤懑。 他所在的竹林在陈家后山上，外人不得入内，所以，他自然也是陈家的人。 可惜，他的七品资质，在寻常人家里，能让邻里人前人后议论数月不止的七品资质，却让他快要做不了陈家的人了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编程通解 第一章 资质平平也要寻仙问道">
+<meta property="og:url" content="https://redcontritio.github.io/2021/11/12/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0/index.html">
+<meta property="og:site_name" content="Chireiden">
+<meta property="og:description" content="竹林里站着一个孩子，十来岁的孩子。 他什么也没做，只是站着，盯着竹子，满脸的愤懑。 他所在的竹林在陈家后山上，外人不得入内，所以，他自然也是陈家的人。 可惜，他的七品资质，在寻常人家里，能让邻里人前人后议论数月不止的七品资质，却让他快要做不了陈家的人了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-12T06:26:33.000Z">
+<meta property="article:modified_time" content="2023-02-07T14:13:59.723Z">
+<meta property="article:author" content="RedContritio">
+<meta property="article:tag" content="编程通解 编程思想 小说">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852980">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1675841852980">
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="chireiden-background">
+        <div class="chireiden-bg" style="background-image: url(/resources/Jupiter.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon chireidenfont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="RedContritio" class="mdui-btn mdui-btn-icon"><img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio"></a>
+            </div>
+        </div>
+    </div>
+    <div id="chireiden-header">
+        <div class="chireiden-drawer mdui-drawer" id="drawer">
+    <div class="chireiden-avatar mdui-ripple">
+        <a href="/" title="RedContritio">
+            <img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio" alt="RedContritio">
+        </a>
+    </div>
+    <div class="chireiden-count">
+        <div><span>文章</span>12</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="chireiden-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon chireidenfont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon chireidenfont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon chireidenfont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="chireiden-sidebar">
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-social">
+        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="chireidenfont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="chireidenfont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="chireidenfont icon-github"></i>
+        </a>
+    </div>
+</div>
+    
+    
+
+    
+    
+  <div class="chireiden-widget-wrap">
+    <div id="randomtagcloud" class="chireiden-widget tagcloud chireiden-rainbow">
+      <a href="/tags/Everything-%E6%B8%B8%E6%88%8F/" style="font-size: 10px;">Everything 游戏</a> <a href="/tags/VS-CSharp-Mods-Environment/" style="font-size: 10px;">VS CSharp Mods Environment</a> <a href="/tags/python-matplotlib/" style="font-size: 10px;">python matplotlib</a> <a href="/tags/ssh-sshd-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">ssh sshd 服务器 网络</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-centOS/" style="font-size: 10px;">服务器 环境配置 centOS</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" style="font-size: 15px;">社团课程</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" style="font-size: 10px;">社团课程 零基础课程</a> <a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 20px;">维护</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%B0%8F%E8%AF%B4/" style="font-size: 10px;">编程通解 编程思想 小说</a>
+    </div>
+    
+  </div>
+
+    
+    <!-- 一言 -->
+
+  <div class="chireiden-widget-wrap">
+    <h3 class="chireiden-widget-title">
+      一言
+    </h3>
+    <div class="chireiden-widget">
+      <ul class="hitokoto-box">
+        <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+          <a href="#" id="hitokoto_text">
+            
+          </a>
+          <a href="#" id="hitokoto_error_text" style="display: none;">
+            
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let hitokotoText = document.getElementById('hitokoto_text')
+    let hitokotoErroText = document.getElementById('hitokoto_error_text')
+    let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+    window.onload = function () {
+      let url = 'https://v1.hitokoto.cn'
+      if (hitokotoCategory) {
+        url += '?c=' + hitokotoCategory
+      }
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+          hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        })
+        .catch((reason) => {
+          console.error(11, reason)
+          hitokotoText.style.display = 'none'
+          hitokotoErroText.style.display = 'block'
+        })
+    }
+  </script>
+  
+    
+</aside>
+    <div class="chireiden-copyright">
+        &copy; 2023 RedContritio
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-chireiden/hexo-theme-chireiden" target="_blank">Chireiden</a>
+        <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a><script data-ad-client="ca-pub-2058306854838448" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+</div><!-- .chireiden-drawer -->
+    </div>
+    <div id="chireiden-content">
+        <div class="chireiden-primary">
+            <div class="chireiden-post">
+
+  <article>
+      
+          <div class="chireiden-post-cover" style="padding-bottom: NaN%;"> 
+              <img src="https://s3.bmp.ovh/imgs/2021/11/5c2603e5e0e632ad.png" alt="编程通解 第一章 资质平平也要寻仙问道" loading="lazy">
+              <h1>编程通解 第一章 资质平平也要寻仙问道</h1>
+          </div>
+      
+      
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    <a><i class="chireidenfont icon-calendar-fill"></i>2021年11月12日</a>
+</div>
+
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约2k字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要6分钟</a>
+    
+</div>
+
+      <p>竹林里站着一个孩子，十来岁的孩子。</p>
+<p>他什么也没做，只是站着，盯着竹子，满脸的愤懑。</p>
+<p>他所在的竹林在陈家后山上，外人不得入内，所以，他自然也是陈家的人。</p>
+<p>可惜，他的七品资质，在寻常人家里，能让邻里人前人后议论数月不止的七品资质，却让他快要做不了陈家的人了。</p>
+<span id="more"></span>
+
+<hr/>
+
+<p>昨天是他的十二岁生日。</p>
+<p>所有陈家的人，在十二岁时，都要进行资质测试，以便看出后辈潜力如何。</p>
+<p>资质分为九品：<br>最低九品，测试石碑只会放出暗淡几乎不可见的灰色。<br>最高一品，据说能让资质测试的石碑放出耀眼的冲天赤芒，哪怕是白天，都能在十余里外看到。</p>
+<p>若是寻常人家，资质有八品，便可以算上是人才，能让街坊羡慕好一阵子。</p>
+<p>可惜，他偏偏生在了陈家，这个天才遍地的陈家。</p>
+<hr/>
+
+<p>陈家是元阳城里的三大家族之一，传承数百年，族人数千，几乎所有当铺、银行乃至珠宝店尽皆是陈家的生意。</p>
+<p>大家族一代代优中择优，后辈自然也是要强于普通人。寻常人眼里，出类拔萃的七品资质，在陈家里，只能算是末流。</p>
+<p>远支二爷爷家，堂兄陈睿，生来四品资质，测出当天，半个城都笼罩着祥瑞的紫色光辉。</p>
+<p>城内，几十个堂姐、堂兄，更是没一人低于六品。</p>
+<p>可是，自己资质却是只有七品。</p>
+<hr/>
+
+<p>陈原木然盯着竹子，像是要从竹子上看出自己的未来一样。</p>
+<p>陈家对待资质平平的人，往往是不屑于培养，而往往是将其发配到外地建立分家。</p>
+<p>若是日后还能发迹，方才允许其归宗，否则，便只是挂着陈家的名头，却得不到多少本家的帮助。</p>
+<p>按往年的惯例，十二岁测完资质，不到半年，自己便会被分派到外地。</p>
+<p>若是被分派，没有奇遇，除了年会等大事，一辈子都没机会回本家看看。</p>
+<p>可是，资质先天赋生，天生天赐，后天不可增半分，也不可减半分。</p>
+<p>自己便是再努力，又能改变什么呢？</p>
+<hr/>
+
+<p>“原儿！你在吗！”</p>
+<p>竹林外传来女子声音。</p>
+<p>这声音陈原很熟悉，陪伴了十余年所产生的熟悉。</p>
+<p>是自己母亲的声音。</p>
+<p>“原儿，你在里面吗？”</p>
+<p>外面还在呼喊，陈原应了一声，朝着声音方向赶去。</p>
+<hr/>
+
+<p>“你这孩子，怎么钻这里，不怕受风寒啊。”</p>
+<p>母亲脸上带着掩不住的喜色，但习惯性地唠叨了一句。</p>
+<p>“今天传来消息，元始宗广收弟子，咱们陈家也有一个名额，你想不想去？”</p>
+<p>“元始宗？”</p>
+<p>陈原回味了一下这个名字。</p>
+<p>元始宗是四年前才重开山门的宗派，据说门中曾有大能，抬手间焚山煮海，偷星换月。</p>
+<p>可惜，千年之前，宗派人丁稀落，从此隐世。</p>
+<p>不知是何缘故，又再次开放。</p>
+<p>虽然盛名在外，但现下实力却不得而知，人们虽然感兴趣，却不愿意赌上自己前途，都只是观望。</p>
+<p>“这元始宗的名额能落到我头上？”</p>
+<p>陈原傻傻地问。</p>
+<p>“本来是轮不到你，但是使者说，只收本家子弟。本家同辈大都想好了出路，没人来抢这名额。”</p>
+<p>母亲解释道。</p>
+<p>“这么好！”</p>
+<p>陈原大喜过望，“我这就去报名！”</p>
+<hr/>
+
+<p>回到家里，问询了元始宗的使者，果真是本家无人愿去。</p>
+<p>“报名需要什么条件吗？” 陈原问使者。</p>
+<p>“这里有三个问题，根据你的答案，若是能符合要求，便可入门。” 使者应道。</p>
+<p>“第一个问题，听好了。”</p>
+<p>使者神色一凝，缓缓问道。</p>
+<p>“上下未形，何由考之？冥昭瞢暗，谁能极之？”</p>
+<p>陈原一愣。这是什么问题，怎么听都听不懂？</p>
+<p>看着陈原一脸茫然，使者便不再等待，继续问道。</p>
+<p>“接下来是第二个问题。”</p>
+<p>“凡果皆有因，凡因皆有果。故知今者，可知下一瞬也，则见未来。故，生死有命，富贵在天？”</p>
+<p>不等回答，使者又问：</p>
+<p>“最后一个问题。”</p>
+<p>“人，能胜天乎？”</p>
+<p>陈原想了想，答道：</p>
+<p>“我以为，生死有命，富贵在天，因果早有注定。故，人，不能胜天。”</p>
+<p>“但，可以顺天，知其时，识其势。人不能胜天，但能胜己。”</p>
+<p>听了陈原回答，使者点了点头。</p>
+<p>“资质平平，心性尚可。口不妄言，有君子之风。”</p>
+<p>“你的名字是？”</p>
+<p>“陈原。” 陈原答道。</p>
+<p>“好，回去收拾家当，三日后，我们便启程回宗。” 使者说。</p>
+<p>说罢，使者身边浮现出一圈绿色符文，似乎密密麻麻写着什么。</p>
+<p>符文光芒暴涨，随后收敛，使者也不见了踪影。</p>
+<hr/>
+
+<p>这是？</p>
+<p>陈原虽然没有学过这些，自幼生长在大家之中，眼力却是不差。</p>
+<p>使者所发动的似乎是八品符术【召灵术】，能用来隔空控物，能于目力之外制敌先机。</p>
+<p>但八品符术本该散发出的白色光芒，在使者的手里却有着七品符术的绿光。</p>
+<p>效果也不再是隔空控物，而是瞬间移动。</p>
+<p>难道，元始宗，竟是这样一个化腐朽为神奇的地方？</p>
+<p>陈原心底开始灼热起来。</p>
+<p>自己，也有希望，化腐朽为神奇，走上寻仙问道的路了。</p>
+<hr/>
+
+<p>符术，人人都能学习的技能。通过将若干符文组合成符文条带，随后将符文条带编织而成。</p>
+<p>资质越高的人，就能掌控更多的符文，从而发动更强大的符术。</p>
+<p>而资质低的人，能掌控的符文数量少，符文条带的种类少，长度短，即使勉强发动符术，也威能不足。</p>
+<p>根据学习难度，符文与符术都和资质一样分为九品，从其光芒就能辨识。</p>
+<p>据说，有些特殊的符文与符术能无视品级规则，拥有自己的特殊光芒。</p>
+<p>九品符术最是容易，普通人略加练习就能释放出，诸如【清心术】，让自己心灵宁静，【点火术】，在木柴表面生火，朴实而好用。</p>
+<p>八品符术则要稍难一些，若是没有八品资质，得苦练数月才能学会，诸如能隔空控物的【召灵术】，能控制火焰大小的【控火术】等。</p>
+<p>九品资质的人去学习七品符术，至少也得数年才能初步学会，而且发动也比较吃力。</p>
+<p>陈原见过的七品符术不多，只有能看到百里外景象的【百里眼】，能控制天气的【驱云术】。</p>
+<p>上次产业竣工，瞅准了黄道吉日，可惜天公不作美，下起了大雨。</p>
+<p>本家几个到场的叔叔一同施展【驱云术】，直接变成艳阳天。</p>
+<hr/>
+
+<p>在十二岁之前，不能擅自凝练符文，否则会影响身体。</p>
+<p>因此，陈原也只有一些纸上的知识。</p>
+<p>他本期望，自己天资过人，以后施展符术手到擒来，却没料到，自己资质却只有七品。</p>
+<p>期望落空，少年人心里自然满是不甘，所幸还有得补救。</p>
+<p>元始宗虽然前途不明，却总比被发配到边远分家好。</p>
+<p>况且，据传在宗门内，虽然没有操持家业的机会，却能学到很多符术的使用技巧，若是学成归来，不论在哪家，都能以符术大师的身份做客卿。</p>
+<hr/>
+
+<p>一边胡思乱想着未来，一边收拾东西，三日时间很快就结束了。</p>
+<p>这些天里，陈原和各位长辈朋友都道了别，放下心去专攻符术，争取在元始宗里出人头地，干出一番事业来。</p>
+
+  </article>
+
+  
+      
+    <div class="chireiden-post-copyright">
+        <strong>本文作者：</strong>RedContritio<br>
+        <strong>本文链接：</strong><a href="https://redcontritio.github.io/2021/11/12/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0/" title="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2021&#x2F;11&#x2F;12&#x2F;%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3&#x2F;%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2021&#x2F;11&#x2F;12&#x2F;%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3&#x2F;%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3%20%E7%AC%AC%E4%B8%80%E7%AB%A0&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="chireiden-post-meta chireiden-rainbow">
+    
+    
+        <a class="chireidenfont icon-tag-fill -none-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%B0%8F%E8%AF%B4/" rel="tag">编程通解 编程思想 小说</a>
+    
+</div>
+
+  
+      <div class="chireiden-post-footer">
+          <section class="chireiden-comment">
+    <div id="gitment"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'RedContritio', // 你的 GitHub ID
+    repo: 'RedContritio.github.io', // 存储评论的 repo
+    oauth: {
+        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
+        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+    },
+})
+gitment.render('gitment')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="chireiden-post-right">
+              <div class="chireiden-fixed">
+                  <div class="chireiden-tool"> 
+                    
+                      
+                    
+                      <a href="#chireiden-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="chireidenfont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="chireiden-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="搜索" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1675841852981"></script>
+
+
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>

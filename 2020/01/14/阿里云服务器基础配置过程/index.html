@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>阿里云服务器基础配置过程 - Chireiden</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="由于某些不可言说、无法理解的原因，我今天早上 00:00 的时候租了阿里云的轻量级服务器。 因为要配置相关环境，尤其指 Python 大礼包和 Anaconda（及 pyTorch），并且在过程中踩了很多坑，在其稍作记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云服务器基础配置过程">
+<meta property="og:url" content="https://redcontritio.github.io/2020/01/14/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Chireiden">
+<meta property="og:description" content="由于某些不可言说、无法理解的原因，我今天早上 00:00 的时候租了阿里云的轻量级服务器。 因为要配置相关环境，尤其指 Python 大礼包和 Anaconda（及 pyTorch），并且在过程中踩了很多坑，在其稍作记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-14T07:02:31.000Z">
+<meta property="article:modified_time" content="2023-02-07T14:13:59.723Z">
+<meta property="article:author" content="RedContritio">
+<meta property="article:tag" content="服务器 环境配置 centOS">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852984">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1675841852984">
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="chireiden-background">
+        <div class="chireiden-bg" style="background-image: url(/resources/Jupiter.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon chireidenfont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="RedContritio" class="mdui-btn mdui-btn-icon"><img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio"></a>
+            </div>
+        </div>
+    </div>
+    <div id="chireiden-header">
+        <div class="chireiden-drawer mdui-drawer" id="drawer">
+    <div class="chireiden-avatar mdui-ripple">
+        <a href="/" title="RedContritio">
+            <img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio" alt="RedContritio">
+        </a>
+    </div>
+    <div class="chireiden-count">
+        <div><span>文章</span>12</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="chireiden-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon chireidenfont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon chireidenfont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon chireidenfont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="chireiden-sidebar">
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-social">
+        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="chireidenfont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="chireidenfont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="chireidenfont icon-github"></i>
+        </a>
+    </div>
+</div>
+    
+    
+
+    
+    
+  <div class="chireiden-widget-wrap">
+    <div id="randomtagcloud" class="chireiden-widget tagcloud chireiden-rainbow">
+      <a href="/tags/Everything-%E6%B8%B8%E6%88%8F/" style="font-size: 10px;">Everything 游戏</a> <a href="/tags/VS-CSharp-Mods-Environment/" style="font-size: 10px;">VS CSharp Mods Environment</a> <a href="/tags/python-matplotlib/" style="font-size: 10px;">python matplotlib</a> <a href="/tags/ssh-sshd-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">ssh sshd 服务器 网络</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-centOS/" style="font-size: 10px;">服务器 环境配置 centOS</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" style="font-size: 15px;">社团课程</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" style="font-size: 10px;">社团课程 零基础课程</a> <a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 20px;">维护</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%B0%8F%E8%AF%B4/" style="font-size: 10px;">编程通解 编程思想 小说</a>
+    </div>
+    
+  </div>
+
+    
+    <!-- 一言 -->
+
+  <div class="chireiden-widget-wrap">
+    <h3 class="chireiden-widget-title">
+      一言
+    </h3>
+    <div class="chireiden-widget">
+      <ul class="hitokoto-box">
+        <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+          <a href="#" id="hitokoto_text">
+            
+          </a>
+          <a href="#" id="hitokoto_error_text" style="display: none;">
+            
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let hitokotoText = document.getElementById('hitokoto_text')
+    let hitokotoErroText = document.getElementById('hitokoto_error_text')
+    let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+    window.onload = function () {
+      let url = 'https://v1.hitokoto.cn'
+      if (hitokotoCategory) {
+        url += '?c=' + hitokotoCategory
+      }
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+          hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        })
+        .catch((reason) => {
+          console.error(11, reason)
+          hitokotoText.style.display = 'none'
+          hitokotoErroText.style.display = 'block'
+        })
+    }
+  </script>
+  
+    
+</aside>
+    <div class="chireiden-copyright">
+        &copy; 2023 RedContritio
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-chireiden/hexo-theme-chireiden" target="_blank">Chireiden</a>
+        <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a><script data-ad-client="ca-pub-2058306854838448" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+</div><!-- .chireiden-drawer -->
+    </div>
+    <div id="chireiden-content">
+        <div class="chireiden-primary">
+            <div class="chireiden-post">
+
+  <article>
+      
+          <div class="chireiden-post-cover" style="padding-bottom: NaN%;"> 
+              <img src="https://tva4.sinaimg.cn/large/9bd9b167gy1g2qkr2cqe3j21hc0u01kx.jpg" alt="阿里云服务器基础配置过程" loading="lazy">
+              <h1>阿里云服务器基础配置过程</h1>
+          </div>
+      
+      
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    <a><i class="chireidenfont icon-calendar-fill"></i>2020年01月14日</a>
+</div>
+
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约363字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
+    
+</div>
+
+      <p>由于某些不可言说、无法理解的原因，我今天早上 00:00 的时候租了阿里云的轻量级服务器。</p>
+<p>因为要配置相关环境，尤其指 Python 大礼包和 Anaconda（及 pyTorch），并且在过程中踩了很多坑，在其稍作记录。</p>
+<span id="more"></span>
+
+<h2 id="安装-conda"><a href="#安装-conda" class="headerlink" title="安装 conda"></a>安装 conda</h2><p>惊奇的是，conda 是有依赖的，其依赖 bzip2 包。</p>
+<p>在参考了<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1888984cad82">教程A</a>及<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiao-apple36/p/9052102.html">教程B</a>后，记录如下：</p>
+<p>首先安装依赖：</p>
+<pre><code class="bash">sudo yum install bzip2 -y
+</code></pre>
+<p>然后是下载</p>
+<pre><code class="bash">wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2018.12-Linux-x86_64.sh
+</code></pre>
+<p>下载的是清华源的某个稳定版本，内置 Python37。</p>
+<p>接下来直接安装</p>
+<pre><code class="bash">bash Anaconda3-4.4.0-Linux-x86_64.sh
+</code></pre>
+<p>安装过程中，首先需要阅读协议并输入 yes。</p>
+<p>随后安装到默认路径并且添加进 ~&#x2F;.vimrc 中。</p>
+<p>至此，安装完成。</p>
+<p>PS: 最后 anaconda 询问是否要下载 vs code，我选择了 no。</p>
+<h2 id="安装-pytorch"><a href="#安装-pytorch" class="headerlink" title="安装 pytorch"></a>安装 pytorch</h2><p>首先是准备环境</p>
+<p>pytorch 只能用在 python36 环境下，因此，我们使用</p>
+<pre><code class="bash">conda create -n python36 python=3.6
+conda activate python36
+</code></pre>
+<p>接下来，为了保证速度，添加一个下载源</p>
+<pre><code class="bash">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config --set show_channel_urls yes
+</code></pre>
+<p>最后安装即可</p>
+<pre><code class="bash">conda install pytorch torchvision
+</code></pre>
+<p>需要注意的是，<code>conda install</code> 不要使用额外的 <code>-c</code> （指定源）参数。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lykxhtp/article/details/81559046">教程</a></p>
+<h2 id="安装-flask"><a href="#安装-flask" class="headerlink" title="安装 flask"></a>安装 flask</h2><p>在上面的 python36 环境中安装 flask 也不难。</p>
+<p>参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/linguanqiang/p/6706641.html">教程</a></p>
+<pre><code class="bash">conda install flask
+</code></pre>
+<p>输入该行即可。</p>
+
+  </article>
+
+  
+      
+    <div class="chireiden-post-copyright">
+        <strong>本文作者：</strong>RedContritio<br>
+        <strong>本文链接：</strong><a href="https://redcontritio.github.io/2020/01/14/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/" title="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2020&#x2F;01&#x2F;14&#x2F;%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2020&#x2F;01&#x2F;14&#x2F;%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="chireiden-post-meta chireiden-rainbow">
+    
+    
+        <a class="chireidenfont icon-tag-fill -none-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-centOS/" rel="tag">服务器 环境配置 centOS</a>
+    
+</div>
+
+  
+      <div class="chireiden-post-footer">
+          <section class="chireiden-comment">
+    <div id="gitment"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'RedContritio', // 你的 GitHub ID
+    repo: 'RedContritio.github.io', // 存储评论的 repo
+    oauth: {
+        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
+        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+    },
+})
+gitment.render('gitment')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="chireiden-post-right">
+              <div class="chireiden-fixed">
+                  <div class="chireiden-tool"> 
+                    
+                      
+                    
+                      <a href="#chireiden-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="chireidenfont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="chireiden-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="搜索" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1675841852985"></script>
+
+
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>

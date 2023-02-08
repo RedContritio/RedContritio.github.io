@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>简单的链表及二叉树学习 - Chireiden</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="本节课将会讲三点内容，链表，栈以及二叉树。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的链表及二叉树学习">
+<meta property="og:url" content="https://redcontritio.github.io/2019/11/29/%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Chireiden">
+<meta property="og:description" content="本节课将会讲三点内容，链表，栈以及二叉树。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-29T13:06:33.000Z">
+<meta property="article:modified_time" content="2023-02-07T14:13:59.719Z">
+<meta property="article:author" content="RedContritio">
+<meta property="article:tag" content="社团课程 零基础课程">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675841852987">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1675841852987">
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/custom_css_source.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="chireiden-background">
+        <div class="chireiden-bg" style="background-image: url(/resources/Jupiter.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon chireidenfont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="RedContritio" class="mdui-btn mdui-btn-icon"><img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio"></a>
+            </div>
+        </div>
+    </div>
+    <div id="chireiden-header">
+        <div class="chireiden-drawer mdui-drawer" id="drawer">
+    <div class="chireiden-avatar mdui-ripple">
+        <a href="/" title="RedContritio">
+            <img src="https://avatars.githubusercontent.com/u/25874478?v=4" alt="RedContritio" alt="RedContritio">
+        </a>
+    </div>
+    <div class="chireiden-count">
+        <div><span>文章</span>12</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>0</div>
+    </div>
+    <div class="chireiden-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon chireidenfont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon chireidenfont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="chireiden-list-item mdui-list-item mdui-ripple false" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon chireidenfont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="chireiden-sidebar">
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="chireiden-widget-wrap">
+    <div class="chireiden-widget chireiden-social">
+        <a class="mdui-ripple" href="https://jq.qq.com/?_wv=1027&k=5CfKHun" target="_blank" mdui-tooltip="{content: 'QQ群'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="chireidenfont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="chireidenfont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="chireidenfont icon-github"></i>
+        </a>
+    </div>
+</div>
+    
+    
+
+    
+    
+  <div class="chireiden-widget-wrap">
+    <div id="randomtagcloud" class="chireiden-widget tagcloud chireiden-rainbow">
+      <a href="/tags/Everything-%E6%B8%B8%E6%88%8F/" style="font-size: 10px;">Everything 游戏</a> <a href="/tags/VS-CSharp-Mods-Environment/" style="font-size: 10px;">VS CSharp Mods Environment</a> <a href="/tags/python-matplotlib/" style="font-size: 10px;">python matplotlib</a> <a href="/tags/ssh-sshd-%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">ssh sshd 服务器 网络</a> <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-centOS/" style="font-size: 10px;">服务器 环境配置 centOS</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B/" style="font-size: 15px;">社团课程</a> <a href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" style="font-size: 10px;">社团课程 零基础课程</a> <a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 20px;">维护</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%80%9A%E8%A7%A3-%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3-%E5%B0%8F%E8%AF%B4/" style="font-size: 10px;">编程通解 编程思想 小说</a>
+    </div>
+    
+  </div>
+
+    
+    <!-- 一言 -->
+
+  <div class="chireiden-widget-wrap">
+    <h3 class="chireiden-widget-title">
+      一言
+    </h3>
+    <div class="chireiden-widget">
+      <ul class="hitokoto-box">
+        <li id="hitokoto_text_parent" class="hitokoto-text" hitokotoCategory="">
+          <a href="#" id="hitokoto_text">
+            
+          </a>
+          <a href="#" id="hitokoto_error_text" style="display: none;">
+            
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let hitokotoText = document.getElementById('hitokoto_text')
+    let hitokotoErroText = document.getElementById('hitokoto_error_text')
+    let hitokotoCategory = document.getElementById('hitokoto_text_parent').getAttribute('hitokotoCategory')
+    window.onload = function () {
+      let url = 'https://v1.hitokoto.cn'
+      if (hitokotoCategory) {
+        url += '?c=' + hitokotoCategory
+      }
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          hitokotoText.innerText = "「 " + data.hitokoto + " 」 from " + data.from
+          hitokotoText.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+        })
+        .catch((reason) => {
+          console.error(11, reason)
+          hitokotoText.style.display = 'none'
+          hitokotoErroText.style.display = 'block'
+        })
+    }
+  </script>
+  
+    
+</aside>
+    <div class="chireiden-copyright">
+        &copy; 2023 RedContritio
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-chireiden/hexo-theme-chireiden" target="_blank">Chireiden</a>
+        <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a><script data-ad-client="ca-pub-2058306854838448" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+</div><!-- .chireiden-drawer -->
+    </div>
+    <div id="chireiden-content">
+        <div class="chireiden-primary">
+            <div class="chireiden-post">
+
+  <article>
+      
+          <div class="chireiden-post-cover" style="padding-bottom: NaN%;"> 
+              <img src="https://tva4.sinaimg.cn/large/9bd9b167gy1fwsi4ecagvj21hc0u07wi.jpg" alt="简单的链表及二叉树学习" loading="lazy">
+              <h1>简单的链表及二叉树学习</h1>
+          </div>
+      
+      
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    <a><i class="chireidenfont icon-calendar-fill"></i>2019年11月29日</a>
+</div>
+
+      <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约4.5k字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要17分钟</a>
+    
+</div>
+
+      <p>本节课将会讲三点内容，链表，栈以及二叉树。</p>
+<span id="more"></span>
+
+<!-- toc -->
+
+<h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>先来看一个简单的题目：</p>
+<h3 id="约瑟夫问题"><a href="#约瑟夫问题" class="headerlink" title="约瑟夫问题"></a>约瑟夫问题</h3><p> n个人围成一圈，从第一个人开始报数，数到m的人出列，再由下一个人重新从1开始报数，数到m的人再出圈，……依次类推，直到所有的人都出圈，请输出依次出圈人的编号。</p>
+<p><strong>输入</strong></p>
+<p>一行有两个数字，n和m，如题意。</p>
+<p><strong>输出</strong></p>
+<p>一行，为所有出圈人的编号。</p>
+<p><strong>样例</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">输入</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">10 3</td>
+<td align="left">3 6 9 2 7 1 8 5 10 4</td>
+</tr>
+</tbody></table>
+<p><strong>数据范围</strong></p>
+<p>1 &lt;&#x3D; m &lt;&#x3D; n &lt;&#x3D; 100</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>约瑟夫问题是一个典型的模拟问题。</p>
+<h4 id="第一种思路（数组标记）"><a href="#第一种思路（数组标记）" class="headerlink" title="第一种思路（数组标记）"></a>第一种思路（数组标记）</h4><p>我们可以创建一个数组，数组长度不小于总人数，每当一个人出列时，在数组内做一个标记。</p>
+<pre><code class="cpp">int a[105];
+
+// ...
+
+int num=n,last=1;
+    while(num)&#123;
+        int cnt=0;
+        for(int i=last;cnt!=m;i++)&#123;
+            if(i&gt;n) i%=n;
+            if(a[i]==-1) continue;
+            ++cnt;
+            if(cnt==m)&#123;
+                a[i]=-1;
+                num--;
+                last=i+1;
+                printf(&quot;%d &quot;,i);
+                break;
+            &#125;
+        &#125;
+    &#125;
+</code></pre>
+<h4 id="第二种思路（索引数组）"><a href="#第二种思路（索引数组）" class="headerlink" title="第二种思路（索引数组）"></a>第二种思路（索引数组）</h4><p>我们需要一种存储方式，能够在修改后快速找到下一个有效位置，而不是顺序检查。</p>
+<p>不妨采用这样的方式：</p>
+<pre><code class="cpp">int prev[105], next[105];
+
+// ...
+
+for(int i=1; i&lt;=n; ++i)
+&#123;
+    prev[i] = ((i-1)-1+n)%n+1;
+    next[i] = ((i-1)+1  )%n+1;
+&#125;
+
+// ...
+
+// 去掉 下标 i 的人
+next[prev[i]] = next[i];
+prev[next[i]] = prev[i];
+</code></pre>
+<h4 id="第三种思路（索引链表）"><a href="#第三种思路（索引链表）" class="headerlink" title="第三种思路（索引链表）"></a>第三种思路（索引链表）</h4><p>上面的 prev 和 next 是分离的，有时候进行一些处理时可能不够直观，因此我们采用数据结构——链表。</p>
+<p>先定义一个整合了 prev 和 next 的结构体：</p>
+<pre><code class="cpp">struct Node
+&#123;
+    int prev;
+    int next;
+&#125;;
+</code></pre>
+<p>如果是 C，为了便于编程，在下面再加一行</p>
+<pre><code class="c">typedef struct Node Node;
+</code></pre>
+<p>在使用的时候，采用这种方式</p>
+<pre><code class="cpp">Node a[105];
+
+// ...
+
+// 去掉 下标 i 的人
+a[a[i].prev].next = a[i].next;
+a[a[i].next].prev = a[i].prev;
+</code></pre>
+<p>这种方式的使用有一些限制，其中最显然的一点是，a，也即是存储这些 Node 的对象，必须是可以使用整数作为索引的。</p>
+<p>对于数组（和上节课描述过的 <code>std::vector</code> 、 <code>template&lt;typename T&gt; std::map&lt;int, T&gt;</code> 以及<code>std::set&lt;int&gt;</code> ）来说，这一假设可以满足，但是对于更多的情况，这一假设可能会限制我们的使用。</p>
+<p>其次，这种方式使用时，还暗示了，删除一个元素很容易，然而增加新元素却很难。</p>
+<p>考虑到 c 和 cpp 中常见的获取新的存储空间的方式（c：<code>malloc</code> ，<code>realloc</code> 和 <code>calloc</code> ；cpp：<code>new</code> ），我们可以认为，指针是一种通用的存储方式，因此，如果能用指针表示 prev 和 next ，我们就可以避免被上面的限制所束缚。</p>
+<h4 id="第四种思路（链表）"><a href="#第四种思路（链表）" class="headerlink" title="第四种思路（链表）"></a>第四种思路（链表）</h4><p>在这里，我们选择使用指针作为索引。</p>
+<pre><code class="cpp">struct Node
+&#123;
+    int id;
+    Node *prev;
+    Node *next;
+&#125;;
+</code></pre>
+<p>如果是 C 语言，请在最前面加上 <code>typedef struct Node Node;</code></p>
+<p>去掉某个人，则采用这样的方法：</p>
+<pre><code class="cpp">void remove(Node *p)
+&#123;
+    if(p-&gt;prev &amp;&amp; p-&gt;next)
+    &#123;
+        p-&gt;prev-&gt;next = p-&gt;next;
+        p-&gt;next-&gt;prev = p-&gt;prev;
+        delete p;
+        // if in c, use free
+    &#125;
+&#125;
+</code></pre>
+<p>最后一种方式的优点在于，我们不需要事先准备一个足够大的数组，而是可以根据输入数据动态创建一个足够长的链。</p>
+<h3 id="什么是链表"><a href="#什么是链表" class="headerlink" title="什么是链表"></a>什么是链表</h3><p>链表是一种物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。<br>链表由一系列结点（链表中每一个元素称为结点）组成，结点可以在运行时动态生成。<br>每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。 </p>
+<p>例如，一个长度为 3 的链表可以是这样的。</p>
+<pre class="mermaid">graph LR;
+    A-->B;
+    B-->C;
+    A["A: 1 | &B"];
+    B["B: 3 | &C"];
+    C["C: 12 | NULL"];</pre>
+
+<p>这个链表共有三个元素，A-C。其中 A 的数据域为 1，指针域为 &amp;B（B的地址）。最后的 C 数据域为 12，指针域为空（NULL）。可以使用一个循环来遍历这个链表：</p>
+<pre><code class="cpp">struct Node
+&#123;
+    int v;
+    Node *next;
+&#125;;
+
+Node *head = GetHead();
+</code></pre>
+<pre><code class="cpp">for(Node *p = head; p; p = p-&gt;next)
+&#123;
+    printf(&quot;%d\n&quot;, p-&gt;v);
+&#125;
+</code></pre>
+<h3 id="链表和数组对比"><a href="#链表和数组对比" class="headerlink" title="链表和数组对比"></a>链表和数组对比</h3><p>此处的数组指广义数组（含<code>std::array</code> 及<code>std::vector</code>）</p>
+<table>
+<thead>
+<tr>
+<th align="left">对比项</th>
+<th align="left">链表</th>
+<th>数组</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">查找第 n 个元素</td>
+<td align="left">O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td align="left">删去第 n 个元素</td>
+<td align="left">O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td align="left">插入元素到某位置</td>
+<td align="left">O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td align="left">将某一段逆序</td>
+<td align="left">O(n)</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+<h3 id="链表的分类"><a href="#链表的分类" class="headerlink" title="链表的分类"></a>链表的分类</h3><ul>
+<li>单链表<ul>
+<li>数据域：数据；</li>
+<li>指针域：next 指针，表示其下一个节点的地址</li>
+</ul>
+</li>
+<li>循环链表<ul>
+<li>单链表</li>
+<li>最后一个节点的 next 为首个节点的地址</li>
+</ul>
+</li>
+<li>双向链表<ul>
+<li>指针域：next 指针和 prev 指针，分别表示下一个节点和上一个节点的地址。</li>
+</ul>
+</li>
+</ul>
+<h3 id="链表-in-STL"><a href="#链表-in-STL" class="headerlink" title="链表 in STL"></a>链表 in STL</h3><p>STL 中也有链表类型的实现：std::list</p>
+<p>其支持的方法如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>list成员</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>operator&#x3D;</td>
+<td>赋值重载运算符</td>
+</tr>
+<tr>
+<td>assign</td>
+<td>分配值</td>
+</tr>
+<tr>
+<td>front</td>
+<td>返回第一个元素的引用</td>
+</tr>
+<tr>
+<td>back</td>
+<td>返回最后一元素的引用</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>返回第一个元素的指针(iterator)</td>
+</tr>
+<tr>
+<td>end</td>
+<td>返回最后一个元素的下一位置的指针</td>
+</tr>
+<tr>
+<td>rbegin</td>
+<td>返回链表最后一元素的后向指针(reverse_iterator or const)</td>
+</tr>
+<tr>
+<td>rend</td>
+<td>返回链表第一元素的下一位置的后向指针</td>
+</tr>
+<tr>
+<td>push_back</td>
+<td>增加一元素到链表尾</td>
+</tr>
+<tr>
+<td>push_front</td>
+<td>增加一元素到链表头</td>
+</tr>
+<tr>
+<td>pop_back</td>
+<td>pop_back()删除链表尾的一个元素</td>
+</tr>
+<tr>
+<td>pop_front</td>
+<td>删除链表头的一元素</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>删除所有元素</td>
+</tr>
+<tr>
+<td>erase</td>
+<td>删除一个元素或一个区域的元素(两个重载)</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>删除链表中匹配值的元素(匹配元素全部删除)</td>
+</tr>
+<tr>
+<td>remove_if</td>
+<td>删除条件满足的元素(遍历一次链表)，参数为自定义的回调函数</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>判断是否链表为空</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>返回链表最大可能长度</td>
+</tr>
+<tr>
+<td>size</td>
+<td>返回链表中元素个数</td>
+</tr>
+<tr>
+<td>resize</td>
+<td>重新定义链表长度(两重载函数)</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td>反转链表</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>对链表排序，默认升序</td>
+</tr>
+<tr>
+<td>merge</td>
+<td>合并两个有序链表并使之有序</td>
+</tr>
+<tr>
+<td>splice</td>
+<td>对两个链表进行结合(三个重载函数) 结合后第二个链表清空</td>
+</tr>
+<tr>
+<td>insert</td>
+<td>在指定位置插入一个或多个元素(三个重载函数)</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>交换两个链表(两个重载)</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>删除相邻重复元素</td>
+</tr>
+</tbody></table>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="后缀表达式"><a href="#后缀表达式" class="headerlink" title="后缀表达式"></a>后缀表达式</h3><p>所谓后缀表达式是指这样的一个表达式：式中不再引用括号，运算符号放在两个运算对象之后，所有计算按运算符号出现的顺序，严格地由左而右新进行（不用考虑运算符的优先级）。</p>
+<p>如：<code>3*(5–1)+7</code>对应的后缀表达式为：<code>3 5 1 - * 7 +</code>。</p>
+<p><strong>输入</strong></p>
+<p>一行，其中运算符和运算数之间都用空格分隔，运算数是一个一位非负整数。</p>
+<p><strong>输出</strong></p>
+<p> 一行，表达式的值。</p>
+<p><strong>样例</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">输入</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">3 5 1 - * 7 +</td>
+<td align="left">19</td>
+</tr>
+</tbody></table>
+<p><strong>数据范围</strong></p>
+<p>无。</p>
+<h3 id="解题思路-1"><a href="#解题思路-1" class="headerlink" title="解题思路"></a>解题思路</h3><p>这个问题看似麻烦，我们不妨先来手动模拟一次。</p>
+<p>3 5 1 - * 7 +</p>
+<p>首先参与运算的是 “5 1 -“ ，得到结果 4，将 4 填在原来 “5 1 -“ 的位置。</p>
+<p>这时候，表达式为 3 4 * 7 +</p>
+<p>我们接下来算乘法，得到结果 12</p>
+<p>现在表达式为 12 7 +</p>
+<p>两者相加，得到结果 19。</p>
+<hr>
+<p>通过观察我们的求解过程，我们可以发现，我们每次选择最靠前的一个符号，并将其前方的两个数字进行运算。</p>
+<p>但是具体实现起来该如何做呢？</p>
+<p><font size=5><del>&gt;&gt;&gt;&gt;<strong>栈</strong>&lt;&lt;&lt;&lt;</del></font></p>
+<p>结合前面的知识，我们发现，可以使用一个链表，这个链表结构如下：</p>
+<pre><code class="cpp">struct Node
+&#123;
+    int type;
+    int v;
+    Node *next, *prev;
+&#125;;
+</code></pre>
+<p>其中，type 表示其为数字还是为运算符。</p>
+<p>如果是数字，v 表示 数字的值；如果为运算符，我们不妨用 0123 代指四种运算符。</p>
+<p>接下来，每次从首个节点开始查找，找到第一个 <code>type == 运算符</code> 的节点，然后获得其前方的两个节点的值，运算后用其结果代替这三个节点。</p>
+<p>等到最后，首元素的 next 为 NULL 的时候，即链表长度为 1 时，最后这个节点的 v 就是结果。</p>
+<p><del> 所以跟栈有什么关系 </del></p>
+<h3 id="使用栈来解题"><a href="#使用栈来解题" class="headerlink" title="使用栈来解题"></a>使用栈来解题</h3><p>观察我们的解题思路，我们可以发现这样一个特点。</p>
+<p>我们每次处理的时候，都只对前面的一部分数据进行处理。</p>
+<p>如下：</p>
+<ol>
+<li><p><font color=gree>3 </font><font color=blue>5 1 </font><font color=red>-</font> <font color=gray>* 7 +</font></p>
+</li>
+<li><p><font color=blue>3 4 </font><font color=red>*</font> <font color=gray>7 +</font></p>
+</li>
+<li><p><font color=blue>12 7 </font><font color=red>+</font></p>
+</li>
+<li><p><font color=blue>19</font></p>
+</li>
+</ol>
+<p>其中，我们可以发现，绿色和灰色的部分是完全不用考虑的。</p>
+<p>每次操作是找到红色的操作符，然后取出蓝色的数字，进行运算后放回对应位置。</p>
+<p>如果我们不看灰色部分，我们可以得到这样的操作流程：</p>
+<p>每次取出最后一个节点（操作符），然后再取出两个节点作为操作数，运算后将结果放回原位置。</p>
+<p>我们归纳这个过程，可以抽象出这样的行为：</p>
+<ol>
+<li><p>取出元素：从一系列元素的最后面获得一个元素，元素数量减一；</p>
+</li>
+<li><p>放入元素：在一系列元素的最后面添加一个元素，元素数量加一。</p>
+</li>
+</ol>
+<p>在栈中，我们将这两个操作称为 push 和 pop。push 是压入一个元素，而 pop 是弹出一个元素。</p>
+<hr>
+<p>通过整理上面的过程，我们可以得到这样的流程：<br>首先创建一个栈，然后读入数据，每当读入一个元素，就将一个元素压栈。（这里的元素包括数字和操作符）</p>
+<p>如果刚刚压栈的是操作符，就弹出三个元素，按照出栈的顺序记为 a，b，c（其中，a 是刚刚压栈的操作符），并将 c (a) b 的结果压栈。</p>
+<p>直到读入完数据后，栈中剩余一个元素，这个元素就是结果。</p>
+<hr>
+<p><strong>更加简洁</strong></p>
+<p>上面的方法中，每次操作符被压栈后就立即出栈，而这一过程可以被简化：</p>
+<p>输入数据：</p>
+<p>如果数据为 数字 ，则压栈；</p>
+<p>如果数据为 操作符，则弹出两个数字，并将运算结果压栈。</p>
+<h3 id="栈的定义"><a href="#栈的定义" class="headerlink" title="栈的定义"></a>栈的定义</h3><p>栈（stack）又名堆栈，它是一种运算受限的线性表。<br>限定仅在表尾进行插入和删除操作的线性表。这一端被称为栈顶，相对地，把另一端称为栈底。<br>向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；<br>从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。</p>
+<p><strong>栈的特点可以概括为 FILO (First In Last Out)，即越先进去的元素，越后出来</strong></p>
+<h3 id="栈的常见实现"><a href="#栈的常见实现" class="headerlink" title="栈的常见实现"></a>栈的常见实现</h3><ol>
+<li>可以用数组和一个数字模拟栈</li>
+<li>STL std::stack</li>
+<li>用链表来实现栈。</li>
+</ol>
+<h3 id="提及队列"><a href="#提及队列" class="headerlink" title="提及队列"></a>提及队列</h3><p>队列与栈相似，不同点在于其为先进先出。</p>
+<h3 id="线性数据结构对比"><a href="#线性数据结构对比" class="headerlink" title="线性数据结构对比"></a>线性数据结构对比</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">数组（广义）</th>
+<th>链表</th>
+<th>栈</th>
+<th>队列</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">支持下标操作（随机寻址）</td>
+<td align="left">是</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td align="left">增删元素的复杂度</td>
+<td align="left">O(n)</td>
+<td>O(1)</td>
+<td>&#x2F;</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td align="left">支持遍历所有元素</td>
+<td align="left">是</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td align="left">求指定位置元素的复杂度</td>
+<td align="left">O(1)</td>
+<td>O(n)</td>
+<td>&#x2F;</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td align="left">在末端增加新元素复杂度</td>
+<td align="left">O(1)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td align="left">能访问的元素数量</td>
+<td align="left">所有</td>
+<td>所有</td>
+<td>仅栈顶</td>
+<td>仅队首</td>
+</tr>
+<tr>
+<td align="left">能操作的位点数量</td>
+<td align="left">所有</td>
+<td>所有</td>
+<td>仅栈顶</td>
+<td>队首和队尾</td>
+</tr>
+</tbody></table>
+<pre class="mermaid">graph TB;
+    A[数组]-->C[栈];
+    A-->B;
+    B[链表]-->C;
+    A-->D[队列];
+    B-->D;</pre>
+
+<h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h2><h3 id="后缀表达式转中缀表达式"><a href="#后缀表达式转中缀表达式" class="headerlink" title="后缀表达式转中缀表达式"></a>后缀表达式转中缀表达式</h3><p>后缀表达式定义如前，请根据给定后缀表达式，采用完全加括号的形式，输出其确定的中缀表达式。</p>
+<p>如：<code>3*(5–1)+7</code>对应的后缀表达式为：<code>3 5 1 - * 7 +</code>，我们对其完全加括号，可以得到<code>((3*(5-1))+7)</code> 。</p>
+<p><strong>输入</strong></p>
+<p>一行，其中运算符和运算数之间都用空格分隔，运算数是一个一位非负整数。</p>
+<p><strong>输出</strong></p>
+<p> 一行，中缀表达式。</p>
+<p><strong>样例</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">输入</th>
+<th align="left">输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">3 5 1 - * 7 +</td>
+<td align="left">((3*(5-1))+7)</td>
+</tr>
+</tbody></table>
+<p><strong>数据范围</strong></p>
+<p>无。</p>
+<h3 id="解题思路-2"><a href="#解题思路-2" class="headerlink" title="解题思路"></a>解题思路</h3><p>针对样例，我们可以发现，有这样的层级结构</p>
+<pre class="mermaid">graph TB;
+    A["((3*(5-1))+7)"]-->B["(3*(5-1))"];
+    A-->C["7"];
+    B-->D["3"];
+    B-->E["(5-1)"];
+    E-->F["5"];
+    E-->G["1"];</pre>
+
+<p>每个表达式可以被抽象为 <code>(a op b)</code> 的形式，其中，a、b 为表达式，op 为操作符。</p>
+<p>表达式有两种形式：<code>(a op b)</code> 或者 <code>a</code> ，其中 a、b 为表达式，op 为操作符。</p>
+<p>也就是说，表达式可以是单个数字。</p>
+<p>通过看图，我们可以发现，3、5、1、7 这四个节点，也就是操作数节点，没有下属节点（后称“子节点”）。<br>而当其有子节点的时候，如 <code>(5-1)</code> ，有两个操作数节点，因此有一层括号。</p>
+<p>我们将其所有子节点的层数，取其中的最大值，称之为该节点的深度。<br>例如，<code>(5-1)</code> 深度为 1，<code>3</code> 深度为 0，而最终结果的深度为 <code>max(3, 1) = 3</code>。<br>对于深度为 d 的节点，其有 d 层括号。</p>
+<p>因为这个层级结构像一棵倒置的树，因此这一结构被称为“树”。最上面的节点被称为根节点，而没有子节点的节点被称为叶节点。</p>
+<pre class="mermaid">graph TB;
+    A["根节点 ((3*(5-1))+7)"]-->B["(3*(5-1))"];
+    A-->C["叶节点 7"];
+    B-->D["叶节点 3"];
+    B-->E["(5-1)"];
+    E-->F["叶节点 5"];
+    E-->G["叶节点 1"];</pre>
+
+<p>也就是说，其结构如上所示。</p>
+<p>对于每一组这样结构的节点</p>
+<pre class="mermaid">graph TB;
+    A["亲节点"]-->B["左子节点"];
+    A-->C["右子节点"];</pre>
+
+<p>其中 A 被称为亲节点（或父节点），而 B、C 则称之为子节点。</p>
+<p>亲节点和子节点的定义的相对的，没有绝对的亲节点，也没有绝对的子节点。<br>特别的，仅当节点数量为 1 时，树中不存在亲节点与子节点的关系。</p>
+<p>像表达式树这种，每个节点（最多）有两个子节点的情况，我们分别将这两个子节点称为左子节点和右子节点。而这个树称之为二叉树。</p>
+<h3 id="二叉树定义"><a href="#二叉树定义" class="headerlink" title="二叉树定义"></a>二叉树定义</h3><p>在计算机科学中，二叉树是每个结点最多有两个子树的树结构。通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。二叉树常被用于实现二叉查找树和二叉堆。</p>
+<p>一棵深度为k，且有2^k-1个结点的二叉树，称为满二叉树。这种树的特点是每一层上的结点数都是最大结点数。而在一棵二叉树中，除最后一层外，若其余层都是满的，并且或者最后一层是满的，或者是在右边缺少连续若干结点，则此二叉树为完全二叉树。具有n个结点的完全二叉树的深度为floor(log2n)+1。深度为k的完全二叉树，至少有2k-1个叶子结点，至多有2k-1个结点。</p>
+<h3 id="怎么解题？"><a href="#怎么解题？" class="headerlink" title="怎么解题？"></a>怎么解题？</h3><p>对于上面的题目，我们可以这样做：</p>
+<p>将栈（后缀表达式）部分的计算过程进行修改。</p>
+<p><strong>原来的过程是：</strong></p>
+<p>输入一个元素；</p>
+<p>如果是数字则压栈；</p>
+<p>如果是操作符则出栈两个数字，运算后压栈。</p>
+<p><strong>在这里，我们修改过程：</strong></p>
+<p>输入一个元素；</p>
+<p>如果是数字，则压栈一个值为此数字的节点；</p>
+<p>如果是操作符，则出栈两个节点，生成新的节点后压栈。</p>
+<p><strong>表达式的保存</strong></p>
+<p>我们可以采用这样的结构：</p>
+<pre><code class="cpp">struct Node
+&#123;
+    bool isNum;
+    int val;
+    Node *left, *right;
+&#125;;
+</code></pre>
+<p>这样一来，上面的树就可以如下表示：</p>
+<pre class="mermaid">graph TB;
+    A["A: false | '+' | &B | &C"]-->B["B: false | '*' | &D | &E"];
+    A-->C["C: true | 7 | NULL | NULL"];
+    B-->D["D: true | 3 | NULL | NULL"];
+    B-->E["E: false | '-' | &F | &G"];
+    E-->F["F: true | 5 | NULL | NULL"];
+    E-->G["G: true | 1 | NULL | NULL"];</pre>
+
+<p>通过观察我们可以发现，所有叶节点都是操作数，非叶节点都是操作符。</p>
+<p>因此我们可以使用这样的结构：</p>
+<pre><code class="cpp">struct Node
+&#123;
+    int val;
+    Node *left, *right;
+&#125;;
+</code></pre>
+<pre class="mermaid">graph TB;
+    A["A: '+' | &B | &C"]-->B["B: '*' | &D | &E"];
+    A-->C["C: 7 | NULL | NULL"];
+    B-->D["D: 3 | NULL | NULL"];
+    B-->E["E: '-' | &F | &G"];
+    E-->F["F: 5 | NULL | NULL"];
+    E-->G["G: 1 | NULL | NULL"];</pre>
+
+<p>而要判断一个节点是操作数还是操作符，可以如下判断：</p>
+<pre><code class="cpp">bool isNum(Node *p)
+&#123;
+    return p-&gt;left == NULL &amp;&amp; p-&gt;right == NULL;
+&#125;
+</code></pre>
+<p>在生成这样一个树形结构后，我们就可以进行输出。</p>
+<h3 id="二叉树遍历"><a href="#二叉树遍历" class="headerlink" title="二叉树遍历"></a>二叉树遍历</h3><blockquote>
+<p>遍历是对树的一种最基本的运算，所谓遍历二叉树，就是按一定的规则和顺序走遍二叉树的所有结点，使每一个结点都被访问一次，而且只被访问一次。由于二叉树是非线性结构，因此，树的遍历实质上是将二叉树的各个结点转换成为一个线性序列来表示。</p>
+<p>设L、D、R分别表示遍历左子树、访问根结点和遍历右子树， 则对一棵二叉树的遍历有三种情况：DLR（称为先根次序遍历，也叫先序遍历），LDR（称为中根次序遍历，也叫中序遍历），LRD （称为后根次序遍历，也叫后序遍历）。</p>
+</blockquote>
+<p>要输出表达式，我们采用中序遍历的方式。</p>
+<p>对于每个节点，如果其为表达式，则遍历输出，如果为数字，则直接输出。</p>
+
+  </article>
+
+  
+      
+    <div class="chireiden-post-copyright">
+        <strong>本文作者：</strong>RedContritio<br>
+        <strong>本文链接：</strong><a href="https://redcontritio.github.io/2019/11/29/%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0/" title="https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;11&#x2F;29&#x2F;%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;redcontritio.github.io&#x2F;2019&#x2F;11&#x2F;29&#x2F;%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="chireiden-post-meta chireiden-rainbow">
+    
+    
+        <a class="chireidenfont icon-tag-fill -none-link" href="/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B-%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B/" rel="tag">社团课程 零基础课程</a>
+    
+</div>
+
+  
+      <div class="chireiden-post-footer">
+          <section class="chireiden-comment">
+    <div id="gitment"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'RedContritio', // 你的 GitHub ID
+    repo: 'RedContritio.github.io', // 存储评论的 repo
+    oauth: {
+        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
+        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+    },
+})
+gitment.render('gitment')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="chireiden-post-right">
+              <div class="chireiden-fixed">
+                  <div class="chireiden-tool"> 
+                    
+                      
+                    
+                      <a href="#chireiden-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="chireidenfont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="chireiden-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="搜索" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1675841852988"></script>
+
+
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
