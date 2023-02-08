@@ -2,7 +2,7 @@
 title: matplotlib编码字体错误的解决过程
 date: 2019-11-07 00:11:02
 tags: python matplotlib
-cover: https://tva2.sinaimg.cn/large/9bd9b167gy1fwrteef8x2j21hc0u0ql4.jpg
+# cover: https://tva2.sinaimg.cn/large/9bd9b167gy1fwrteef8x2j21hc0u0ql4.jpg
 ---
 
 

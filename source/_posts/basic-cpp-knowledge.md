@@ -2,7 +2,7 @@
 title: Cpp 入门
 date: 2019-10-20 21:06:47
 tags: 社团课程
-cover: https://tva1.sinaimg.cn/large/9bd9b167gy1g2ql5g4bm5j21hc0u07wh.jpg
+# cover: https://tva1.sinaimg.cn/large/9bd9b167gy1g2ql5g4bm5j21hc0u07wh.jpg
 ---
 
 {% blockquote [Linus Torvalds] %}

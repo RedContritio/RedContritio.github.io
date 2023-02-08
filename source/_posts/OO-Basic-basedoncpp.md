@@ -2,7 +2,7 @@
 title: 面向对象入门
 date: 2019-11-11 15:42:01
 tags: 社团课程
-cover: https://tva1.sinaimg.cn/large/9bd9b167ly1fwsfe14njgj21hc0u07tf.jpg
+# cover: https://tva1.sinaimg.cn/large/9bd9b167ly1fwsfe14njgj21hc0u07tf.jpg
 ---
 
 {% blockquote [Tom Cargill] %}
