@@ -40,6 +40,7 @@
     "hexo-theme-nexmoe": "3.2.13",
     "hexo-toc": "^1.1.0",
     "hexo-wordcount": "^6.0.1",
+    "prismjs": "^1.29.0",
     "word-count": "^0.2.2"
   }
 }

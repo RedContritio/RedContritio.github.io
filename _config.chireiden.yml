@@ -73,7 +73,7 @@ social:
     - rgb(231, 106, 141)
     - rgba(231, 106, 141, .15)
   GitHub:
-    - https://github.com/nexmoe/
+    - https://github.com/RedContritio/
     - icon-github
     - rgb(25, 23, 23)
     - rgba(25, 23, 23, .15)
@@ -107,8 +107,8 @@ gitalk:
 gitment:
   owner: RedContritio # 持有该 repo 的 GitHub username
   repo: RedContritio.github.io # 存放评论的 issue 所在的 repo
-  clientID: 80b2453b6d5f37ad6225 # GitHub Client ID
-  clientSecret: 43e99fa852795c9a7b3eb924b2558c64b84bbdeb # GitHub Client Secret
+  clientID: 0a6a884a25f2cfcd11b3 # GitHub Client ID
+  clientSecret: <CLIENT_COMMENT_SECRET> # GitHub Client Secret
 valine: 
   appId: <API_ID> # leancloud application app id
   appKey: <API_Key> # leancloud application app key

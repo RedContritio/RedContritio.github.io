@@ -40,11 +40,21 @@ post_asset_folder: true # 启动asset文件夹
 relative_link: false # 把链接改为与根目录的相对位址
 future: false # 显示未来的文章
 highlight: # 代码块的设置
-  enable: true # 启动设置
+  enable: true # 启用
+  auto_detect: false # 自动检测
   line_number: true # 行号
-  auto_detect: true # 自动检测
+  line_threshold: 0
+  tab_replace: ''
+  exclude_languages:
+    - example
+  wrap: true
   hljs: true
-  tab_replace: # tab替换
+prismjs:
+  enable: true
+  preprocess: true
+  line_number: true
+  line_threshold: 0
+  tab_replace: ''
   
 # 主页设置
 # path: Root path for your blogs index page. (默认 = '')
