@@ -29,9 +29,24 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675853862062">
+
+    <!-- 这儿必须 highlight.js 不能 min，否则会换行出错 -->
+
+    <!-- 主题可以在 https://github.com/highlightjs/highlight.js/tree/main/src/styles 里选 -->
+
     
-    <link rel="stylesheet" href="/css/style.css?v=1675853862062">
+        <link rel="stylesheet"
+            href="//cdn.bootcss.com/highlight.js/11.0.1/styles/github-dark.min.css">
+        <script src="//cdn.bootcss.com/highlight.js/11.0.1/highlight.min.js">
+        </script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+    
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341726">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1676198341726">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -58,7 +73,7 @@
         </a>
     </div>
     <div class="chireiden-count">
-        <div><span>文章</span>13</div>
+        <div><span>文章</span>15</div>
         <div><span>标签</span>9</div>
         <div><span>分类</span>0</div>
     </div>
@@ -104,7 +119,7 @@
             <i class="chireidenfont icon-QQ"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="chireidenfont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
             <i class="chireidenfont icon-github"></i>
         </a>
     </div>
@@ -195,6 +210,10 @@
             <h2>2023</h2>
             <ul>
             
+                <li><span>02-11</span><a href="/2023/02/11/%E5%9B%BD%E5%86%85git%E5%8A%A0%E9%80%9F/" >国内git加速</a></li>
+            
+                <li><span>02-08</span><a href="/2023/02/08/%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7%E6%9D%A5%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" >重新捡起来的个人博客</a></li>
+            
                 <li><span>02-08</span><a href="/2023/02/08/Paddle%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/" >Paddle开发入门</a></li>
             
             </ul>
@@ -274,7 +293,7 @@
 
  
 
-<script async src="/js/app.js?v=1675853862063"></script>
+<script async src="/js/app.js?v=1676198341727"></script>
 
 
 

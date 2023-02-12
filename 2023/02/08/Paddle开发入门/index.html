@@ -12,15 +12,15 @@
     
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <meta name="description" content="过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程，">
+    <meta name="description" content="过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程， # paddle.flip事实上的首个动手目标，它的出错输入是这样的： import paddle import numpy as np from paddle import flip x &#x3D; paddle.to_tensor(np.random.uniform(-10, 10, [1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Paddle开发入门">
 <meta property="og:url" content="https://redcontritio.github.io/2023/02/08/Paddle%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Chireiden">
-<meta property="og:description" content="过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程，">
+<meta property="og:description" content="过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程， # paddle.flip事实上的首个动手目标，它的出错输入是这样的： import paddle import numpy as np from paddle import flip x &#x3D; paddle.to_tensor(np.random.uniform(-10, 10, [1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-08T09:02:29.000Z">
-<meta property="article:modified_time" content="2023-02-08T10:49:32.144Z">
+<meta property="article:modified_time" content="2023-02-09T10:31:39.132Z">
 <meta property="article:author" content="RedContritio">
 <meta name="twitter:card" content="summary">
     
@@ -29,9 +29,24 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675853862068">
+
+    <!-- 这儿必须 highlight.js 不能 min，否则会换行出错 -->
+
+    <!-- 主题可以在 https://github.com/highlightjs/highlight.js/tree/main/src/styles 里选 -->
+
     
-    <link rel="stylesheet" href="/css/style.css?v=1675853862069">
+        <link rel="stylesheet"
+            href="//cdn.bootcss.com/highlight.js/11.0.1/styles/github-dark.min.css">
+        <script src="//cdn.bootcss.com/highlight.js/11.0.1/highlight.min.js">
+        </script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+    
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341763">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1676198341763">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -58,7 +73,7 @@
         </a>
     </div>
     <div class="chireiden-count">
-        <div><span>文章</span>13</div>
+        <div><span>文章</span>15</div>
         <div><span>标签</span>9</div>
         <div><span>分类</span>0</div>
     </div>
@@ -104,7 +119,7 @@
             <i class="chireidenfont icon-QQ"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="chireidenfont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
             <i class="chireidenfont icon-github"></i>
         </a>
     </div>
@@ -193,12 +208,159 @@
 
       <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
     
-        <a><i class="chireidenfont icon-areachart"></i>约41字</a>
-        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
+        <a><i class="chireidenfont icon-areachart"></i>约1.5k字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要7分钟</a>
     
 </div>
 
       <p>过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程，</p>
+<h2><a href="#paddle-flip" class="header-anchor"># </a><span id="paddle-flip">paddle.flip</span></h2><p>事实上的首个动手目标，它的出错输入是这样的：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> paddle
+<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">from</span> paddle <span class="token keyword">import</span> flip
+x <span class="token operator">=</span> paddle<span class="token punctuation">.</span>to_tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span>np<span class="token punctuation">.</span>int64<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+axis <span class="token operator">=</span> paddle<span class="token punctuation">.</span>to_tensor<span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2147483648</span><span class="token punctuation">,</span> <span class="token number">2147483647</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>astype<span class="token punctuation">(</span>np<span class="token punctuation">.</span>int32<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>axis<span class="token punctuation">)</span>
+flip<span class="token punctuation">(</span>x<span class="token punctuation">,</span> axis<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>翻到 Paddle 源码看看</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">flip</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> axis<span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Reverse the order of a n-D tensor along given axis in axis.
+
+    Args:
+        x (Tensor): A Tensor(or LoDTensor) with shape :math:`[N_1, N_2,..., N_k]` . The data type of the input Tensor x
+            should be float32, float64, int32, int64, bool.
+        axis (list|tuple|int): The axis(axes) to flip on. Negative indices for indexing from the end are accepted.
+        name (str, optional): Name for the operation (optional, default is None). For more information, please refer to :ref:`api_guide_Name`.
+
+    Returns:
+        Tensor, Tensor or LoDTensor calculated by flip layer. The data type is same with input x.
+
+    Examples:
+        .. code-block:: python
+
+          import paddle
+
+          image_shape=(3, 2, 2)
+          img = paddle.arange(image_shape[0] * image_shape[1] * image_shape[2]).reshape(image_shape)
+          tmp = paddle.flip(img, [0,1])
+          print(tmp) # [[[10,11],[8, 9]], [[6, 7],[4, 5]], [[2, 3],[0, 1]]]
+
+          out = paddle.flip(tmp,-1)
+          print(out) # [[[11,10],[9, 8]], [[7, 6],[5, 4]], [[3, 2],[1, 0]]]
+    """</span>
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>axis<span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        axis <span class="token operator">=</span> <span class="token punctuation">[</span>axis<span class="token punctuation">]</span>
+
+    <span class="token keyword">if</span> in_dygraph_mode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> _C_ops<span class="token punctuation">.</span>flip<span class="token punctuation">(</span>x<span class="token punctuation">,</span> axis<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>思路很明显，flip 期望输入一个一维的数组，但是错误的案例里输入了二维的。因此解决方案就更明显了，不妨加一个维度检查。</p>
+<p>加在哪呢？很直观的，既然上面的 python 代码里处理了输入单个整数时将其转换为整数，那就给它加上一个维度检查，形如 </p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> paddle<span class="token punctuation">.</span>to_tensor<span class="token punctuation">(</span>axis<span class="token punctuation">)</span><span class="token punctuation">.</span>ndim <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">:</span>
+    <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">'维度不对，麻烦再检查检查，只要一维的'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>非常合理，而且简单易懂，维度不为 1 就报错，于是事情就这样成了（并没有）。</p>
+<p>因为 <a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Paddle/issues/49927">Good First Issue Lists</a> 里面还有这样的对话。</p>
+<blockquote>
+<blockquote>
+<p>您好，想问下是要在 Python 端加输入检查，还是要在C++端用 <code>PADDLE_ENFORCE_EQ</code> 做检查呢 ?</p>
+</blockquote>
+<p>根据情况而定。能够在C++端加的，一定要在C++端加。如果C++端不具备条件的，则在Python端加。</p>
+</blockquote>
+<p>也就是说，应该尽可能在 C++ 端加对应检查。</p>
+<p>C++ 端加检查难吗？不难，顺着 flip 查找内核实现，就能看到 <code>flip_kernel.cc</code> 里面对应的代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Context</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">FlipKernel</span><span class="token punctuation">(</span><span class="token keyword">const</span> Context<span class="token operator">&amp;</span> dev_ctx<span class="token punctuation">,</span>
+                <span class="token keyword">const</span> DenseTensor<span class="token operator">&amp;</span> x<span class="token punctuation">,</span>
+                <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> axis<span class="token punctuation">,</span>
+                DenseTensor<span class="token operator">*</span> out<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">PD_REGISTER_KERNEL</span><span class="token punctuation">(</span>flip<span class="token punctuation">,</span>
+                   CPU<span class="token punctuation">,</span>
+                   ALL_LAYOUT<span class="token punctuation">,</span>
+                   phi<span class="token double-colon punctuation">::</span>FlipKernel<span class="token punctuation">,</span>
+                   <span class="token keyword">float</span><span class="token punctuation">,</span>
+                   <span class="token keyword">double</span><span class="token punctuation">,</span>
+                   <span class="token keyword">int32_t</span><span class="token punctuation">,</span>
+                   <span class="token keyword">int64_t</span><span class="token punctuation">,</span>
+                   <span class="token keyword">bool</span><span class="token punctuation">,</span>
+                   phi<span class="token double-colon punctuation">::</span>dtype<span class="token double-colon punctuation">::</span>complex<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">,</span>
+                   phi<span class="token double-colon punctuation">::</span>dtype<span class="token double-colon punctuation">::</span>complex<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也就是说，只要看 <code>FlipKernel</code> 就行了。</p>
+<p>逻辑很合理，但是失败了，gdb 调试跑了一遍（gdb 7 支持了 python 调试），看到了和 <strong>#49922</strong> 相同的调用栈。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">AddressSanitizer<span class="token operator">:</span>DEADLYSIGNAL
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+<span class="token operator">==</span><span class="token number">92083</span><span class="token operator">==</span>ERROR<span class="token operator">:</span> AddressSanitizer<span class="token operator">:</span> SEGV on unknown address <span class="token number">0x000000000008</span> <span class="token punctuation">(</span>pc <span class="token number">0x7faceb79eab3</span> bp <span class="token number">0x7ffe95a59990</span> sp <span class="token number">0x7ffe95a598e0</span> T0<span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token number">92083</span><span class="token operator">==</span>The signal is caused by a READ memory access<span class="token punctuation">.</span>
+<span class="token operator">==</span><span class="token number">92083</span><span class="token operator">==</span>Hint<span class="token operator">:</span> address points to the zero page<span class="token punctuation">.</span>
+    #<span class="token number">0</span> <span class="token number">0x7faceb79eab3</span> in paddle<span class="token double-colon punctuation">::</span>pybind<span class="token double-colon punctuation">::</span><span class="token function">PyObject_CheckLongOrToLong</span><span class="token punctuation">(</span>_object<span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span>home<span class="token operator">/</span>work<span class="token operator">/</span>yakun<span class="token operator">/</span>paddle<span class="token operator">-</span><span class="token number">2.4</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">/</span>Paddle<span class="token operator">/</span>paddle<span class="token operator">/</span>fluid<span class="token operator">/</span>pybind<span class="token operator">/</span>op_function_common<span class="token punctuation">.</span>cc<span class="token operator">:</span><span class="token number">69</span><span class="token operator">:</span><span class="token number">8</span>
+    #<span class="token number">1</span> <span class="token number">0x7faceb7a4dd5</span> in paddle<span class="token double-colon punctuation">::</span>pybind<span class="token double-colon punctuation">::</span><span class="token function">CastPyArg2Ints</span><span class="token punctuation">(</span>_object<span class="token operator">*</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>__cxx11<span class="token double-colon punctuation">::</span>basic_string<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>char_traits<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">></span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>allocator<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">></span> <span class="token operator">></span> <span class="token keyword">const</span><span class="token operator">&amp;</span><span class="token punctuation">,</span> <span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token operator">/</span>home<span class="token operator">/</span>work<span class="token operator">/</span>yakun<span class="token operator">/</span>paddle<span class="token operator">-</span><span class="token number">2.4</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">/</span>Paddle<span class="token operator">/</span>paddle<span class="token operator">/</span>fluid<span class="token operator">/</span>pybind<span class="token operator">/</span>op_function_common<span class="token punctuation">.</span>cc<span class="token operator">:</span><span class="token number">357</span><span class="token operator">:</span><span class="token number">11</span>
+    #<span class="token number">2</span> <span class="token number">0x7facea7c4caf</span> in paddle<span class="token double-colon punctuation">::</span>pybind<span class="token double-colon punctuation">::</span><span class="token function">eager_api_flip</span><span class="token punctuation">(</span>_object<span class="token operator">*</span><span class="token punctuation">,</span> _object<span class="token operator">*</span><span class="token punctuation">,</span> _object<span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">/</span>home<span class="token operator">/</span>work<span class="token operator">/</span>yakun<span class="token operator">/</span>paddle<span class="token operator">-</span><span class="token number">2.4</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">/</span>Paddle<span class="token operator">/</span>paddle<span class="token operator">/</span>fluid<span class="token operator">/</span>pybind<span class="token operator">/</span>eager_op_function<span class="token punctuation">.</span>cc<span class="token operator">:</span><span class="token number">1216</span><span class="token operator">:</span><span class="token number">29</span>
+    #<span class="token number">3</span> <span class="token number">0x5025f3</span> in <span class="token function">PyCFunction_Call</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x5025f3</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">4</span> <span class="token number">0x500db4</span> in <span class="token function">_PyObject_MakeTpCall</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x500db4</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">5</span> <span class="token number">0x566223</span> in <span class="token function">_PyEval_EvalFrameDefault</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x566223</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">6</span> <span class="token number">0x55f470</span> in <span class="token function">_PyEval_EvalCodeWithName</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x55f470</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">7</span> <span class="token number">0x5016c5</span> in <span class="token function">_PyFunction_Vectorcall</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x5016c5</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">8</span> <span class="token number">0x560136</span> in <span class="token function">_PyEval_EvalFrameDefault</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x560136</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">9</span> <span class="token number">0x55f470</span> in <span class="token function">_PyEval_EvalCodeWithName</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x55f470</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">10</span> <span class="token number">0x55f102</span> in <span class="token function">PyEval_EvalCode</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x55f102</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">11</span> <span class="token number">0x62a1ef</span>  <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x62a1ef</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">12</span> <span class="token number">0x62a179</span>  <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x62a179</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">13</span> <span class="token number">0x47a7f2</span>  <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x47a7f2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">14</span> <span class="token number">0x47a5cb</span> in <span class="token function">PyRun_SimpleFileExFlags</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x47a5cb</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">15</span> <span class="token number">0x4247dc</span> in <span class="token function">_init</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x4247dc</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">16</span> <span class="token number">0x5fb9b8</span> in <span class="token function">Py_BytesMain</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x5fb9b8</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+    #<span class="token number">17</span> <span class="token number">0x7fad0bf9783f</span> in __libc_start_main <span class="token operator">/</span>build<span class="token operator">/</span>glibc<span class="token operator">-</span>S7Ft5T<span class="token operator">/</span>glibc<span class="token operator">-</span><span class="token number">2.23</span><span class="token operator">/</span>csu<span class="token operator">/</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token operator">/</span>csu<span class="token operator">/</span>libc<span class="token operator">-</span>start<span class="token punctuation">.</span>c<span class="token operator">:</span><span class="token number">291</span>
+    #<span class="token number">18</span> <span class="token number">0x5fb8b8</span> in <span class="token function">_start</span> <span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3<span class="token punctuation">.</span><span class="token number">8</span><span class="token operator">+</span><span class="token number">0x5fb8b8</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>BuildId<span class="token operator">:</span> <span class="token number">69</span>b06f9a4b2e8428d7e32aa682c34a91dc0b961e<span class="token punctuation">)</span>
+AddressSanitizer can <span class="token operator">not</span> provide additional info<span class="token punctuation">.</span>
+SUMMARY<span class="token operator">:</span> AddressSanitizer<span class="token operator">:</span> SEGV <span class="token operator">/</span>home<span class="token operator">/</span>work<span class="token operator">/</span>yakun<span class="token operator">/</span>paddle<span class="token operator">-</span><span class="token number">2.4</span><span class="token punctuation">.</span><span class="token number">0</span><span class="token operator">/</span>Paddle<span class="token operator">/</span>paddle<span class="token operator">/</span>fluid<span class="token operator">/</span>pybind<span class="token operator">/</span>op_function_common<span class="token punctuation">.</span>cc<span class="token operator">:</span><span class="token number">69</span><span class="token operator">:</span><span class="token number">8</span> in paddle<span class="token double-colon punctuation">::</span>pybind<span class="token double-colon punctuation">::</span><span class="token function">PyObject_CheckLongOrToLong</span><span class="token punctuation">(</span>_object<span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token operator">==</span><span class="token number">92083</span><span class="token operator">==</span>ABORTING<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到，调用栈完全没进入到 <code>FlipKernel</code> 中，而是停在了 <code>eager_api_flip</code>，这个自动生成的文件里，并且更具体的，是 <code>CastPyArg2Ints</code> 这个函数。</p>
+<p>这个函数简单来说，是将类型为 <code>PyObject</code> 的 <code>python</code> 变量转换成 <code>std::vector&lt;int&gt;</code> 的 <code>cpp</code> 值，首先判断输入变量是否可迭代，如果可迭代，就将每个元素转换为 <code>int</code>（<code>long</code>）。</p>
+<p>而问题就出在这个转换过程：先检查是否能转换为 <code>long</code>，如果能，则进行转换，否则抛出错误。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">PyObject_CheckLongOrToLong</span><span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token operator">*</span> obj<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">PyLong_Check</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">PyBool_Check</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+      <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>g_vartype_pytype<span class="token punctuation">)</span> <span class="token operator">||</span>  <span class="token comment">// NOLINT</span>
+      <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>g_varbase_pytype<span class="token punctuation">)</span> <span class="token operator">||</span>  <span class="token comment">// NOLINT</span>
+      <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>p_tensor_type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token comment">// NOLINT</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果 <code>obj</code> 是（能转换到） <code>long</code> 并且 <code>obj</code> 不是 <code>bool</code>，则返回 <code>true</code>。<br>**或者，如果 <code>obj</code> 是 <code>Variable</code> 或 <code>Tensor</code>，返回 <code>true</code>**。</p>
+<ul>
+<li>当 <code>item</code> 为 <code>long</code> 的时候<ul>
+<li>检查能否转换 <code>PyObject_CheckLongOrToLong</code> 结果为 <code>true</code>, 检查通过</li>
+<li>进行 <code>PyLong_AsLong</code>，<strong>得到一个 long 变量的指针</strong></li>
+</ul>
+</li>
+<li>当 <code>item</code> 为 tensor<long> 的时候<ul>
+<li>检查能否转换 <code>PyObject_CheckLongOrToLong</code> 结果为 true（不确定内部逻辑通过原因）, 检查通过</li>
+<li>进行 <code>PyLong_AsLong</code>，<strong>得到一个空指针</strong></li>
+</ul>
+</long></li>
+</ul>
+<p>因而出错。</p>
+<p>简单来说，<code>PyObject_CheckLongOrToLong</code> 对 <code>Variable</code> 和 <code>Tensor</code> 这种复杂类型的检查，不够详尽。</p>
+<p>最后进行的修复策略也同样简单。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">PyLong_Check</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">PyBool_Check</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span>
+    <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>g_vartype_pytype<span class="token punctuation">)</span> <span class="token operator">||</span>  <span class="token comment">// NOLINT</span>
+    <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>g_varbase_pytype<span class="token punctuation">)</span> <span class="token operator">||</span>  <span class="token comment">// NOLINT</span>
+    <span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>p_tensor_type<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token comment">// NOLINT</span>
+    <span class="token punctuation">(</span><span class="token function">PyObject_IsInstance</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">,</span> <span class="token punctuation">(</span>PyObject<span class="token operator">*</span><span class="token punctuation">)</span>p_tensor_type<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span>    <span class="token comment">// NOLINT</span>
+     <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>TensorObject<span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">*</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">-></span>tensor<span class="token punctuation">.</span><span class="token function">numel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token comment">// NOLINT</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>即检查是否是仅存在单个元素，如果是，则表明其支持转换。</p>
+<p>通过添加该检查，能够解决该问题。</p>
+<p>但是通过敏锐的观察力，不难发现，对于其他数据类型，如 <code>float</code> 等，同样存在该问题。</p>
+<p>同时，也不难发现，对于 <code>Variable</code> (<code>static</code>)，同样存在该问题。</p>
+<p>因此短期小目标是对这些检查代码进行修改，以提高其稳健性。</p>
 
   </article>
 
@@ -231,8 +393,8 @@ var gitment = new Gitment({
     owner: 'RedContritio', // 你的 GitHub ID
     repo: 'RedContritio.github.io', // 存储评论的 repo
     oauth: {
-        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
-        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+        client_id: '0a6a884a25f2cfcd11b3', // 你的 client ID
+        client_secret: '&lt;CLIENT_COMMENT_SECRET&gt;' // 你的 client secret
     },
 })
 gitment.render('gitment')
@@ -275,7 +437,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675853862069"></script>
+<script async src="/js/app.js?v=1676198341764"></script>
 
 
 

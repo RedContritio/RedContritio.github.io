@@ -30,9 +30,24 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675853862075">
+
+    <!-- 这儿必须 highlight.js 不能 min，否则会换行出错 -->
+
+    <!-- 主题可以在 https://github.com/highlightjs/highlight.js/tree/main/src/styles 里选 -->
+
     
-    <link rel="stylesheet" href="/css/style.css?v=1675853862075">
+        <link rel="stylesheet"
+            href="//cdn.bootcss.com/highlight.js/11.0.1/styles/github-dark.min.css">
+        <script src="//cdn.bootcss.com/highlight.js/11.0.1/highlight.min.js">
+        </script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+    
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341937">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1676198341937">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -59,7 +74,7 @@
         </a>
     </div>
     <div class="chireiden-count">
-        <div><span>文章</span>13</div>
+        <div><span>文章</span>15</div>
         <div><span>标签</span>9</div>
         <div><span>分类</span>0</div>
     </div>
@@ -105,7 +120,7 @@
             <i class="chireidenfont icon-QQ"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="chireidenfont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
             <i class="chireidenfont icon-github"></i>
         </a>
     </div>
@@ -283,8 +298,8 @@ var gitment = new Gitment({
     owner: 'RedContritio', // 你的 GitHub ID
     repo: 'RedContritio.github.io', // 存储评论的 repo
     oauth: {
-        client_id: '80b2453b6d5f37ad6225', // 你的 client ID
-        client_secret: '43e99fa852795c9a7b3eb924b2558c64b84bbdeb' // 你的 client secret
+        client_id: '0a6a884a25f2cfcd11b3', // 你的 client ID
+        client_secret: '&lt;CLIENT_COMMENT_SECRET&gt;' // 你的 client secret
     },
 })
 gitment.render('gitment')
@@ -327,7 +342,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1675853862076"></script>
+<script async src="/js/app.js?v=1676198341938"></script>
 
 
 

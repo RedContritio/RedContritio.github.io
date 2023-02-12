@@ -27,9 +27,24 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675853862089">
+
+    <!-- 这儿必须 highlight.js 不能 min，否则会换行出错 -->
+
+    <!-- 主题可以在 https://github.com/highlightjs/highlight.js/tree/main/src/styles 里选 -->
+
     
-    <link rel="stylesheet" href="/css/style.css?v=1675853862089">
+        <link rel="stylesheet"
+            href="//cdn.bootcss.com/highlight.js/11.0.1/styles/github-dark.min.css">
+        <script src="//cdn.bootcss.com/highlight.js/11.0.1/highlight.min.js">
+        </script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+    
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341955">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1676198341955">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -56,7 +71,7 @@
         </a>
     </div>
     <div class="chireiden-count">
-        <div><span>文章</span>13</div>
+        <div><span>文章</span>15</div>
         <div><span>标签</span>9</div>
         <div><span>分类</span>0</div>
     </div>
@@ -102,7 +117,7 @@
             <i class="chireidenfont icon-QQ"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="chireidenfont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
             <i class="chireidenfont icon-github"></i>
         </a>
     </div>
@@ -302,7 +317,7 @@
 
  
 
-<script async src="/js/app.js?v=1675853862090"></script>
+<script async src="/js/app.js?v=1676198341956"></script>
 
 
 

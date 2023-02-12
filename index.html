@@ -27,9 +27,24 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1675853862100">
+
+    <!-- 这儿必须 highlight.js 不能 min，否则会换行出错 -->
+
+    <!-- 主题可以在 https://github.com/highlightjs/highlight.js/tree/main/src/styles 里选 -->
+
     
-    <link rel="stylesheet" href="/css/style.css?v=1675853862100">
+        <link rel="stylesheet"
+            href="//cdn.bootcss.com/highlight.js/11.0.1/styles/github-dark.min.css">
+        <script src="//cdn.bootcss.com/highlight.js/11.0.1/highlight.min.js">
+        </script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+    
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341969">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1676198341969">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -56,7 +71,7 @@
         </a>
     </div>
     <div class="chireiden-count">
-        <div><span>文章</span>13</div>
+        <div><span>文章</span>15</div>
         <div><span>标签</span>9</div>
         <div><span>分类</span>0</div>
     </div>
@@ -102,7 +117,7 @@
             <i class="chireidenfont icon-QQ"></i>
         </a><a class="mdui-ripple" href="https://space.bilibili.com/20238211" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
             <i class="chireidenfont icon-bilibili"></i>
-        </a><a class="mdui-ripple" href="https://github.com/nexmoe/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+        </a><a class="mdui-ripple" href="https://github.com/RedContritio/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
             <i class="chireidenfont icon-github"></i>
         </a>
     </div>
@@ -178,6 +193,63 @@
             <section class="chireiden-posts">
     
     <div class="chireiden-post">
+        <a href="/2023/02/11/%E5%9B%BD%E5%86%85git%E5%8A%A0%E9%80%9F/">
+            
+                <div class="chireiden-post-cover mdui-ripple" style="padding-bottom: 2em;"> 
+                    <h1 class="no-gradient-h1" style="color: black;">国内git加速</h1>
+                </div>
+            
+        </a>
+
+        <div class="chireiden-post-meta chireiden-rainbow">
+            <a><i class="chireidenfont icon-calendar-fill"></i>2023年02月11日</a>
+            
+            
+        </div>
+
+        <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约300字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
+    
+</div>
+
+        <article>
+            <p>一步式操作：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> url.<span class="token string">"https://ghproxy.com/https://github.com"</span>.insteadOf <span class="token string">"https://github.com/"</span>
+<span class="token function">git</span> config protocol.https.allow always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+        </article>
+    </div>
+    
+    <div class="chireiden-post">
+        <a href="/2023/02/08/%E9%87%8D%E6%96%B0%E6%8D%A1%E8%B5%B7%E6%9D%A5%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+            
+                <div class="chireiden-post-cover mdui-ripple" style="padding-bottom: 2em;"> 
+                    <h1 class="no-gradient-h1" style="color: black;">重新捡起来的个人博客</h1>
+                </div>
+            
+        </a>
+
+        <div class="chireiden-post-meta chireiden-rainbow">
+            <a><i class="chireidenfont icon-calendar-fill"></i>2023年02月08日</a>
+            
+            
+        </div>
+
+        <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="chireidenfont icon-areachart"></i>约237字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
+    
+</div>
+
+        <article>
+            <p>时隔两年，捡起来这个 github 主页，甚是唏嘘。</p>
+<p>重新 <code>npm install</code> 的时候，发现已是卡死，于是寻思着干脆重新配置，顺便写点东西权作记录。</p>
+        </article>
+    </div>
+    
+    <div class="chireiden-post">
         <a href="/2023/02/08/Paddle%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/">
             
                 <div class="chireiden-post-cover mdui-ripple" style="padding-bottom: 2em;"> 
@@ -194,8 +266,8 @@
 
         <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
     
-        <a><i class="chireidenfont icon-areachart"></i>约41字</a>
-        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
+        <a><i class="chireidenfont icon-areachart"></i>约1.5k字</a>
+        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要7分钟</a>
     
 </div>
 
@@ -418,65 +490,6 @@
         </article>
     </div>
     
-    <div class="chireiden-post">
-        <a href="/2019/11/07/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/">
-            
-                <div class="chireiden-post-cover mdui-ripple" style="padding-bottom: 2em;"> 
-                    <h1 class="no-gradient-h1" style="color: black;">matplotlib编码字体错误的解决过程</h1>
-                </div>
-            
-        </a>
-
-        <div class="chireiden-post-meta chireiden-rainbow">
-            <a><i class="chireidenfont icon-calendar-fill"></i>2019年11月07日</a>
-            
-            
-                <a class="chireidenfont icon-tag-fill -none-link" href="/tags/python-matplotlib/" rel="tag">python matplotlib</a>
-            
-        </div>
-
-        <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
-    
-        <a><i class="chireidenfont icon-areachart"></i>约2.6k字</a>
-        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要13分钟</a>
-    
-</div>
-
-        <article>
-            <h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p>
-<p>plt.rcParams[‘font.sans-serif’]&#x3D;[‘SimHei’]  # 用来正常显示中文标签<br>plt.rcParams[‘axes.unicode_minus’]&#x3D;False  # 用来正常显示负号</p>
-        </article>
-    </div>
-    
-    <div class="chireiden-post">
-        <a href="/2019/10/22/%E5%88%B6%E4%BD%9C%E4%B8%BB%E9%A2%98%E6%97%B6%E8%B8%A9%E7%9A%84%E5%9D%91/">
-            
-                <div class="chireiden-post-cover mdui-ripple" style="padding-bottom: 2em;"> 
-                    <h1 class="no-gradient-h1" style="color: black;">制作主题时踩的坑</h1>
-                </div>
-            
-        </a>
-
-        <div class="chireiden-post-meta chireiden-rainbow">
-            <a><i class="chireidenfont icon-calendar-fill"></i>2019年10月22日</a>
-            
-            
-                <a class="chireidenfont icon-tag-fill -none-link" href="/tags/%E7%BB%B4%E6%8A%A4/" rel="tag">维护</a>
-            
-        </div>
-
-        <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
-    
-        <a><i class="chireidenfont icon-areachart"></i>约115字</a>
-        <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
-    
-</div>
-
-        <article>
-            <p>自定义主题的时候遇到的一些问题记录如下：</p>
-        </article>
-    </div>
-    
 </section>
 
     <nav class="chireiden-page-nav">
@@ -517,7 +530,7 @@
 
  
 
-<script async src="/js/app.js?v=1675853862101"></script>
+<script async src="/js/app.js?v=1676198341971"></script>
 
 
 
