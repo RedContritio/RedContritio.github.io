@@ -19,8 +19,8 @@
 <meta property="og:site_name" content="Chireiden">
 <meta property="og:description" content="发现问题最近几次走 ssh 连接树莓派的时候，经常会发生连接速度较慢的问题，表现为每次按键后需要几秒时间才能反应过来，甚至直接断开连接，例如局域网ssh延迟这篇中所述的情况。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-05T07:53:31.000Z">
-<meta property="article:modified_time" content="2023-02-08T08:55:39.592Z">
+<meta property="article:published_time" content="2021-11-05T15:53:31.000Z">
+<meta property="article:modified_time" content="2023-02-12T11:00:16.966Z">
 <meta property="article:author" content="RedContritio">
 <meta property="article:tag" content="ssh sshd 服务器 网络">
 <meta name="twitter:card" content="summary">
@@ -45,9 +45,9 @@
         </script>
     
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341764">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676199654483">
     
-    <link rel="stylesheet" href="/css/style.css?v=1676198341764">
+    <link rel="stylesheet" href="/css/style.css?v=1676199654483">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -233,23 +233,23 @@
 </blockquote>
 <p>综上所述，可以看出，<strong>EEE会采用降低发送频率的方式节能</strong>。</p>
 <p>执行该命令，查看是否启用了 EEE。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ethtool --show-eee eth0<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">ethtool</span> --show-eee eth0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>通过观察可以看到，输出中，有 </p>
 <blockquote>
 <p>EEE status: enabled - active</p>
 </blockquote>
 <p>因此判断出，问题出现在 EEE 上。</p>
-<h2><a href="#jie-jue-wen-ti" class="header-anchor"># </a><span id="jie-jue-wen-ti">解决问题</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ethtool --set-eee eth0 eee off<br></code></pre></td></tr></table></figure>
+<h2><a href="#jie-jue-wen-ti" class="header-anchor"># </a><span id="jie-jue-wen-ti">解决问题</span></h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ethtool</span> --set-eee eth0 eee off<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>执行后再次检查 EEE 状态，可以看到其已关闭（disabled）。</p>
 <p>为了保险，进行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo service sshd restart<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">service</span> sshd restart<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>从而解决问题，丝滑 ssh。</p>
 <h2><a href="#chang-qi-pei-zhi" class="header-anchor"># </a><span id="chang-qi-pei-zhi">长期配置</span></h2><p>可以将其加入开机启动项中，例如在 Raspberry 4B 上，可以将命令加入到 <code>/etc/rc.local</code> 中。</p>
 <p>加入的命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo ethtool --set-eee eth0 eee off<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ethtool</span> --set-eee eth0 eee off<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
   </article>
 
   
@@ -327,7 +327,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1676198341765"></script>
+<script async src="/js/app.js?v=1676199654484"></script>
 
 
 

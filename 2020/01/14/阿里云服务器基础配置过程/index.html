@@ -19,8 +19,8 @@
 <meta property="og:site_name" content="Chireiden">
 <meta property="og:description" content="由于某些不可言说、无法理解的原因，我今天早上 00:00 的时候租了阿里云的轻量级服务器。 因为要配置相关环境，尤其指 Python 大礼包和 Anaconda（及 pyTorch），并且在过程中踩了很多坑，在其稍作记录。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-01-14T07:02:31.000Z">
-<meta property="article:modified_time" content="2023-02-08T08:18:34.607Z">
+<meta property="article:published_time" content="2020-01-14T15:02:31.000Z">
+<meta property="article:modified_time" content="2023-02-12T11:00:16.970Z">
 <meta property="article:author" content="RedContritio">
 <meta property="article:tag" content="服务器 环境配置 centOS">
 <meta name="twitter:card" content="summary">
@@ -45,9 +45,9 @@
         </script>
     
 
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676198341938">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1676199654486">
     
-    <link rel="stylesheet" href="/css/style.css?v=1676198341938">
+    <link rel="stylesheet" href="/css/style.css?v=1676199654486">
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="/custom_css_source.css">
@@ -209,7 +209,7 @@
 
       <div class="chireiden-post-meta chireiden-rainbow" style="margin:10px 0!important;">
     
-        <a><i class="chireidenfont icon-areachart"></i>约362字</a>
+        <a><i class="chireidenfont icon-areachart"></i>约363字</a>
         <a><i class="chireidenfont icon-time-circle-fill"></i>预计需要1分钟</a>
     
 </div>
@@ -221,14 +221,14 @@
 <h2><a href="#an-zhuang-conda" class="header-anchor"># </a><span id="an-zhuang-conda">安装 conda</span></h2><p>惊奇的是，conda 是有依赖的，其依赖 bzip2 包。</p>
 <p>在参考了<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1888984cad82">教程A</a>及<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiao-apple36/p/9052102.html">教程B</a>后，记录如下：</p>
 <p>首先安装依赖：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo yum install bzip2 -y<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> <span class="token function">bzip2</span> <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后是下载</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">wget -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2018.12-Linux-x86_64.sh<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> <span class="token parameter variable">-c</span> https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2018.12-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>下载的是清华源的某个稳定版本，内置 Python37。</p>
 <p>接下来直接安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bash Anaconda3-4.4.0-Linux-x86_64.sh<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">bash</span> Anaconda3-4.4.0-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装过程中，首先需要阅读协议并输入 yes。</p>
 <p>随后安装到默认路径并且添加进 ~&#x2F;.vimrc 中。</p>
@@ -236,19 +236,21 @@
 <p>PS: 最后 anaconda 询问是否要下载 vs code，我选择了 no。</p>
 <h2><a href="#an-zhuang-pytorch" class="header-anchor"># </a><span id="an-zhuang-pytorch">安装 pytorch</span></h2><p>首先是准备环境</p>
 <p>pytorch 只能用在 python36 环境下，因此，我们使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n python36 python=3.6<br>conda activate python36<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda create <span class="token parameter variable">-n</span> python36 <span class="token assign-left variable">python</span><span class="token operator">=</span><span class="token number">3.6</span>
+conda activate python36<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>接下来，为了保证速度，添加一个下载源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/<br>conda config --<span class="hljs-built_in">set</span> show_channel_urls <span class="hljs-built_in">yes</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda config <span class="token parameter variable">--add</span> channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+conda config <span class="token parameter variable">--set</span> show_channel_urls <span class="token function">yes</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>最后安装即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda install pytorch torchvision<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda <span class="token function">install</span> pytorch torchvision<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>需要注意的是，<code>conda install</code> 不要使用额外的 <code>-c</code> （指定源）参数。</p>
 <p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/lykxhtp/article/details/81559046">教程</a></p>
 <h2><a href="#an-zhuang-flask" class="header-anchor"># </a><span id="an-zhuang-flask">安装 flask</span></h2><p>在上面的 python36 环境中安装 flask 也不难。</p>
 <p>参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/linguanqiang/p/6706641.html">教程</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda install flask<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda <span class="token function">install</span> flask<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>输入该行即可。</p>
 
@@ -329,7 +331,7 @@ gitment.render('gitment')
 
  
 
-<script async src="/js/app.js?v=1676198341939"></script>
+<script async src="/js/app.js?v=1676199654487"></script>
 
 
 
