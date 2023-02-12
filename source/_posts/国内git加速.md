@@ -7,7 +7,7 @@ tags:
 一步式操作：
 
 ```bash
-git config --global url."https://ghproxy.com/https://github.com".insteadOf "https://github.com/"
+git config --global url."https://ghproxy.com/https://github.com/".insteadOf "https://github.com/"
 git config protocol.https.allow always
 ```
 
