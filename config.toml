@@ -40,15 +40,15 @@ welcomeMessage = "夢も希望も無い、毎日がそんな生活だった。"
 coverColor = "light-red"
 
 [params.comment]
-disqus = "vno-hugo"
+disqus = ""
 duoshuo = ""
 
 # Take a look on https://github.com/gitalk/gitalk#usage for more info.
 [params.comment.gitalk]
-ID = ""
+ID = "0a6a884a25f2cfcd11b3"
 secret = ""
-repo = ""
-owner = ""
+repo = "https://github.com/RedContritio/RedContritio.github.io"
+owner = "RedContritio"
 
 [params.social]
 # weibo = "onevcat"
@@ -70,6 +70,11 @@ description = "Visit blog"
 [params.copyright]
 license = 'CC BY-NC-SA 4.0'
 license_link = 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
+
+[security]
+  enableInlineShortcodes = false
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$', 'GITALK_CLIENT_SECRET']
 
 [permalinks]
 posts = "/:year/:month/:title/"
