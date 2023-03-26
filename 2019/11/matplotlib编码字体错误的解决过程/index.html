@@ -1,0 +1,325 @@
+<!doctype html><head><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel="shortcut icon" type=image/x-icon href=/images/favicon.ico><title>matplotlib编码字体错误的解决过程 - Chireiden</title><meta name=author content="RedContritio"><meta name=description content="地霊殿，充满幻想与希望的殿堂"><meta name=keywords content="python,matplotlib"><meta property="og:title" content="matplotlib编码字体错误的解决过程"><meta property="og:description" content="发现问题
+众所周知，设置 matplotlib 输出中文需要：
+plt.rcParams['font.sans-serif']=['SimHei']  # 用来正常显示中文标签
+plt.rcParams['axes.unicode_minus']=False  # 用来正常显示负号
+"><meta property="og:type" content="article"><meta property="og:url" content="https://RedContritio.github.io/2019/11/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-11-07T00:11:02+00:00"><meta property="article:modified_time" content="2019-11-07T00:11:02+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="matplotlib编码字体错误的解决过程"><meta name=twitter:description content="发现问题
+众所周知，设置 matplotlib 输出中文需要：
+plt.rcParams['font.sans-serif']=['SimHei']  # 用来正常显示中文标签
+plt.rcParams['axes.unicode_minus']=False  # 用来正常显示负号
+"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css><link rel=stylesheet href=https://RedContritio.github.io/scss/main.min.b9b6b671bc2491131397b1a73b759d56a490f3a33abd09ce6fcb946e58f9526a.css integrity="sha256-uba2cbwkkRMTl7GnO3WdVqSQ86M6vQnOb8uUblj5Umo=" crossorigin=anonymous media=screen><link href=//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css rel=stylesheet></head></head><body><span class="mobile btn-mobile-menu"><i class="fa fa-list btn-mobile-menu__icon"></i>
+<i class="fa fa-angle-up btn-mobile-close__icon hidden"></i></span><header class="panel-cover panel-cover--collapsed" style=background-image:url(/images/background-cover.jpg)><div class=panel-main><div class="panel-main__inner panel-inverted"><div class=panel-main__content><a href=/#blog title="Homepage of Chireiden " class=blog-button><img src=/images/avatar.jpg width=80 alt="Chireiden logo" class="panel-cover__logo logo"></a><h1 class="panel-cover__title panel-title"><a href=/#blog title="Homepage of Chireiden" class=blog-button>Chireiden</a></h1><span class="panel-cover__subtitle panel-subtitle">地霊殿</span><hr class=panel-cover__divider><p class=panel-cover__description>地霊殿，充满幻想与希望的殿堂</p><hr class="panel-cover__divider panel-cover__divider--secondary"><p class=panel-cover__description>夢も希望も無い、毎日がそんな生活だった。</p><div class=navigation-wrapper><div><nav class="cover-navigation cover-navigation--primary"><ul class=navigation><li class=navigation__item><a href=/#blog title=Blog class=blog-button>Blog</a></li><li class=navigation__item><a href=/about/ target=_blank title=About>About</a></li><li class=navigation__item><a href=/friend/ target=_blank title=Friend>Friend</a></li><li class=navigation__item><a href=/tags/ target=_blank title=Tags>Tags</a></li></ul></nav></div><div><nav class="cover-navigation navigation--social"><ul class=navigation><li class=navigation__item><a href=https://github.com/RedContritio title=@RedContritio target=_blank><i class='social fa fa-github'></i>
+<span class=label>Github</span></a></li><li class=navigation__item><a href=/index.xml rel=author title=RSS target=_blank><i class='social fa fa-rss'></i>
+<span class=label>RSS</span></a></li><li class=navigation__item><a href=mailto:RedContritio@qq.com title="Contact me"><i class='social fa fa-envelope'></i>
+<span class=label>Email</span></a></li></ul></nav></div></div></div></div><div class="panel-cover--overlay cover-light-red"></div></div></header><div class=content-wrapper><div class=content-wrapper__inner><article class="post-container post-container--single" itemscope itemtype=http://schema.org/BlogPosting><header class=post-header><div class=post-meta><time datetime=" 2019-11-07 00:11:02 +0000 " itemprop=datePublished class="post-meta__date date">2019-11-07</time>
+<span class="post-meta__tags tags">• <a href=https://RedContritio.github.io/tags/python>python</a> • <a href=https://RedContritio.github.io/tags/matplotlib>matplotlib</a></span></div><h1 class=post-title>matplotlib编码字体错误的解决过程</h1></header><section class=post><h2 id=发现问题>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;font.sans-serif&#39;</span>]<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;SimHei&#39;</span>]  <span style=color:#75715e># 用来正常显示中文标签</span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;axes.unicode_minus&#39;</span>]<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>  <span style=color:#75715e># 用来正常显示负号</span>
+</span></span></code></pre></div><p>第一行是设置字体（推荐使用 <code>.insert(0, fontname)</code> 而非直接赋值）</p><p>第二行则是设置减号（<code>-</code> ）采用 ASCII 码查找字体，而非 unicode 编码。</p><p>但是，在使用过程中发生了错误。</p><p>复现错误：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># -*- coding: UTF-8 -*-</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>%</span>matplotlib inline
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;font.sans-serif&#39;</span>]<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;SimHei&#39;</span>]
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;axes.unicode_minus&#39;</span>]<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>figure(figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>18</span>,<span style=color:#ae81ff>9</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> [<span style=color:#ae81ff>0.001</span><span style=color:#f92672>*</span>(<span style=color:#ae81ff>10</span><span style=color:#f92672>**</span>i) <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>4</span>)]
+</span></span><span style=display:flex><span>bins <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span><span style=color:#f92672>**</span>(np<span style=color:#f92672>.</span>linspace(<span style=color:#f92672>-</span><span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>2</span>))
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>hist(data, bins <span style=color:#f92672>=</span> bins, label <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;test&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xscale(<span style=color:#e6db74>&#39;log&#39;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#39;English test&#39;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>title(<span style=color:#e6db74>&#39;汉字测试&#39;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>show()
+</span></span></code></pre></div><p>会发生这样的错误：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>%pythonlib%\matplotlib\mathtext.py:849: MathTextWarning: Font &#39;default&#39; does not have a glyph for &#39;-&#39; [U+2212]
+</span></span><span style=display:flex><span>  MathTextWarning)
+</span></span><span style=display:flex><span>%pythonlib%\matplotlib\mathtext.py:850: MathTextWarning: Substituting with a dummy symbol.
+</span></span><span style=display:flex><span>  warn(&#34;Substituting with a dummy symbol.&#34;, MathTextWarning)
+</span></span></code></pre></div><p>我们可以认为是 &lsquo;-&rsquo; 导致的出错。</p><p>通过在 github 上的 <a href=https://github.com/matplotlib/matplotlib>matplotlib 项目</a> 查找，可以找到这个文件 <a href=https://github.com/matplotlib/matplotlib/blob/master/examples/text_labels_and_annotations/unicode_minus.py>matplotlib/examples/text_labels_and_annotations/unicode_minus.py</a> ，通过看文件名，大致可知其为 <code>unicode_minus</code> 的示例文件。</p><p>内容如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>=============
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Unicode minus
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>=============
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>By default, tick labels at negative values are rendered using a `Unicode
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>minus`__ (U+2212) rather than an ASCII hyphen (U+002D).  This can be controlled
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>by setting :rc:`axes.unicode_minus`.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>__ https://en.wikipedia.org/wiki/Plus_and_minus_signs#Character_codes
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>The replacement is performed at draw time of the tick labels (usually during a
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>`.pyplot.show()` or `.pyplot.savefig()` call). Therefore, all tick labels of
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>the figure follow the same setting and we cannot demonstrate both glyphs on
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>real tick labels of the same figure simultaneously.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>Instead, this example simply showcases the difference between the two glyphs
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>in a magnified font.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fig <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>figure(figsize<span style=color:#f92672>=</span>(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>2</span>))
+</span></span><span style=display:flex><span>fig<span style=color:#f92672>.</span>text(<span style=color:#ae81ff>.15</span>, <span style=color:#ae81ff>.6</span>, <span style=color:#e6db74>&#34;Unicode minus:&#34;</span>, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>20</span>)
+</span></span><span style=display:flex><span>fig<span style=color:#f92672>.</span>text(<span style=color:#ae81ff>.85</span>, <span style=color:#ae81ff>.6</span>, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\N{MINUS SIGN}</span><span style=color:#e6db74>1&#34;</span>, ha<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;right&#39;</span>, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>20</span>)
+</span></span><span style=display:flex><span>fig<span style=color:#f92672>.</span>text(<span style=color:#ae81ff>.15</span>, <span style=color:#ae81ff>.3</span>, <span style=color:#e6db74>&#34;ASCII hyphen:&#34;</span>, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>20</span>)
+</span></span><span style=display:flex><span>fig<span style=color:#f92672>.</span>text(<span style=color:#ae81ff>.85</span>, <span style=color:#ae81ff>.3</span>, <span style=color:#e6db74>&#34;-1&#34;</span>, ha<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;right&#39;</span>, fontsize<span style=color:#f92672>=</span><span style=color:#ae81ff>20</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>show()
+</span></span></code></pre></div><p>可知，<code>unicode_minus</code> 设置为 <code>False</code> 时，理应不使用 U+2212 输出，而是使用 U+002D，然而上面的错误信息却试图输出 U+2212，我们可以认为是这个选项没有起到作用。</p><h2 id=定位问题>定位问题</h2><p>通过注释，我们可以发现出现警告的原因是<code>plt.xscale('log')</code> 一行。</p><p>不妨在库源码中追溯来源。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span></code></pre></div><p>由此可知，错误是在 <code>matplotlib.pyplot.xscale</code> 调用时出现的。</p><p>追溯<code>matplotlib.pyplot.xscale</code> 可得：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>xscale</span>(<span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>    gca()<span style=color:#f92672>.</span>set_xscale(<span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kwargs)
+</span></span></code></pre></div><p>首先判断 <code>gca()</code> 类型，由 <code>print(gca().__module__)</code> 输出 <code>matplotlib.axes._subplots</code> 。</p><p>打开对应模块，会发现找不到 <code>gca()</code> 的定义。</p><p>改为 <code>print(type(gca()))</code> ，输出<code>&lt;class 'matplotlib.axes._subplots.AxesSubplot'></code> 。</p><p>虽然未能找到 <code>AxesSubplot</code> ，但是观察可得，<code>AxesSubplot</code> 应该是 <code>matplotlib.axes._subplots.SubplotBase</code> 的一个子类/别名。</p><p>然而，在该基类中未能找到对应的函数。</p><p>由于 python 具有反射机制，我们想当然地去<code>matplotlib\axes\_base.py</code> 中，在<code>matplotlib.axes._base._AxesBase</code> 内，可以找到</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>set_xscale</span>(self, value, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>        g <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>get_shared_x_axes()
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> ax <span style=color:#f92672>in</span> g<span style=color:#f92672>.</span>get_siblings(self):
+</span></span><span style=display:flex><span>            ax<span style=color:#f92672>.</span>xaxis<span style=color:#f92672>.</span>_set_scale(value, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>            ax<span style=color:#f92672>.</span>_update_transScale()
+</span></span><span style=display:flex><span>            ax<span style=color:#f92672>.</span>stale <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>autoscale_view(scaley<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+</span></span></code></pre></div><p>简单分析可知，我们出错的情况下， <code>set_xscale</code> 传入参数为 <code>set_xscale(this, 'log')</code> 。</p><p>也即通过该函数呈递给 <code>ax.xaxis._set_scale(value, **kwargs)</code> ，此时<code>value = 'log', kwargs={}</code> 。</p><p>在呈递前插入</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>            print(type(ax<span style=color:#f92672>.</span>xaxis))
+</span></span></code></pre></div><p>得到输出<code>&lt;class 'matplotlib.axis.XAxis'></code> 。</p><p>由于<code>XAxis</code> 继承于<code>Axis</code> ，搜索<code>_set_scale</code> 可发现其定义于后者，即基类中。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_set_scale</span>(self, value, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>_scale <span style=color:#f92672>=</span> mscale<span style=color:#f92672>.</span>scale_factory(value, self, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>_scale<span style=color:#f92672>.</span>set_default_locators_and_formatters(self)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>isDefault_majloc <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>isDefault_minloc <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>isDefault_majfmt <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>isDefault_minfmt <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span></code></pre></div><p>通过尝试输出<code>self._scale</code> ，可以得到缩放类型为<code>"log"</code> 时，该变量类型为<code>matplotlib.scale.LogScale</code> 。</p><p>目前，我们可以得到这样的呈递关系图：</p><script src=//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0,fontFamily:'Consolas, "Courier New", monospace'})</script><div class=mermaid>graph TB;
+plt["pyplot.xscale('log')"]-->gca["axes._subplots.set_xscale('log')"];
+gca["axes._subplots.set_xscale('log')"]-->axis["axis.XAxis._set_scale('log')"];
+axis["axis.XAxis._set_scale('log')"]-->mscale["scale.LogScale.set_default_locators_and_formatters()"];</div><p>根据</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>LogitScale</span>(ScaleBase):
+</span></span><span style=display:flex><span>    <span style=color:#f92672>...</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>_scale_mapping <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;linear&#39;</span>: LinearScale,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;log&#39;</span>:    LogScale,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;symlog&#39;</span>: SymmetricalLogScale,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#39;logit&#39;</span>:  LogitScale,
+</span></span><span style=display:flex><span>    }
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>scale_factory</span>(scale, axis, <span style=color:#f92672>**</span>kwargs):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    Return a scale class by name.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    ACCEPTS: [ </span><span style=color:#e6db74>%(names)s</span><span style=color:#e6db74> ]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    scale <span style=color:#f92672>=</span> scale<span style=color:#f92672>.</span>lower()
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> scale <span style=color:#f92672>is</span> <span style=color:#66d9ef>None</span>:
+</span></span><span style=display:flex><span>        scale <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;linear&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> scale <span style=color:#f92672>not</span> <span style=color:#f92672>in</span> _scale_mapping:
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>raise</span> <span style=color:#a6e22e>ValueError</span>(<span style=color:#e6db74>&#34;Unknown scale type &#39;</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#39;&#34;</span> <span style=color:#f92672>%</span> scale)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> _scale_mapping[scale](axis, <span style=color:#f92672>**</span>kwargs)
+</span></span><span style=display:flex><span>scale_factory<span style=color:#f92672>.</span>__doc__ <span style=color:#f92672>=</span> cbook<span style=color:#f92672>.</span>dedent(scale_factory<span style=color:#f92672>.</span>__doc__) <span style=color:#f92672>%</span> \
+</span></span><span style=display:flex><span>    {<span style=color:#e6db74>&#39;names&#39;</span>: <span style=color:#e6db74>&#34; | &#34;</span><span style=color:#f92672>.</span>join(get_scale_names())}
+</span></span></code></pre></div><p>可得<code>self._scale = mscale.scale_factory('log')</code> 等价于<code>self._scale = mscale.LogScale(self)</code> 。</p><p>到 <code>class 'matplotlib.scale.LogScale'</code> 中可以看到方法</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>set_default_locators_and_formatters</span>(self, axis):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        Set the locators and formatters to specialized versions for
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        log scaling.
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_major_locator(LogLocator(self<span style=color:#f92672>.</span>base))
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_major_formatter(LogFormatterSciNotation(self<span style=color:#f92672>.</span>base))
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_minor_locator(LogLocator(self<span style=color:#f92672>.</span>base, self<span style=color:#f92672>.</span>subs))
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_minor_formatter(
+</span></span><span style=display:flex><span>            LogFormatterSciNotation(self<span style=color:#f92672>.</span>base,
+</span></span><span style=display:flex><span>                                    labelOnlyBase<span style=color:#f92672>=</span>(self<span style=color:#f92672>.</span>subs <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> <span style=color:#66d9ef>None</span>)))
+</span></span></code></pre></div><p>观察易知，其分别设置刻度的标值和格式。</p><p>将设置四行改为</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_major_locator(NullLocator())
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_major_formatter(NullFormatter())
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_minor_locator(NullLocator())
+</span></span><span style=display:flex><span>        axis<span style=color:#f92672>.</span>set_minor_formatter(NullFormatter())
+</span></span></code></pre></div><p>可以发现，<code>plt.show()</code> 没有了水平刻度值，也没有警告信息。</p><p>通过观察可知，<code>set_major_XXX</code> 控制刻度值，而<code>set_minor_XXX</code> 控制刻度格。</p><p>并且错误原因在于<code>axis.set_major_formatter(LogFormatterSciNotation(self.base))</code> 。</p><p>因为 <code>LogScale</code> 默认以 10 为底（<code>self.base</code> ），因此可知该句等价于</p><p><code>Axis.set_major_formatter(LogFormatterSciNotation(10))</code></p><p>其中，<code>LogFormatterSciNotation</code> 类型为 <code>matplotlib.ticker.LogFormatterSciNotation</code> 。</p><hr><p>根据输出的警告信息，我们在对应位置前生成一个异常，可以得到</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> __init__(self, c, state, math)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1454</span>         <span style=color:#75715e># The real width, height and depth will be set during the</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1455</span>         <span style=color:#75715e># pack phase, after we know the real fontsize</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1456</span>         self<span style=color:#f92672>.</span>_update_metrics()
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1457</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1458</span>     <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>__internal_repr__</span>(self):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _update_metrics(self)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1461</span>     <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_update_metrics</span>(self):
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1462</span>         metrics <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_metrics <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>font_output<span style=color:#f92672>.</span>get_metrics(
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1463</span>             self<span style=color:#f92672>.</span>font, self<span style=color:#f92672>.</span>font_class, self<span style=color:#f92672>.</span>c, self<span style=color:#f92672>.</span>fontsize, self<span style=color:#f92672>.</span>dpi, self<span style=color:#f92672>.</span>math)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1464</span>         <span style=color:#66d9ef>if</span> self<span style=color:#f92672>.</span>c <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39; &#39;</span>:
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1465</span>             self<span style=color:#f92672>.</span>width <span style=color:#f92672>=</span> metrics<span style=color:#f92672>.</span>advance
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> get_metrics(self, font, font_class, sym, fontsize, dpi, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>456</span>             <span style=color:#e6db74>&#34;height&#34;</span><span style=color:#f92672>.</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>457</span>         <span style=color:#e6db74>&#34;&#34;&#34;&#34;&#34;&#34;&#34; # 为了不影响代码高亮，补全引号</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>458</span>         info <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_get_info(font, font_class, sym, fontsize, dpi, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>459</span>         <span style=color:#66d9ef>return</span> info<span style=color:#f92672>.</span>metrics
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>460</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>579</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>580</span>         font, num, symbol_name, fontsize, slanted <span style=color:#f92672>=</span> \
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>581</span>             self<span style=color:#f92672>.</span>_get_glyph(fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>582</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>583</span>         font<span style=color:#f92672>.</span>set_size(fontsize, dpi)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>907</span>             <span style=color:#75715e># otherwise return regular glyph</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>908</span>             <span style=color:#66d9ef>return</span> super(DejaVuFonts, self)<span style=color:#f92672>.</span>\_get_glyph(fontname,
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>909</span>                     font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>910</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>911</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>787</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>788</span>     <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_get_glyph</span>(self, fontname, font_class, sym, fontsize, math<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>):
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>789</span>         <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#34;test&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>790</span>         found_symbol <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>791</span>
+</span></span></code></pre></div><p>此时的 <code>fontname</code> 为 <code>'default'</code>，应当改为其他内容（以满足条件 <code>fontname in ('it', 'regular')</code> ）</p><hr><p>经测试，改 <code>UnicodeFonts</code> 类中 <code>_get_glyph</code> 内 <code>fontname</code> 为 <code>'it'</code> 可解决问题。</p><p>经测试，改 <code>TruetypeFonts</code> 类中 <code>_get_info</code> 方法的 <code>fontname</code> 为 <code>'it'</code> 也可解决问题。</p><p>经测试，改 <code>Fonts</code> 基类中的 <code>get_metrics</code> 方法的 <code>font</code> 为 <code>'it'</code> 无效。</p><p>在 <code>_get_info</code> 添加输出，可以发现其被多处调用。</p><p>重新获取另一调用链，可得</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> group(self, s, loc, toks)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2814</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2815</span>     <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>group</span>(self, s, loc, toks):
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>2816</span>         grp <span style=color:#f92672>=</span> Hlist(toks[<span style=color:#ae81ff>0</span>])
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2817</span>         <span style=color:#66d9ef>return</span> [grp]
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2818</span>     required_group <span style=color:#f92672>=</span> simple_group <span style=color:#f92672>=</span> group
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> __init__(self, elements, w, m, do_kern)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1609</span>         List<span style=color:#f92672>.</span>__init__(self, elements)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1610</span>         <span style=color:#66d9ef>if</span> do_kern:
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1611</span>             self<span style=color:#f92672>.</span>kern()
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1612</span>         self<span style=color:#f92672>.</span>hpack()
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1613</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> kern(self)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1631</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1632</span>                 new_children<span style=color:#f92672>.</span>append(elem)
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1633</span>                 kerning_distance <span style=color:#f92672>=</span> elem<span style=color:#f92672>.</span>get_kerning(next)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1634</span>                 <span style=color:#66d9ef>if</span> kerning_distance <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0.</span>:
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1635</span>                     kern <span style=color:#f92672>=</span> Kern(kerning_distance)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> get_kerning(self, next)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1486</span>                 self<span style=color:#f92672>.</span>font, self<span style=color:#f92672>.</span>font_class, self<span style=color:#f92672>.</span>c, self<span style=color:#f92672>.</span>fontsize,
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1487</span>                 next<span style=color:#f92672>.</span>font, next<span style=color:#f92672>.</span>font_class, next<span style=color:#f92672>.</span>c, next<span style=color:#f92672>.</span>fontsize,
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1488</span>                 self<span style=color:#f92672>.</span>dpi)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1489</span>         <span style=color:#66d9ef>return</span> advance <span style=color:#f92672>+</span> kern
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1490</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>634</span>                  font2, fontclass2, sym2, fontsize2, dpi):
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>635</span>         <span style=color:#66d9ef>if</span> font1 <span style=color:#f92672>==</span> font2 <span style=color:#f92672>and</span> fontsize1 <span style=color:#f92672>==</span> fontsize2:
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>636</span>             info1 <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_get_info(font1, fontclass1, sym1, fontsize1, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>637</span>             info2 <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_get_info(font2, fontclass2, sym2, fontsize2, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>638</span>             font <span style=color:#f92672>=</span> info1<span style=color:#f92672>.</span>font
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>580</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>581</span>         font, num, symbol_name, fontsize, slanted <span style=color:#f92672>=</span> \
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>582</span>             self<span style=color:#f92672>.</span>_get_glyph(fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>583</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>584</span>         font<span style=color:#f92672>.</span>set_size(fontsize, dpi)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>909</span>             <span style=color:#75715e># otherwise return regular glyph</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>910</span>             <span style=color:#66d9ef>return</span> super(DejaVuFonts, self)<span style=color:#f92672>.</span>_get_glyph(fontname,
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>911</span>                     font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>912</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>913</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>840</span>                 <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>841</span>                     <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>cm_fallback<span style=color:#f92672>.</span>_get_glyph(
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>842</span>                         fontname, font_class, sym, fontsize)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>843</span>             <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>844</span>                 <span style=color:#66d9ef>if</span> fontname <span style=color:#f92672>in</span> (<span style=color:#e6db74>&#39;it&#39;</span>, <span style=color:#e6db74>&#39;regular&#39;</span>) <span style=color:#f92672>and</span> isinstance(self, StixFonts):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>845</span>                     <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_get_glyph(<span style=color:#e6db74>&#39;rm&#39;</span>, font_class, sym, fontsize)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>846</span>                 print(fontname)
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>847</span>                 <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#39;error&#39;</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>848</span>                 warn(<span style=color:#e6db74>&#34;Font &#39;</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#39; does not have a glyph for &#39;</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#39; [U+</span><span style=color:#e6db74>%x</span><span style=color:#e6db74>]&#34;</span> <span style=color:#f92672>%</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>849</span>                      (new_fontname,
+</span></span></code></pre></div><p>为了方便此后调试，在改动部分加上 <code># RecoDebugging</code> 。</p><p>该次 Bug 出错在于 <code>mathtext.Char.font = 'default'</code> ，经过捕捉可发现其被 <code>state.font</code> 赋值，即 <code>matplotlib.mathtext.Parser.State.font</code> 。</p><p>追踪这个构造函数调用，可得</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> symbol(self, s, loc, toks)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2638</span>         c <span style=color:#f92672>=</span> toks[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2639</span>         <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>2640</span>             char <span style=color:#f92672>=</span> Char(c, self<span style=color:#f92672>.</span>get_state())
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2641</span>         <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>ValueError</span>:
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2642</span>             <span style=color:#66d9ef>raise</span> ParseFatalException(s, loc, <span style=color:#e6db74>&#34;Unknown symbol: </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>%</span> c)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> __init__(self, c, state, math)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1449</span>         self<span style=color:#f92672>.</span>c <span style=color:#f92672>=</span> c
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1450</span>         self<span style=color:#f92672>.</span>font_output <span style=color:#f92672>=</span> state<span style=color:#f92672>.</span>font_output
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1451</span>         <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#39;test&#39;</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1452</span>         self<span style=color:#f92672>.</span>font <span style=color:#f92672>=</span> state<span style=color:#f92672>.</span>font
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1453</span>         self<span style=color:#f92672>.</span>font_class <span style=color:#f92672>=</span> state<span style=color:#f92672>.</span>font_class
+</span></span></code></pre></div><p>观察 <code>matplotlib.mathtext.Parser.symbol</code> 可得，<code>Parser.State</code> 构造函数被调用于</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> parse(self, s, fonts_object, fontsize, dpi)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2513</span>         Returns the parse tree of :class:<span style=color:#960050;background-color:#1e0010>`</span>Node<span style=color:#960050;background-color:#1e0010>`</span> instances<span style=color:#f92672>.</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2514</span>         <span style=color:#e6db74>&#34;&#34;&#34;&#34;&#34;&#34;</span> <span style=color:#75715e># end the comment</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>2515</span>         self<span style=color:#f92672>.</span>_state_stack <span style=color:#f92672>=</span> [self<span style=color:#f92672>.</span>State(fonts_object, <span style=color:#e6db74>&#39;default&#39;</span>, <span style=color:#e6db74>&#39;rm&#39;</span>, fontsize, dpi)]
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2516</span>         self<span style=color:#f92672>.</span>_em_width_cache <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2517</span>         <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>C:\ProgramData\Anaconda3\lib\site<span style=color:#f92672>-</span>packages\matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> __init__(self, font_output, font, font_class, fontsize, dpi)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2540</span>         <span style=color:#e6db74>&#34;&#34;&#34;&#34;&#34;&#34;</span>  <span style=color:#75715e># end the comment</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2541</span>         <span style=color:#66d9ef>def</span> __init__(self, font_output, font, font_class, fontsize, dpi):
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>2542</span>             <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#39;generate state&#39;</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2543</span>             self<span style=color:#f92672>.</span>font_output <span style=color:#f92672>=</span> font_output
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2544</span>             self<span style=color:#f92672>.</span>_font <span style=color:#f92672>=</span> font
+</span></span></code></pre></div><p>最终可以发现，<code>state</code> 被赋值于此处，只需要修改 <code>matplotlib.mathtext.Parser.parse</code> 即可结束此支错误。</p><hr><p>暂改为 <code>'it'</code>，运行仍然出错，主动抛出异常，捕获链如下：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> group(self, s, loc, toks)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2815</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2816</span>     <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>group</span>(self, s, loc, toks):
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>2817</span>         grp <span style=color:#f92672>=</span> Hlist(toks[<span style=color:#ae81ff>0</span>])
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2818</span>         <span style=color:#66d9ef>return</span> [grp]
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>2819</span>     required_group <span style=color:#f92672>=</span> simple_group <span style=color:#f92672>=</span> group
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> __init__(self, elements, w, m, do_kern)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1609</span>         List<span style=color:#f92672>.</span>__init__(self, elements)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1610</span>         <span style=color:#66d9ef>if</span> do_kern:
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1611</span>             self<span style=color:#f92672>.</span>kern()
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1612</span>         self<span style=color:#f92672>.</span>hpack()
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1613</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> kern(self)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1631</span>
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1632</span>                 new_children<span style=color:#f92672>.</span>append(elem)
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1633</span>                 kerning_distance <span style=color:#f92672>=</span> elem<span style=color:#f92672>.</span>get_kerning(next)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1634</span>                 <span style=color:#66d9ef>if</span> kerning_distance <span style=color:#f92672>!=</span> <span style=color:#ae81ff>0.</span>:
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1635</span>                     kern <span style=color:#f92672>=</span> Kern(kerning_distance)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> get_kerning(self, next)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1486</span>                 self<span style=color:#f92672>.</span>font, self<span style=color:#f92672>.</span>font_class, self<span style=color:#f92672>.</span>c, self<span style=color:#f92672>.</span>fontsize,
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1487</span>                 next<span style=color:#f92672>.</span>font, next<span style=color:#f92672>.</span>font_class, next<span style=color:#f92672>.</span>c, next<span style=color:#f92672>.</span>fontsize,
+</span></span><span style=display:flex><span><span style=color:#f92672>-&gt;</span> <span style=color:#ae81ff>1488</span>                 self<span style=color:#f92672>.</span>dpi)
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1489</span>         <span style=color:#66d9ef>return</span> advance <span style=color:#f92672>+</span> kern
+</span></span><span style=display:flex><span>   <span style=color:#ae81ff>1490</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> get_kern(self, font1, fontclass1, sym1, fontsize1, font2, fontclass2, sym2, fontsize2, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>634</span>                  font2, fontclass2, sym2, fontsize2, dpi):
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>635</span>         <span style=color:#66d9ef>if</span> font1 <span style=color:#f92672>==</span> font2 <span style=color:#f92672>and</span> fontsize1 <span style=color:#f92672>==</span> fontsize2:
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>636</span>             info1 <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_get_info(font1, fontclass1, sym1, fontsize1, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>637</span>             info2 <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>_get_info(font2, fontclass2, sym2, fontsize2, dpi)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>638</span>             font <span style=color:#f92672>=</span> info1<span style=color:#f92672>.</span>font
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_info(self, fontname, font_class, sym, fontsize, dpi, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>580</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>581</span>         font, num, symbol_name, fontsize, slanted <span style=color:#f92672>=</span> \
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>582</span>             self<span style=color:#f92672>.</span>_get_glyph(fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>583</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>584</span>         font<span style=color:#f92672>.</span>set_size(fontsize, dpi)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>909</span>             <span style=color:#75715e># otherwise return regular glyph</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>910</span>             <span style=color:#66d9ef>return</span> super(DejaVuFonts, self)<span style=color:#f92672>.</span>_get_glyph(fontname,
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>911</span>                     font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>912</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>913</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>840</span>                 <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>841</span>                     <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>cm_fallback<span style=color:#f92672>.</span>_get_glyph(
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>842</span>                         fontname, font_class, sym, fontsize)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>843</span>             <span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>844</span>                 <span style=color:#66d9ef>if</span> fontname <span style=color:#f92672>in</span> (<span style=color:#e6db74>&#39;it&#39;</span>, <span style=color:#e6db74>&#39;regular&#39;</span>) <span style=color:#f92672>and</span> isinstance(self, StixFonts):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>matplotlib\mathtext<span style=color:#f92672>.</span>py <span style=color:#f92672>in</span> _get_glyph(self, fontname, font_class, sym, fontsize, math)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>845</span>                     <span style=color:#66d9ef>return</span> self<span style=color:#f92672>.</span>_get_glyph(<span style=color:#e6db74>&#39;rm&#39;</span>, font_class, sym, fontsize)
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>846</span>                 <span style=color:#75715e>#print(fontname)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>--&gt;</span> <span style=color:#ae81ff>847</span>                 <span style=color:#66d9ef>raise</span> <span style=color:#e6db74>&#39;error&#39;</span> <span style=color:#75715e># RecoDebugging</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>848</span>                 warn(<span style=color:#e6db74>&#34;Font &#39;</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#39; does not have a glyph for &#39;</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>&#39; [U+</span><span style=color:#e6db74>%x</span><span style=color:#e6db74>]&#34;</span> <span style=color:#f92672>%</span>
+</span></span><span style=display:flex><span>    <span style=color:#ae81ff>849</span>                      (new_fontname,
+</span></span></code></pre></div></section></article><section class=read-more><div class=read-more-header><div class="read-more-header-item read-more-item"><span class=read-more-item-dim>Recent</span><h2 class="post-list__post-title post-title"><a href=/2019/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%A5%E9%97%A8/ title="link to 面向对象入门">面向对象入门</a></h2></div><div class="read-more-header-item read-more-item"><span class=read-more-item-dim>Earlier</span><h2 class="post-list__post-title post-title"><a href=/2019/10/%E5%88%B6%E4%BD%9C%E4%B8%BB%E9%A2%98%E6%97%B6%E8%B8%A9%E7%9A%84%E5%9D%91/ title="link to 制作主题时踩的坑">制作主题时踩的坑</a></h2></div></div><div class=read-more-summary><div class="read-more-summary-item read-more-item"><p class=excerpt><blockquote>If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one?<footer>Tom Cargill</footer></blockquote>&mldr;</p></div><div class="read-more-summary-item read-more-item"><p class=excerpt><p>自定义主题的时候遇到的一些问题记录如下：</p>&mldr;</p></div></div><div class=read-more-meta><div class="read-more-meta-item read-more-item"><time datetime="2019-11-07 00:11:02 +0000" class="post-list__meta--date date">2019-11-11</time>
+<span class="post-list__meta--tags tags">• <a href=https://RedContritio.github.io/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B>社团课程</a></span>
+<a class=btn-border-small href=/2019/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%A5%E9%97%A8/>Continue</a></div><div class="read-more-meta-item read-more-item"><time datetime="2019-11-07 00:11:02 +0000" class="post-list__meta--date date">2019-10-22</time>
+<span class="post-list__meta--tags tags">• <a href=https://RedContritio.github.io/tags/%E7%BB%B4%E6%8A%A4>维护</a></span>
+<a class=btn-border-small href=/2019/10/%E5%88%B6%E4%BD%9C%E4%B8%BB%E9%A2%98%E6%97%B6%E8%B8%A9%E7%9A%84%E5%9D%91/>Continue</a></div></div></section><section class=post-comments><div id=disqus_thread></div><script>var disqus_config=function(){this.page.url="https://RedContritio.github.io/2019/11/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/",this.page.identifier="https://RedContritio.github.io/2019/11/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/"},disqus_shortname="vno-hugo";(function(){var e=document,t=e.createElement("script");t.src="//"+disqus_shortname+".disqus.com/embed.js",t.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(t)})()</script><noscript>To view comments from<a href=http://disqus.com/?ref_noscript> Disqus </a>, please enable JavaScript.</noscript></section><section class=footer><footer><span class=footer__copyright>This site is licensed under a <a href=http://creativecommons.org/licenses/by-nc-sa/4.0/>CC BY-NC-SA 4.0</a> license.</span>
+<span class=footer__copyright>Generated by <a href=https://gohugo.io/>Hugo</a> at 2023-03-26, themed with <a href=https://github.com/xslingcn/vno-hugo>Vno - Hugo</a>.</span></footer></section></div></div><script type=text/javascript src=//code.jquery.com/jquery-1.11.3.min.js></script>
+<script type=text/javascript src=/js/main.js></script><script>(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)})(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","your_ga_id","your_host"),ga("send","pageview")</script></body>

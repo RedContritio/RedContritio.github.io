@@ -1,0 +1,362 @@
+<!doctype html><head><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><link rel=icon type=image/x-icon href=/images/favicon.ico><link rel="shortcut icon" type=image/x-icon href=/images/favicon.ico><title>面向对象入门 - Chireiden</title><meta name=author content="RedContritio"><meta name=description content="地霊殿，充满幻想与希望的殿堂"><meta name=keywords content="社团课程"><meta property="og:title" content="面向对象入门"><meta property="og:description" content="
+  
+If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one?
+
+  Tom Cargill
+"><meta property="og:type" content="article"><meta property="og:url" content="https://RedContritio.github.io/2019/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%A5%E9%97%A8/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-11-11T15:42:01+00:00"><meta property="article:modified_time" content="2019-11-11T15:42:01+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="面向对象入门"><meta name=twitter:description content="
+  
+If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one?
+
+  Tom Cargill
+"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css><link rel=stylesheet href=https://RedContritio.github.io/scss/main.min.b9b6b671bc2491131397b1a73b759d56a490f3a33abd09ce6fcb946e58f9526a.css integrity="sha256-uba2cbwkkRMTl7GnO3WdVqSQ86M6vQnOb8uUblj5Umo=" crossorigin=anonymous media=screen><link href=//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css rel=stylesheet></head></head><body><span class="mobile btn-mobile-menu"><i class="fa fa-list btn-mobile-menu__icon"></i>
+<i class="fa fa-angle-up btn-mobile-close__icon hidden"></i></span><header class="panel-cover panel-cover--collapsed" style=background-image:url(/images/background-cover.jpg)><div class=panel-main><div class="panel-main__inner panel-inverted"><div class=panel-main__content><a href=/#blog title="Homepage of Chireiden " class=blog-button><img src=/images/avatar.jpg width=80 alt="Chireiden logo" class="panel-cover__logo logo"></a><h1 class="panel-cover__title panel-title"><a href=/#blog title="Homepage of Chireiden" class=blog-button>Chireiden</a></h1><span class="panel-cover__subtitle panel-subtitle">地霊殿</span><hr class=panel-cover__divider><p class=panel-cover__description>地霊殿，充满幻想与希望的殿堂</p><hr class="panel-cover__divider panel-cover__divider--secondary"><p class=panel-cover__description>夢も希望も無い、毎日がそんな生活だった。</p><div class=navigation-wrapper><div><nav class="cover-navigation cover-navigation--primary"><ul class=navigation><li class=navigation__item><a href=/#blog title=Blog class=blog-button>Blog</a></li><li class=navigation__item><a href=/about/ target=_blank title=About>About</a></li><li class=navigation__item><a href=/friend/ target=_blank title=Friend>Friend</a></li><li class=navigation__item><a href=/tags/ target=_blank title=Tags>Tags</a></li></ul></nav></div><div><nav class="cover-navigation navigation--social"><ul class=navigation><li class=navigation__item><a href=https://github.com/RedContritio title=@RedContritio target=_blank><i class='social fa fa-github'></i>
+<span class=label>Github</span></a></li><li class=navigation__item><a href=/index.xml rel=author title=RSS target=_blank><i class='social fa fa-rss'></i>
+<span class=label>RSS</span></a></li><li class=navigation__item><a href=mailto:RedContritio@qq.com title="Contact me"><i class='social fa fa-envelope'></i>
+<span class=label>Email</span></a></li></ul></nav></div></div></div></div><div class="panel-cover--overlay cover-light-red"></div></div></header><div class=content-wrapper><div class=content-wrapper__inner><article class="post-container post-container--single" itemscope itemtype=http://schema.org/BlogPosting><header class=post-header><div class=post-meta><time datetime=" 2019-11-11 15:42:01 +0000 " itemprop=datePublished class="post-meta__date date">2019-11-11</time>
+<span class="post-meta__tags tags">• <a href=https://RedContritio.github.io/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B>社团课程</a></span></div><h1 class=post-title>面向对象入门</h1></header><section class=post><blockquote>If you think C++ is not overly complicated, just what is a protected abstract virtual base pure virtual private destructor and when was the last time you needed one?<footer>Tom Cargill</footer></blockquote><p>本文通篇将会构造一个类，并以此类的构造过程为讲解顺序。</p><p>本文需求的先修知识：cpp iostream (<code>std::cin,std::cout</code> & <code>std::endl</code>)，cpp class defination, c struct, c pointer and cpp keywords (<code>const, new, delete, class, public, private</code> [<code>protected, pure, virtual</code>])</p><hr><h2 id=编程目标>编程目标</h2><p>在命令行窗口编程时，我们有时候会希望输出一些特定的格式，如：（每行前面有一个空格）</p><pre tabindex=0><code> Hello,
+ World!
+</code></pre><p>像这样的，基于字符构造的，有特定格式、内容的整体，我们姑且称之为 “字符图像”。
+我们可以给字符图像加上边框：</p><pre tabindex=0><code>.-------.
+| Hello,|
+| World!|
+&#39;-------&#39;
+</code></pre><p>更多地，可能会希望支持两个这样的字符图拼接，形成新的图像。</p><pre tabindex=0><code>.-------.
+| Hello,| 你好，
+| World!| 世界！
+&#39;-------&#39;
+</code></pre><p>以及希望能够修改边框的样式等等······</p><hr><h2 id=面向过程可以吗>面向过程可以吗？</h2><p>如我们所学过的 C/Cpp， 我们可能会想到这样做：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>content[] <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;Hello,&#34;</span>, <span style=color:#e6db74>&#34;World!&#34;</span>};
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> left_padding <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span><span style=color:#ae81ff>2</span>; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> j<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; j<span style=color:#f92672>&lt;</span> left_padding; <span style=color:#f92672>++</span>j) printf(<span style=color:#e6db74>&#34; &#34;</span>);
+</span></span><span style=display:flex><span>        printf(<span style=color:#e6db74>&#34;%s&#34;</span>, content[i]);
+</span></span><span style=display:flex><span>        printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>运行可以得到输出：</p><pre tabindex=0><code> Hello,
+ World!
+</code></pre><p>但是很显然，这样无法（很难）对多个字符图进行操作。</p><h2 id=c-语言也能面向对象吗>C 语言也能面向对象吗？</h2><p>我们需要将一个图视为一个对象，一个物体，才能方便地管理、输出两个（及以上）的图。</p><h3 id=c-语言面向对象>C 语言面向对象</h3><p><em>如果下面的例程编译错误，请修改文件后缀为 cpp 或添加编译选项 -std=c99 或 -std=c11</em></p><p>我们用 C 语言来试试看：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>struct</span> tagPicture
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>m_content;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_padding_left, m_padding_top;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_height, m_width;
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>struct</span> tagPicture Picture;
+</span></span></code></pre></div><p>在这个结构体 <code>struct tagPicture</code> （或记作<code>Picture</code>）中，我们使用 <code>m_content</code> 来保存图像内容，<code>m_height, m_width</code> 表示图像的宽与高，<code>m_padding_left</code> 和<code>m_padding_top</code> 表示图像左侧和上侧内边界大小。</p><p>怎么创建一个 <code>Picture</code> 呢？
+在 C 语言中，我们需要定义一个函数来创建该类型：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// 此处需要库文件 stdlib.h 和 string.h
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Picture <span style=color:#a6e22e>getPicture</span>(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>_ArrayOfCharArray, <span style=color:#66d9ef>int</span> _Lines)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	Picture t;
+</span></span><span style=display:flex><span>	t.m_content <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>) <span style=color:#a6e22e>malloc</span>(_Lines <span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>));
+</span></span><span style=display:flex><span>	t.m_padding_left <span style=color:#f92672>=</span> t.m_padding_top <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	t.m_height <span style=color:#f92672>=</span> _Lines;
+</span></span><span style=display:flex><span>	t.m_width <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>_Lines; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>int</span> n <span style=color:#f92672>=</span> _ArrayOfCharArray[i] <span style=color:#f92672>?</span> <span style=color:#a6e22e>strlen</span>(_ArrayOfCharArray[i]) <span style=color:#f92672>:</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>( t.m_width <span style=color:#f92672>&lt;</span> n ) t.m_width <span style=color:#f92672>=</span> n;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>_Lines; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		t.m_content[i] <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) <span style=color:#a6e22e>malloc</span>((t.m_width<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>char</span>));
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>strcpy</span>(t.m_content[i], _ArrayOfCharArray[i]);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> t;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>还需要设定一个输出用的函数：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#75715e>// 此处需要库文件 stdio.h
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>printPicture</span>(Picture _pic)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>_pic.m_height; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>(<span style=color:#f92672>!</span>(i <span style=color:#f92672>&lt;</span> _pic.m_padding_top))
+</span></span><span style=display:flex><span>		{
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> j<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; j<span style=color:#f92672>&lt;</span>_pic.m_width; <span style=color:#f92672>++</span>j)
+</span></span><span style=display:flex><span>			{
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>if</span>(j <span style=color:#f92672>&lt;</span> _pic.m_padding_left) <span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34; &#34;</span>);
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(_pic.m_content[j<span style=color:#f92672>-</span>_pic.m_padding_left])
+</span></span><span style=display:flex><span>					<span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;%c&#34;</span>, _pic.m_content[i<span style=color:#f92672>-</span>_pic.m_padding_top][j<span style=color:#f92672>-</span>_pic.m_padding_left]);
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>else</span> <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>(i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>!=</span> _pic.m_height) <span style=color:#a6e22e>printf</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>接下来在主函数调用试试：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>content[] <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;Hello,&#34;</span>, <span style=color:#e6db74>&#34;World!&#34;</span>};
+</span></span><span style=display:flex><span>	Picture a <span style=color:#f92672>=</span> <span style=color:#a6e22e>getPicture</span>(content, <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span><span style=color:#75715e>//  a.m_padding_left = 1;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>printPicture</span>(a);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>编译运行后可以得到这样的输出：</p><pre tabindex=0><code>Hello,
+World!
+</code></pre><p>我们在主函数中将 <code>a.m_padding_left</code> 设置为 1，则会看到：</p><pre tabindex=0><code> Hello
+ World
+</code></pre><h3 id=有何缺陷>有何缺陷？</h3><p>首先，我们的这个图像单个输出、存储都没有问题，但是如果想要拼接，尤其是横向拼接，就很难做，其次，进行其他复杂操作时，不能较容易地存储结构信息。</p><h3 id=c语言课后习题>C语言课后习题</h3><ul><li>课后习题 1 : 经过上面的示例，我们可以发现纵向拼接很容易，在此处不做详解，将 C 语言面向对象实现图像的纵向拼接这一任务留作习题。</li><li>课后习题 2 : 纵向拼接实现很轻松，横向拼接相对来说难度略大，但聪明的读者一定能解决这个问题，请用 C 语言面向对象实现图像的横向拼接。</li><li>课后习题 3 : 请用 C 语言面向对象实现给图像加边框，边框样式需要作为函数参数，如可以指定用 &lsquo;*&rsquo; 来画边框。</li><li>课后习题 4 : 请用 C 语言面向对象实现图像修改边框样式，例如将 &lsquo;*&rsquo; 样式的边框改为 &lsquo;+&rsquo; 样式。</li></ul><h2 id=cpp-面向对象>Cpp 面向对象</h2><p>Cpp 的 class、struct 与 C 中的 struct 相似。</p><table><thead><tr><th style=text-align:center></th><th style=text-align:center>C struct</th><th style=text-align:center>Cpp struct</th><th style=text-align:center>Cpp class</th></tr></thead><tbody><tr><td style=text-align:center>Plain Old Data</td><td style=text-align:center>true</td><td style=text-align:center>false</td><td style=text-align:center>false</td></tr><tr><td style=text-align:center>default access rights</td><td style=text-align:center>/</td><td style=text-align:center>public</td><td style=text-align:center>private</td></tr><tr><td style=text-align:center>member function enable</td><td style=text-align:center>false</td><td style=text-align:center>true</td><td style=text-align:center>true</td></tr></tbody></table><p>简单用法在此不做赘述。
+不妨先实现上面程序的内容，让我们看看能否更加优雅。</p><h3 id=构造和输出功能>构造和输出功能</h3><p>我们姑且以此结构构造程序：</p><pre tabindex=0><code>src
+ |-- main.cpp
+ |-- Picture.h
+ &#39;-- Picture.cpp
+</code></pre><p>首先得定义这个类，并声明其方法。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>#ifndef __PICTURE__INC
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#define __PICTURE__INC
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Picture</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	Picture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>_Strs, <span style=color:#66d9ef>int</span> _Lines);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>m_content;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_width, m_height;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_padding_left, m_padding_top;
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#endif
+</span></span></span></code></pre></div><p>接下来我们在主函数内直接定义 Picture 的实例 pic，并以此初始化字符串数组初始化这个实例。</p><p>此后，我们调用其输出方法。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>//main.cpp
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;picture.h&#34;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>initstrs[] <span style=color:#f92672>=</span> {<span style=color:#e6db74>&#34;Hello,&#34;</span>, <span style=color:#e6db74>&#34;World!&#34;</span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	Picture pic(initstrs, <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>	pic.print();
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>最后，我们实现这两个函数。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>// picture.cpp
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#75715e>#include</span> <span style=color:#75715e>&#34;picture.h&#34;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdlib&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Picture<span style=color:#f92672>::</span>Picture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>_Strs, <span style=color:#66d9ef>int</span> _Lines)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	m_content <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>) malloc(_Lines <span style=color:#f92672>*</span><span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>));
+</span></span><span style=display:flex><span>	m_padding_left <span style=color:#f92672>=</span> m_padding_top <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	m_height <span style=color:#f92672>=</span> _Lines;
+</span></span><span style=display:flex><span>	m_width <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>_Lines; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>int</span> n <span style=color:#f92672>=</span> _Strs[i] <span style=color:#f92672>?</span> strlen(_Strs[i]) <span style=color:#f92672>:</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>( m_width <span style=color:#f92672>&lt;</span> n ) m_width <span style=color:#f92672>=</span> n;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>_Lines; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		m_content[i] <span style=color:#f92672>=</span> (<span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span>) malloc((m_width<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>) <span style=color:#f92672>*</span> <span style=color:#66d9ef>sizeof</span>(<span style=color:#66d9ef>char</span>));
+</span></span><span style=display:flex><span>		strcpy(m_content[i], _Strs[i]);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> Picture<span style=color:#f92672>::</span>print(<span style=color:#66d9ef>void</span>)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>m_height; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span>	{
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>(<span style=color:#f92672>!</span>(i <span style=color:#f92672>&lt;</span> m_padding_top))
+</span></span><span style=display:flex><span>		{
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> j<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; j<span style=color:#f92672>&lt;</span>m_width; <span style=color:#f92672>++</span>j)
+</span></span><span style=display:flex><span>			{
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>if</span>(j <span style=color:#f92672>&lt;</span> m_padding_left) printf(<span style=color:#e6db74>&#34; &#34;</span>);
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>else</span> <span style=color:#a6e22e>if</span>(m_content[j<span style=color:#f92672>-</span>m_padding_left])
+</span></span><span style=display:flex><span>					printf(<span style=color:#e6db74>&#34;%c&#34;</span>, m_content[i<span style=color:#f92672>-</span>m_padding_top][j<span style=color:#f92672>-</span>m_padding_left]);
+</span></span><span style=display:flex><span>				<span style=color:#66d9ef>else</span> <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span>(i<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span> <span style=color:#f92672>!=</span> m_height) printf(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=管理内存>管理内存</h3><p>对于 Picture 来说，管理内存比较容易，只需要给其添加一个析构函数即可。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>// picture.h
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#960050;background-color:#1e0010>@@</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>6</span> <span style=color:#f92672>+</span><span style=color:#ae81ff>5</span>,<span style=color:#ae81ff>7</span> <span style=color:#960050;background-color:#1e0010>@@</span>
+</span></span><span style=display:flex><span> {
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        Picture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>_Strs, <span style=color:#66d9ef>int</span> _Lines);
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>       <span style=color:#f92672>~</span>Picture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>m_content;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>@@</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>23</span>,<span style=color:#ae81ff>6</span> <span style=color:#f92672>+</span><span style=color:#ae81ff>23</span>,<span style=color:#ae81ff>13</span> <span style=color:#960050;background-color:#1e0010>@@</span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span> }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>Picture<span style=color:#f92672>::~</span>Picture(<span style=color:#66d9ef>void</span>)
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>{
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>       <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>m_height; <span style=color:#f92672>++</span>i)
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>               free(m_content[i]);
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>       free(m_content);
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>+</span>
+</span></span><span style=display:flex><span> <span style=color:#66d9ef>void</span> Picture<span style=color:#f92672>::</span>print(<span style=color:#66d9ef>void</span>)
+</span></span><span style=display:flex><span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>int</span> i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; i<span style=color:#f92672>&lt;</span>m_height; <span style=color:#f92672>++</span>i)
+</span></span></code></pre></div><h3 id=怎么纵向连接俯瞰继承关系>怎么纵向连接？俯瞰继承关系</h3><p>首先我们要知道，纵向连接后的结果也应该是一个 Picture，并能够继续纵向连接。</p><h4 id=我们应该怎样设计呢>我们应该怎样设计呢？</h4><p>这里引入一个概念：继承</p><p>如下，是图形之间的继承关系。
+我们可以认为，如果 A 指向 B ，那么 B 属于 A。</p><p><em>这里涉及到面向对象设计的基本理念，目前主流思路有两种：is-a，has-a 和 like-a。</em></p><script src=//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0,fontFamily:'Consolas, "Courier New", monospace'})</script><div class=mermaid>graph TB;
+Shape["Shape"]-->Polygen["Polygen"];
+Shape["Shape"]-->Ellipse["Ellipse"];
+Polygen["Polygen"]-->Rectange["Rectange"];
+Ellipse["Ellipse"]-->Circle["Circle"];
+Rectange["Rectange"]-->Square["Square"];</div><p>在我们这个例子中，我们有理由认为，Picture 是所有类型的基础。
+我们可以想当然如此构造：</p><script src=//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0,fontFamily:'Consolas, "Courier New", monospace'})</script><div class=mermaid>graph TB;
+Picture["Picture"] --> vCatPicture["vCatPicture"];
+Picture["Picture"] --> hCatPicture["hCatPicture"];</div><p>这时候出现了一个问题：我们连接两个图像的时候，应该使用类型本身呢，还是使用其指针呢？
+例如上面的图形例子，Rectangle 类型（通常）可以无损转化为 Square 类型，但是 Rectangle 类型的指针不能转换为 Square 类型的指针。相反的，Square 类型（通常）不能无损转换为 Rectangle 类型，但是 Square * 类型却可以实现到 Rectangle * 的转换。</p><p>指针类型并不方便，而值类型（及引用类型）并不能支持这样的转换。</p><p>如果采用指针类型的话，我们需要定制这样的框架：</p><script src=//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0,fontFamily:'Consolas, "Courier New", monospace'})</script><div class=mermaid>graph TB;
+Picture["Picture"]-->BasicPicture["BasicPicture"];
+Picture["Picture"]-->vCatPicture["vCatPicture"];
+Picture["Picture"]-->hCatPicture["hCatPicture"];
+Picture["Picture"]-->FramedPicture["FramedPicture"];</div><p>其中，<code>BasicPicture</code> 表示纯文本的图，<code>vCatPicture</code> 表示经过了一次垂直连接，<code>hCatPicture</code> 表示经过一次水平连接，<code>FramedPicture</code> 表示加框架的图。
+在具体使用时，我们使用 Picture * 来表示所有可能的类型。</p><p>而值类型则不同，值类型只能从上游向下游转换（从亲代到子代），因此只能是这两种情况之一（或其组合形式）。</p><script src=//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0,fontFamily:'Consolas, "Courier New", monospace'})</script><div class=mermaid>graph TB;
+A["A"]-->D["D"];
+B["B"]-->D["D"];
+C["C"]-->D["D"];
+a["a"]==>b["b"];
+b==>c["c"];
+c==>d["d"];</div><p>显然，这两种构造都无法用 is-a 来解释，用 has-a 解释也很勉强。因此，这是一种不合理的构造方式。</p><p><strong>因此，我们采用指针来进行运算，采用共同基类来实现</strong>。</p><hr><h4 id=我们需要哪些类型呢>我们需要哪些类型呢？</h4><p><code>BasicPicture</code> ：保存实际的图像（字符串）内容，及其宽度与高度。
+<code>vCatPicture</code> ，<code>hCatPicture</code> ：保存其所连接的两图像指针
+<code>FramedPicture</code> ：保存一个图像指针及其边框内容。</p><p>基于这些类型，我们可以容易地实现图像连接，图像解除连接，图像加边框，图像去边框以及修改内容。</p><hr><h4 id=我们怎样管理内存>我们怎样管理内存？</h4><p>之前的例子里，我们采用构造函数分配内存，析构函数释放内存的方式来处理内存问题。</p><p>但是，如下所示的，在断点处，<code>FramedPicture b</code> 的内容物（a）已经被析构，因此输出 b 可能是一个非法操作。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>FramedPicture b;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    BasicPicture a <span style=color:#f92672>=</span> ...;
+</span></span><span style=display:flex><span>    b <span style=color:#f92672>=</span> enframe(a);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#75715e>// breakpoint
+</span></span></span></code></pre></div><p>经过一系列思考，我们可以推理出引用计数的必要性。</p><h3 id=类型的设计>类型的设计</h3><h4 id=picture-类>Picture 类</h4><p>经过思考，我们设计这样一个 <code>Picture</code> 类。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Picture</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	Picture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	Picture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>, <span style=color:#66d9ef>int</span>);
+</span></span><span style=display:flex><span>	Picture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#f92672>~</span>Picture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	Picture<span style=color:#f92672>&amp;</span> <span style=color:#66d9ef>operator</span><span style=color:#f92672>=</span>(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>int</span> p, <span style=color:#66d9ef>char</span> c);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>char</span> c, <span style=color:#66d9ef>char</span> v, <span style=color:#66d9ef>char</span> h);
+</span></span><span style=display:flex><span>	Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	PictureEntity <span style=color:#f92672>*</span>ap ;
+</span></span><span style=display:flex><span>	Picture(PictureEntity<span style=color:#f92672>*</span> p);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	std<span style=color:#f92672>::</span>ostream<span style=color:#f92672>&amp;</span> display(std<span style=color:#f92672>::</span>ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><p>最上面的三个构造函数，分别有以下作用：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>Picture<span style=color:#f92672>::</span>Picture(<span style=color:#66d9ef>void</span>); <span style=color:#75715e>// 构造一个空的 Picture 对象
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Picture<span style=color:#f92672>::</span>Picture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>, <span style=color:#66d9ef>int</span>); <span style=color:#75715e>// 根据字符串指针和其行数构造一个 Picture
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>Picture<span style=color:#f92672>::</span>Picture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>); <span style=color:#75715e>// 拷贝构造函数，例如
+</span></span></span></code></pre></div><p><code>reframe</code> 函数用来重设框架格式。
+<code>private</code> 内容则是对外不可见的具体实现。
+<code>PictureEntity *ap</code> 是一个指针，这里的 <code>PictureEntity</code> 即为上面设计中的所有类型的基类 。
+剩余的函数姑且不考虑。</p><h4 id=pictureentity-基类>PictureEntity 基类</h4><p>这个类型，作为所有行为的具体呈现者，并且是一个基类，我们如此定义：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>PictureEntity</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	PictureEntity(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#f92672>~</span>PictureEntity(<span style=color:#66d9ef>void</span>) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>incuse</span>(<span style=color:#66d9ef>void</span>) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>decuse</span>(<span style=color:#66d9ef>void</span>) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>friend</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Picture</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>protected</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> use;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> ostream<span style=color:#f92672>&amp;</span> display(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>const</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	ostream<span style=color:#f92672>&amp;</span> fillEmpty(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>char</span> _ch <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39; &#39;</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> <span style=color:#a6e22e>max</span>(<span style=color:#66d9ef>int</span> a, <span style=color:#66d9ef>int</span> b);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>int</span> pos, <span style=color:#66d9ef>char</span> c);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>char</span> corner, <span style=color:#66d9ef>char</span> vlimit, <span style=color:#66d9ef>char</span> hlimit);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>virtual</span> Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>首先看 <code>public:</code> 部分：
+继承中的基类必须拥有虚析构函数，在这里，为了防止创建 <code>PictureEntity</code> 的实例，我们将其析构函数设置为纯虚析构函数。
+其次，其拥有两个对引用进行处理的函数，且均为纯虚函数。</p><p>其次看 <code>protected</code> ：
+<code>use</code> 为引用计数器。
+其他的函数作用如其名所示。</p><p>这个类无法被实例化。</p><h4 id=basicpicture>BasicPicture</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>BasicPicture</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> PictureEntity
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	BasicPicture(<span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> <span style=color:#66d9ef>const</span><span style=color:#f92672>*</span>, <span style=color:#66d9ef>int</span>);
+</span></span><span style=display:flex><span>	<span style=color:#f92672>~</span>BasicPicture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>incuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>decuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	ostream<span style=color:#f92672>&amp;</span> display(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>int</span>)<span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>char</span> <span style=color:#f92672>**</span>m_data;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_size;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>m_width;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m_maxwidth;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><p>这个类型看起来更像是我们在<a href=#%E6%9E%84%E9%80%A0%E5%92%8C%E8%BE%93%E5%87%BA%E5%8A%9F%E8%83%BD>前面</a> 里面实现的类型。其用法也与之相似。</p><h4 id=framedpicture>FramedPicture</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>FramedPicture</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> PictureEntity
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	FramedPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>char</span> c, <span style=color:#66d9ef>char</span> v, <span style=color:#66d9ef>char</span> h);
+</span></span><span style=display:flex><span>	FramedPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>char</span> ct, <span style=color:#66d9ef>char</span> cb, <span style=color:#66d9ef>char</span> v, <span style=color:#66d9ef>char</span> h);
+</span></span><span style=display:flex><span>	FramedPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>char</span> ct, <span style=color:#66d9ef>char</span> cb, <span style=color:#66d9ef>char</span> t, <span style=color:#66d9ef>char</span> b, <span style=color:#66d9ef>char</span> l, <span style=color:#66d9ef>char</span> r);
+</span></span><span style=display:flex><span>	FramedPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>char</span> c1, <span style=color:#66d9ef>char</span> c2, <span style=color:#66d9ef>char</span> c3, <span style=color:#66d9ef>char</span> c4, <span style=color:#66d9ef>char</span> t, <span style=color:#66d9ef>char</span> b, <span style=color:#66d9ef>char</span> l, <span style=color:#66d9ef>char</span> r);
+</span></span><span style=display:flex><span>	<span style=color:#f92672>~</span>FramedPicture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>incuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>decuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>int</span> pos, <span style=color:#66d9ef>char</span> c);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reframe</span>(<span style=color:#66d9ef>char</span> corner, <span style=color:#66d9ef>char</span> v, <span style=color:#66d9ef>char</span> h);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	ostream<span style=color:#f92672>&amp;</span> display(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span> y, <span style=color:#66d9ef>int</span> mw) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>friend</span> Picture <span style=color:#a6e22e>enframe</span>(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	Picture m_insidePic;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>char</span> c1, c2, c3, c4;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>char</span> l, r, t, b;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><p>这个类型 <code>public:</code> 部分有大量构造函数，其余部分与上面的<code>BasicPicture</code> 相似。</p><h4 id=vcatpicture>VcatPicture</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>VcatPicture</span> <span style=color:#f92672>:</span> <span style=color:#66d9ef>public</span> PictureEntity
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	VcatPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#f92672>~</span>VcatPicture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>incuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>decuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>)<span style=color:#66d9ef>const</span> ;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>)<span style=color:#66d9ef>const</span> ;
+</span></span><span style=display:flex><span>	ostream<span style=color:#f92672>&amp;</span> display(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span> y, <span style=color:#66d9ef>int</span> mw) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>friend</span> Picture <span style=color:#66d9ef>operator</span><span style=color:#f92672>&amp;</span>(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	Picture top, bottom;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><p>这个类表示 <code>top</code> 和 <code>bottom</code> 纵向连接。</p><h4 id=hcatpicture>HcatPicture</h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>HcatPicture</span> <span style=color:#f92672>:</span><span style=color:#66d9ef>public</span> PictureEntity
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	HcatPicture(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#f92672>~</span>HcatPicture(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>incuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>decuse</span>(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>width</span>(<span style=color:#66d9ef>void</span>)<span style=color:#66d9ef>const</span> ;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>height</span>(<span style=color:#66d9ef>void</span>)<span style=color:#66d9ef>const</span> ;
+</span></span><span style=display:flex><span>	ostream<span style=color:#f92672>&amp;</span> display(ostream<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>int</span> y, <span style=color:#66d9ef>int</span> mw) <span style=color:#66d9ef>const</span>;
+</span></span><span style=display:flex><span>	Picture <span style=color:#a6e22e>split</span>(<span style=color:#66d9ef>int</span> id);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>friend</span> Picture <span style=color:#66d9ef>operator</span><span style=color:#f92672>|</span>(<span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>, <span style=color:#66d9ef>const</span> Picture<span style=color:#f92672>&amp;</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>private</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>	Picture left, right;
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><hr><h2 id=总述及效果展示>总述及效果展示</h2><p>通过上面从<a href=#%E6%80%8E%E4%B9%88%E7%BA%B5%E5%90%91%E8%BF%9E%E6%8E%A5%EF%BC%9F%E4%BF%AF%E7%9E%B0%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB>继承关系设计</a> 到 <a href=#%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1>类型的具体设计</a> ，我们基本有了程序的框架。</p><p>在经过具体实现这些类型后，我们就得到了完整的<a href=/resources/archive/CharacterPicture.zip>代码</a>。</p><h3 id=cpp-课后习题>Cpp 课后习题</h3><ul><li>课后习题 1 : 经过上面的示例，我们可以发现一个给定的图可以唯一确定一个（系列性的）输出动作，而 <code>std::string</code> 也可以唯一确定一个输出动作，请将一个给定的图转换为 <code>std::string</code> 。</li><li>课后习题 2 : 请设计一个类，可以独立保存一张图及其结构信息。</li><li>课后习题 3 : 习题 2 自然不难，能否将这个类的 <code>std::cin</code> 和<code>std::cout</code> 的对应操作重载，使其能够被保存和读取。</li><li>课后习题 4 : 如果将<code>'*'</code> 视为黑色，<code>' '</code> 视为白色，那么任何一张只有黑白两色的图可以唯一确定一个字符图，请设计一个方法，能够根据一张图片（<code>.jpg</code> 或<code>.png</code>）生成一个字符图。（可以利用第三方库读入图片）</li><li>课后习题 5 : 相信对于聪明的读者们，习题 4 比较容易。请在习题 4 的基础上，支持字符图的旋转、平移等图形操作。</li><li>课后习题 6 : 其实根据字符密度，<a href=/resources/text/thirdeye.txt>纯字符方式</a>可以表现黑白灰色彩（单通道八位），请在习题 4 的基础上，生成一个可以生成黑白灰色彩的图。（如 <code>' '</code> 表示纯黑，<code>'■'</code> 表示纯白，<code>'*'</code> 表示一种灰色）</li></ul></section></article><section class=read-more><div class=read-more-header><div class="read-more-header-item read-more-item"><span class=read-more-item-dim>Recent</span><h2 class="post-list__post-title post-title"><a href=/2019/11/%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0/ title="link to 简单的链表及二叉树学习">简单的链表及二叉树学习</a></h2></div><div class="read-more-header-item read-more-item"><span class=read-more-item-dim>Earlier</span><h2 class="post-list__post-title post-title"><a href=/2019/11/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/ title="link to matplotlib编码字体错误的解决过程">matplotlib编码字体错误的解决过程</a></h2></div></div><div class=read-more-summary><div class="read-more-summary-item read-more-item"><p class=excerpt><p>本节课将会讲三点内容，链表，栈以及二叉树。</p>&mldr;</p></div><div class="read-more-summary-item read-more-item"><p class=excerpt><h2 id=发现问题>发现问题</h2><p>众所周知，设置 matplotlib 输出中文需要：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;font.sans-serif&#39;</span>]<span style=color:#f92672>=</span>[<span style=color:#e6db74>&#39;SimHei&#39;</span>]  <span style=color:#75715e># 用来正常显示中文标签</span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>rcParams[<span style=color:#e6db74>&#39;axes.unicode_minus&#39;</span>]<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>  <span style=color:#75715e># 用来正常显示负号</span>
+</span></span></code></pre></div>&mldr;</p></div></div><div class=read-more-meta><div class="read-more-meta-item read-more-item"><time datetime="2019-11-11 15:42:01 +0000" class="post-list__meta--date date">2019-11-29</time>
+<span class="post-list__meta--tags tags">• <a href=https://RedContritio.github.io/tags/%E7%A4%BE%E5%9B%A2%E8%AF%BE%E7%A8%8B>社团课程</a> • <a href=https://RedContritio.github.io/tags/%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%A8%8B>零基础课程</a></span>
+<a class=btn-border-small href=/2019/11/%E7%AE%80%E5%8D%95%E7%9A%84%E9%93%BE%E8%A1%A8%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AD%A6%E4%B9%A0/>Continue</a></div><div class="read-more-meta-item read-more-item"><time datetime="2019-11-11 15:42:01 +0000" class="post-list__meta--date date">2019-11-07</time>
+<span class="post-list__meta--tags tags">• <a href=https://RedContritio.github.io/tags/python>python</a> • <a href=https://RedContritio.github.io/tags/matplotlib>matplotlib</a></span>
+<a class=btn-border-small href=/2019/11/matplotlib%E7%BC%96%E7%A0%81%E5%AD%97%E4%BD%93%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E8%BF%87%E7%A8%8B/>Continue</a></div></div></section><section class=post-comments><div id=disqus_thread></div><script>var disqus_config=function(){this.page.url="https://RedContritio.github.io/2019/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%A5%E9%97%A8/",this.page.identifier="https://RedContritio.github.io/2019/11/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%85%A5%E9%97%A8/"},disqus_shortname="vno-hugo";(function(){var e=document,t=e.createElement("script");t.src="//"+disqus_shortname+".disqus.com/embed.js",t.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(t)})()</script><noscript>To view comments from<a href=http://disqus.com/?ref_noscript> Disqus </a>, please enable JavaScript.</noscript></section><section class=footer><footer><span class=footer__copyright>This site is licensed under a <a href=http://creativecommons.org/licenses/by-nc-sa/4.0/>CC BY-NC-SA 4.0</a> license.</span>
+<span class=footer__copyright>Generated by <a href=https://gohugo.io/>Hugo</a> at 2023-03-26, themed with <a href=https://github.com/xslingcn/vno-hugo>Vno - Hugo</a>.</span></footer></section></div></div><script type=text/javascript src=//code.jquery.com/jquery-1.11.3.min.js></script>
+<script type=text/javascript src=/js/main.js></script><script>(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)})(window,document,"script","//www.google-analytics.com/analytics.js","ga"),ga("create","your_ga_id","your_host"),ga("send","pageview")</script></body>
