@@ -52,7 +52,7 @@ duoshuo = ""
 [params.comment.gitalk]
 ID = "0a6a884a25f2cfcd11b3"
 secret = ""
-repo = "https://github.com/RedContritio/RedContritio.github.io"
+repo = "RedContritio.github.io"
 owner = "RedContritio"
 
 [params.social]
