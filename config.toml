@@ -51,7 +51,7 @@ duoshuo = ""
 # Take a look on https://github.com/gitalk/gitalk#usage for more info.
 [params.comment.gitalk]
 ID = "0a6a884a25f2cfcd11b3"
-secret = ""
+secret = "63fa88190fa69c3d00d744d99b78af1b13f595ec"
 repo = "RedContritio.github.io"
 owner = "RedContritio"
 
