@@ -6,19 +6,16 @@ on:
       - main # default branch
 
 jobs:
-  pages:
+  deploy-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - uses: jakejarvis/hugo-build-action@master  # ...or replace 'master' with a full version tag, such as: v0.64.1
         with:
-          hugo-version: latest
-      - name: Build
-        run: hugo
+          args: --minify --buildDrafts
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
