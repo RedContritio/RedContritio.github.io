@@ -1,3 +1,75 @@
-baseURL = 'http://RedContritio.github.io/'
-languageCode = 'zh-cn'
-title = 'Chireiden'
+# Basic
+title = "Chireiden"
+baseURL = "https://RedContritio.github.io/"
+theme = "vno-hugo"
+
+# supported languages: en-us, zh-cn (lowercase language codes only)
+defaultContentLanguage = 'en-us'
+# here lists available languages, if you wish to add your own custom translation, please refer to https://gohugo.io/content-management/multilingual
+[languages]
+  [languages.en-us]
+    languageName = 'English(United States)'
+    weight = 10
+  [languages.zh-cn]
+    languageName = '简体中文（中国大陆）'
+    weight = 20
+
+# Pagination
+paginate = 10
+paginatePath = "page"
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[menu]
+ [[menu.main]]
+    name = "Tags"
+    identifier = "Tags"
+    url = "/tags/"
+    weight = 20
+[taxonomies]
+    tag = "tags"
+
+[params]
+author = "RedContritio"
+subtitle = "地霊殿"
+description = "地霊殿，充满幻想与希望的殿堂"
+welcomeMessage = "夢も希望も無い、毎日がそんな生活だった。"
+
+# supported colors: blue, green, purple, red, orange or slate. If you need clear, leave it empty.
+coverColor = "light-red"
+
+[params.comment]
+disqus = "vno-hugo"
+duoshuo = ""
+
+# Take a look on https://github.com/gitalk/gitalk#usage for more info.
+[params.comment.gitalk]
+ID = ""
+secret = ""
+repo = ""
+owner = ""
+
+[params.social]
+# weibo = "onevcat"
+github = "RedContritio"
+# twitter = "onevcat"
+# gplus = "107108267983477358170"
+mail = "RedContritio@qq.com"
+# linkedin = "example"
+
+[params.ga]
+ID = "your_ga_id"
+host = "your_host"
+
+# The blog button should not be removed.
+[params.blogButton]
+title = "Blog"
+description = "Visit blog"
+
+[params.copyright]
+license = 'CC BY-NC-SA 4.0'
+license_link = 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
+
+[permalinks]
+posts = "/:year/:month/:title/"

@@ -1,0 +1,3 @@
+[submodule "themes/vno-hugo"]
+	path = themes/vno-hugo
+	url = https://github.com/RedContritio/Vno-Hugo.git
