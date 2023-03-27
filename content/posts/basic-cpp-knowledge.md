@@ -1,7 +1,8 @@
 ---
 title: "Cpp 入门"
 tags: ["社团课程"]
-date: 2019-10-20T21:06:47+00:00
+date: 2019-10-20T21:06:47+08:00
+layout: 'post'
 draft: false
 ---
 
