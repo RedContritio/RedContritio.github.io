@@ -1,10 +1,8 @@
 ---
 title: "Friend"
 date: 2023-03-26T20:25:36+08:00
+layout: "simple"
 draft: false
-menu: "main"
-weight: 40
-readMore: false
 hidden: true
 ---
 
