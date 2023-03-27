@@ -4,6 +4,7 @@ tags: ["python", "matplotlib"]
 date: 2019-11-07T00:11:02+08:00
 layout: 'post'
 draft: false
+toc: true
 ---
 
 ## 发现问题
@@ -248,7 +249,7 @@ scale_factory.__doc__ = cbook.dedent(scale_factory.__doc__) % \
 
 其中，`LogFormatterSciNotation` 类型为 `matplotlib.ticker.LogFormatterSciNotation` 。
 
----
+----
 
 根据输出的警告信息，我们在对应位置前生成一个异常，可以得到
 
@@ -298,7 +299,7 @@ matplotlib\mathtext.py in _get_glyph(self, fontname, font_class, sym, fontsize, 
 
 此时的 `fontname` 为 `'default'`，应当改为其他内容（以满足条件 `fontname in ('it', 'regular')` ）
 
----
+----
 
 经测试，改 `UnicodeFonts` 类中 `_get_glyph` 内 `fontname` 为 `'it'` 可解决问题。
 
@@ -417,7 +418,7 @@ C:\ProgramData\Anaconda3\lib\site-packages\matplotlib\mathtext.py in __init__(se
 
 最终可以发现，`state` 被赋值于此处，只需要修改 `matplotlib.mathtext.Parser.parse` 即可结束此支错误。
 
----
+----
 
 暂改为 `'it'`，运行仍然出错，主动抛出异常，捕获链如下：
 
