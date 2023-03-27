@@ -4,6 +4,7 @@ tags: ["Everything", "游戏"]
 date: 2019-12-22T11:15:42+08:00
 layout: 'post'
 draft: false
+toc: true
 ---
 
 See the Help section when you press Esc in-game for information on how to do specific actions. (If the information about a particular action is not there it means you haven't unlocked it yet, keep playing).

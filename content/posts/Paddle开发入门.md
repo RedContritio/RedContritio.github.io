@@ -4,6 +4,7 @@ tags: []
 date: 2023-02-08T17:02:29+08:00
 layout: 'post'
 draft: false
+toc: true
 ---
 
 过年期间看到 Paddle 框架那边发了新的 issue，所以顺手修了几个，这里取几个例子来简单介绍其修复过程，

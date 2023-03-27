@@ -4,6 +4,7 @@ tags: ["社团课程"]
 date: 2019-11-11T15:42:01+08:00
 layout: 'post'
 draft: false
+toc: true
 ---
 
 {{< blockquote author="Tom Cargill" >}}
@@ -19,7 +20,7 @@ If you think C++ is not overly complicated, just what is a protected abstract vi
 
 <!-- toc -->
 
----
+----
 
 ## 编程目标
 
@@ -51,7 +52,7 @@ If you think C++ is not overly complicated, just what is a protected abstract vi
 
 以及希望能够修改边框的样式等等······
 
----
+----
 
 ## 面向过程可以吗？
 
@@ -395,7 +396,7 @@ graph TB;
 
 **因此，我们采用指针来进行运算，采用共同基类来实现**。
 
----
+----
 
 #### 我们需要哪些类型呢？
 
@@ -405,7 +406,7 @@ graph TB;
 
 基于这些类型，我们可以容易地实现图像连接，图像解除连接，图像加边框，图像去边框以及修改内容。
 
----
+----
 
 #### 我们怎样管理内存？
 
@@ -607,7 +608,7 @@ private:
 };
 ```
 
----
+----
 
 ## 总述及效果展示
 
