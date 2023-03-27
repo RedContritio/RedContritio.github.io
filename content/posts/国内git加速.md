@@ -2,6 +2,7 @@
 title: "国内git加速"
 tags: []
 date: 2023-02-11T20:59:17+08:00
+layout: 'post'
 draft: false
 ---
 

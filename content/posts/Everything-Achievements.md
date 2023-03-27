@@ -1,7 +1,8 @@
 ---
 title: "Everything成就获得攻略"
 tags: ["Everything", "游戏"]
-date: 2019-12-22T11:15:42+00:00
+date: 2019-12-22T11:15:42+08:00
+layout: 'post'
 draft: false
 ---
 

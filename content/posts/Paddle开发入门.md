@@ -1,7 +1,8 @@
 ---
 title: "Paddle开发入门"
 tags: []
-date: 2023-02-08T17:02:29+00:00
+date: 2023-02-08T17:02:29+08:00
+layout: 'post'
 draft: false
 ---
 

@@ -32,6 +32,11 @@ paginatePath = "page"
     identifier = "About"
     url = "/about/"
     weight = 100
+  [[menu.main]]
+    name = "Friends"
+    identifier = "Friends"
+    url = "/friends/"
+    weight = 90
 [taxonomies]
     tag = "tags"
 

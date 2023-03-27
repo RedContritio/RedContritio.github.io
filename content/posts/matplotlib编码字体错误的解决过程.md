@@ -1,7 +1,8 @@
 ---
 title: "matplotlib编码字体错误的解决过程"
 tags: ["python", "matplotlib"]
-date: 2019-11-07T00:11:02+00:00
+date: 2019-11-07T00:11:02+08:00
+layout: 'post'
 draft: false
 ---
 
