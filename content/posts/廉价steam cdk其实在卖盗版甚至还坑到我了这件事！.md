@@ -4,7 +4,7 @@ tags: ["steam","信息安全", "游戏", "greenluma"]
 title: "廉价steam cdk其实在卖盗版甚至还坑到我了这件事！"
 date: 2024-03-09T15:40:05+08:00
 math: false
-draft: true
+draft: false
 toc: true
 ---
 
