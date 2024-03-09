@@ -1,10 +1,10 @@
 ---
 layout: post
-tags: ["Say Hi","Vno"]
+tags: ["openWrt","clash", "openclash", "网络配置"]
 title: "基于openwrt的配置与搭梯子教程"
 date: 2024-03-08T14:08:16+08:00
 math: false
-draft: true
+draft: false
 toc: true
 ---
 
